@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miku の 15 Presentations — EIKEN 準1級</title>
+<style>
+  :root{ --ink:#1e2340; --sub:#6b7194; --bg:#f4f5fb; --card:#fff; --indigo:#4c56c0; --indigo-d:#343d99; --sakura:#e8628c; --gold:#b8860b; --green:#3ba272; --line:#e6e8f4; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; padding-bottom:80px;}
+  header{background:linear-gradient(120deg,var(--indigo-d),var(--indigo) 55%,var(--sakura)); color:#fff; padding:30px 24px; text-align:center;}
+  header h1{font-size:1.4rem;}
+  header .sub{opacity:.9; font-size:.85rem; margin-top:6px;}
+  header a{color:#fff;}
+  .wrap{max-width:900px; margin:0 auto; padding:18px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-bottom:16px; box-shadow:0 1px 4px rgba(30,35,64,.06);}
+  h2{color:var(--indigo-d); font-size:1.05rem; margin-bottom:10px;}
+  h3{color:var(--indigo-d); font-size:.95rem; margin:16px 0 6px;}
+  .muted{color:var(--sub); font-size:.82rem;}
+  .toc{columns:2; gap:24px; font-size:.88rem;}
+  .toc a{color:var(--indigo); text-decoration:none; display:block; margin-bottom:6px;}
+  .toc a:hover{text-decoration:underline;}
+  .cat{display:inline-block; padding:2px 10px; border-radius:99px; font-size:.7rem; font-weight:700; margin-bottom:8px;}
+  .cat.st{background:#e8eafd; color:var(--indigo-d);} .cat.env{background:#e2f4ea; color:#1e7a4d;}
+  .cat.jp{background:#fdeef4; color:#b03060;} .cat.we{background:#fdf1dc; color:#8a6414;}
+  .cat.hl{background:#e6f4f7; color:#20707f;} .cat.cv{background:#f0e8fd; color:#6b3fa0;}
+  details.pres{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:0 22px; margin-bottom:14px; box-shadow:0 1px 4px rgba(30,35,64,.06);}
+  details.pres summary{cursor:pointer; padding:16px 0; font-weight:700; color:var(--indigo-d); font-size:1rem;}
+  .pres-body{padding:0 0 20px;}
+  .script{background:#fafbff; border:1px solid var(--line); border-left:4px solid var(--indigo); border-radius:10px; padding:14px 16px; font-size:.93rem;}
+  .script b{color:var(--sakura);}
+  .script u{text-decoration-color:var(--gold); text-decoration-thickness:2px;}
+  .qa{margin:6px 0 0;}
+  .qa dt{font-weight:700; color:var(--indigo-d); margin-top:10px; font-size:.9rem;}
+  .qa dd{margin:2px 0 0 0; font-size:.9rem; background:#fafbff; border-radius:8px; padding:8px 12px;}
+  table{width:100%; border-collapse:collapse; font-size:.85rem; margin:6px 0;}
+  th,td{border-bottom:1px solid var(--line); padding:5px 8px; text-align:left; vertical-align:top;}
+  th{color:var(--sub); font-size:.75rem;}
+  .guide{background:#fff8ef; border:1px solid #f3e2c4; border-radius:10px; padding:14px 16px; font-size:.9rem;}
+  .guide h4{color:var(--gold); font-size:.85rem; margin:10px 0 4px;} .guide h4:first-child{margin-top:0;}
+  .legend{font-size:.8rem; color:var(--sub);}
+  .legend b{color:var(--sakura);} .legend u{text-decoration-color:var(--gold); text-decoration-thickness:2px;}
+  @media print{ details.pres{page-break-inside:avoid;} details.pres[open]{border:none;} body{background:#fff;} header{background:#fff; color:var(--ink);} }
+</style>
+</head>
+<body>
+<header>
+  <h1>🎤 Miku の 15 Presentations — 英検準1級 完全対策パック</h1>
+  <div class="sub">3分スピーチ × 想定Q&amp;A × 日本語スタディガイド &nbsp;|&nbsp; <a href="index.html">← ダッシュボードに戻る</a></div>
+</header>
+<div class="wrap">
+
+<div class="card">
+  <h2>📖 使い方 (Frank メソッド)</h2>
+  <div style="font-size:.9rem;">
+    <b>1.</b> スクリプトを読み、スタディガイドで意味を完全に理解する →
+    <b>2.</b> 練習前に「before ビデオ」を撮る →
+    <b>3.</b> AIチューターと発音ドリル（毎日10分）→
+    <b>4.</b> タイマーで3分計測しながら暗記（台本を見ない！）→
+    <b>5.</b> Frank に発表 → Q&amp;A に挑戦 → 「after ビデオ」で成長を確認 🌸
+  </div>
+  <p class="legend" style="margin-top:10px;">スクリプト内の表記: <b>ピンク太字 = イディオム・重要表現</b> / <u>下線 = 文法パターン</u>。どちらもスタディガイドで解説。</p>
+  <p class="muted" style="margin-top:6px;">15本すべて、実際の過去問（2024〜2026年度）のエッセイ・要約・語彙問題のテーマと単語から設計。全部マスターすれば、頻出の文法・語彙・イディオムの8割以上をカバーします。</p>
+</div>
+
+<div class="card">
+  <h2>🗺 目次 — 6カテゴリー × 15本</h2>
+  <div class="toc">
+    <a href="#p1">1. Should AI be used in education?</a>
+    <a href="#p2">2. Does advertising control how we spend?</a>
+    <a href="#p3">3. Should self-driving cars be allowed?</a>
+    <a href="#p4">4. Is social media doing more harm than good?</a>
+    <a href="#p5">5. Should governments protect endangered species?</a>
+    <a href="#p6">6. Should Japan rely more on renewable energy?</a>
+    <a href="#p7">7. Who should fight climate change?</a>
+    <a href="#p8">8. Should Japan accept more foreign workers?</a>
+    <a href="#p9">9. Should tourists visit rural Japan?</a>
+    <a href="#p10">10. Should high school students work part-time?</a>
+    <a href="#p11">11. Will remote work become the norm?</a>
+    <a href="#p12">12. Should university education be free?</a>
+    <a href="#p13">13. Should schools protect students' mental health?</a>
+    <a href="#p14">14. City life or country life?</a>
+    <a href="#p15">15. Are traditions worth preserving?</a>
+  </div>
+</div>
+
+<!-- PRESENTATIONS -->
+
+<details class="pres" id="p1" open>
+<summary>1. Should AI be used in education?</summary>
+<div class="pres-body">
+<span class="cat st">Society &amp; Technology</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. Today, I would like to talk about a question that affects every student in Japan: should AI be used in education? <b>There's no denying that</b> AI has already changed the way we live, and now it is entering our classrooms. In my opinion, AI should be used in education, but carefully.</p>
+<p>First, let me explain the benefits. AI tutors are available twenty-four hours a day, so students can study <u>whenever they want</u>. In the past, only wealthy families could afford private tutors. Now, <u>thanks to AI, students from low-income backgrounds can receive the same support as everyone else</u>. In other words, AI makes education more equal. Moreover, AI can analyze each student's weak points and offer personalized lessons. Schools that fail to <b>keep pace with</b> this technology may leave their students behind.</p>
+<p>However, <b>while it's true that</b> AI is convenient, <u>it is not without risks</u>. If students depend on AI for every answer, they may stop thinking for themselves. Their creativity and problem-solving skills could become weaker, not stronger. Furthermore, AI systems collect huge amounts of personal data, which may <b>infringe on students' privacy</b>. Teachers also worry that their role could become <b>obsolete</b>, although I believe technology can never replace human encouragement.</p>
+<p>So, what is the answer? I believe AI is <b>a double-edged sword</b>. Used wisely, it cuts through inequality; used carelessly, it cuts away our ability to think. Therefore, schools should use AI as a supporting tool, not as a replacement for teachers. <u>The more we understand its limits, the more safely we can enjoy its benefits.</u></p>
+<p>In conclusion, AI should be welcomed into education — but with clear rules. If we combine the efficiency of machines with the warmth of human teachers, we can <b>get the best of both worlds</b>. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A — 想定質問と理想回答</h3>
+<dl class="qa">
+<dt>Q1. Do you think AI will replace teachers completely in the future?</dt>
+<dd>No, I don't think so. <b>While it's true that</b> AI can deliver information efficiently, teachers do much more than that — they motivate students and understand their feelings. I believe the teacher's role will change, but it will never become obsolete.</dd>
+<dt>Q2. Have you ever used AI for studying? How was it?</dt>
+<dd>Yes, I use an AI tutor to practice English pronunciation. It points out my mistakes immediately, so I can correct them on the spot. However, I still need my human teacher to explain <i>why</i> something is wrong, so I use both.</dd>
+<dt>Q3. Some people say AI makes students lazy. What do you think?</dt>
+<dd>I partly agree. If students simply copy AI answers, their thinking skills will decline. However, it <b>comes down to</b> how we use it — a calculator doesn't make mathematicians lazy, and AI won't make good students lazy either.</dd>
+<dt>Q4. What rules should schools make about AI?</dt>
+<dd>I would suggest three rules: students must protect their personal data, they must not submit AI writing as their own, and they should always double-check AI information, because it doesn't always <b>add up</b>.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>譲歩構文 “While it's true that A, B”</b>：「確かにAだが、B」。反対意見を認めてから自分の主張を述べる、エッセイ・面接の最強パターン。<i>While it's true that AI is convenient, it is not without risks.</i>（二重否定 not without ～「〜がないわけではない」も準1級頻出）<br>
+② <b>The 比較級, the 比較級</b>：「〜すればするほど…」。<i>The more we understand its limits, the more safely we can enjoy its benefits.</i><br>
+③ <b>thanks to ～ / 分詞構文的前置き</b>：<i>Thanks to AI, students ... can receive the same support.</i>（because of のフォーマル版）
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>obsolete</td><td>時代遅れの・廃れた</td><td>become obsolete</td></tr>
+<tr><td>infringe on</td><td>（権利を）侵害する</td><td>infringe on privacy</td></tr>
+<tr><td>personalized</td><td>個別化された</td><td>personalized lessons</td></tr>
+<tr><td>low-income background</td><td>低所得の家庭環境</td><td>from a low-income background（過去問(4)の recipient 問題より）</td></tr>
+<tr><td>analyze</td><td>分析する</td><td>analyze weak points</td></tr>
+<tr><td>efficiency</td><td>効率</td><td>the efficiency of machines</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>a double-edged sword</b> 諸刃の剣（良い面と悪い面が両方ある）→ どのトピックでも使える万能表現！<br>
+・<b>keep pace with ～</b> 〜に遅れずについていく<br>
+・<b>there's no denying that ～</b> 〜は否定できない（強い書き出し）<br>
+・<b>get the best of both worlds</b> 両方の良いとこ取りをする<br>
+・<b>add up</b>（話の）つじつまが合う（過去問(16)より）
+<h4>暗記のコツ</h4>
+段落の頭文字「Good afternoon → First → However → So → In conclusion」の5枚のカードを想像して、1枚ずつめくる感覚で。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p2">
+<summary>2. Does advertising have too much influence on how we spend money?</summary>
+<div class="pres-body">
+<span class="cat st">Society &amp; Technology ｜ 2026年第1回 エッセイ問題そのもの！</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Hello, everyone. Have you ever bought something you didn't really need? I have — many times! Today I want to discuss whether advertising has too much influence on the way people spend money. My answer is yes, it does, especially in the age of social media.</p>
+<p>To begin with, advertising today is not what it used to be. In the past, we saw the same TV commercials as everyone else. Now, companies collect our personal data and show us advertisements <u>that are designed just for us</u>. <u>Every time we search for something online, that information is recorded.</u> As a result, we see the perfect advertisement at the perfect moment — and we <b>can hardly resist</b> it. This is not a coincidence; it is a carefully calculated strategy.</p>
+<p>Moreover, advertisements often create desires rather than satisfy needs. Influencers make luxury goods look like daily necessities, and many young people <b>end up</b> spending money they cannot afford, simply to <b>keep up with</b> trends. In the worst cases, they <b>live off</b> credit and fall into debt. There is also the problem of reliable information: some advertisements exaggerate or even <b>fabricate</b> the effects of a product, so consumers cannot make informed decisions.</p>
+<p>On the other hand, <b>it would be unfair to say</b> advertising is all bad. It supports the economy, funds free services like search engines, and introduces us to genuinely useful products. <u>Without advertising, many small businesses would never reach their customers.</u></p>
+<p>Nevertheless, when I <b>weigh the pros and cons</b>, I believe the influence has become too strong, because the balance of power is unfair: companies know everything about us, but we know almost nothing about their methods. Therefore, we should teach media literacy at school and require companies to be transparent about targeted advertising.</p>
+<p>In conclusion, advertising is a clever servant but a dangerous master. We cannot escape it, but we can learn to see through it. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Have you ever bought something because of an advertisement and regretted it?</dt>
+<dd>Yes. Last year I bought a face cream because an influencer praised it, but it didn't work at all. The advertisement clearly exaggerated its effects. Since then, I always check independent reviews before buying — the claims in ads don't always <b>add up</b>.</dd>
+<dt>Q2. Should advertising to children be restricted?</dt>
+<dd>Definitely. Children cannot tell the difference between information and persuasion, so advertising to them is like a game with one-sided rules. Many European countries already restrict it, and I think Japan should <b>follow suit</b>.</dd>
+<dt>Q3. How can consumers protect themselves from targeted ads?</dt>
+<dd>First, we can limit the data we share by changing privacy settings. Second, we should wait twenty-four hours before buying anything expensive. If we still want it the next day, it may be a real need rather than a desire created by an ad.</dd>
+<dt>Q4. Isn't advertising necessary for the economy?</dt>
+<dd><b>While it's true that</b> the economy depends on consumption, an economy built on debt and impulse buying is not healthy in the long run. I believe honest advertising can support the economy without manipulating consumers.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>仮定法 “Without ～, S would …”</b>：「〜がなければ…だろう」。<i>Without advertising, many small businesses would never reach their customers.</i> if を使わない仮定法は準1級の武器。<br>
+② <b>関係代名詞 that の限定用法</b>：<i>advertisements that are designed just for us</i>「私たちのためだけに設計された広告」。<br>
+③ <b>Every time S V</b>（接続詞的）：「〜するたびに」。<i>Every time we search for something online, ...</i>
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>fabricate</td><td>でっち上げる</td><td>fabricate data／effects（過去問(5)より）</td></tr>
+<tr><td>exaggerate</td><td>誇張する</td><td>exaggerate the effects</td></tr>
+<tr><td>transparent</td><td>透明性のある</td><td>be transparent about ～</td></tr>
+<tr><td>consumer</td><td>消費者</td><td>informed consumers</td></tr>
+<tr><td>strategy</td><td>戦略</td><td>a calculated strategy</td></tr>
+<tr><td>media literacy</td><td>情報を見抜く力</td><td>teach media literacy</td></tr>
+<tr><td>coincidental</td><td>偶然の</td><td>It is not a coincidence（過去問(8)の選択肢より）</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>weigh the pros and cons</b> 長所と短所を比較検討する（結論前の決めゼリフ）<br>
+・<b>end up -ing</b> 結局〜してしまう<br>
+・<b>live off ～</b> 〜に頼って生活する（過去問イディオム！クレジット・親のすね等）<br>
+・<b>see through ～</b> 〜を見抜く<br>
+・<b>follow suit</b> 先例にならう<br>
+・<b>a clever servant but a dangerous master</b> 便利だが支配されると危険（締めの名言型）
+<h4>暗記のコツ</h4>
+「規制なしの広告 → データ収集 → 欲望の創造 → でも経済には必要 → だからバランス」というストーリーの矢印を頭に描く。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p3">
+<summary>3. Should self-driving cars be allowed on public roads?</summary>
+<div class="pres-body">
+<span class="cat st">Society &amp; Technology ｜ 2025年第3回 エッセイ問題そのもの！</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. Imagine getting into a car, saying your destination, and simply relaxing while the car drives itself. This is no longer science fiction. Today I will discuss whether self-driving cars should be allowed on public roads. My position is yes — under strict conditions.</p>
+<p>The strongest argument is safety. <u>It is said that</u> over ninety percent of traffic accidents <u>are caused by</u> human error: drivers who are tired, distracted, or careless. Machines, on the other hand, never get sleepy and never check their phones. If self-driving technology can reduce accidents even by half, thousands of lives will be saved every year. In an aging society like Japan, these cars could also give elderly people the freedom to travel <u>without depending on</u> their families. <b>When it comes to</b> convenience, the benefits are enormous.</p>
+<p>However, opponents raise serious concerns, and <b>rightly so</b>. First, there is the question of responsibility: if a self-driving car causes an accident, <u>who should be blamed</u> — the passenger, the carmaker, or the software company? Until this question is answered clearly, full permission would be premature. We cannot <b>rule out</b> the possibility of system failures, either. A computer that freezes on the highway could cause a terrible <b>collision</b>. Second, millions of taxi and truck drivers might lose their jobs, so the change could <b>come at the expense of</b> workers.</p>
+<p>Considering both sides, I believe we should allow self-driving cars <b>step by step</b>: first in limited areas at low speeds, then gradually expand as the technology proves itself. This is exactly how Japan introduced other new technologies, and it worked.</p>
+<p>In conclusion, self-driving cars should be allowed on public roads, but only with clear laws about responsibility and a gradual introduction. If we prepare carefully, this technology will not only make our roads safer but also make our society kinder to the elderly. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Would you personally ride in a self-driving car?</dt>
+<dd>Honestly, I would feel nervous at first, but yes. I already trust machines in other ways — elevators and airplanes mostly fly on autopilot. Once the technology has a proven safety record, I think my fear will fade with time.</dd>
+<dt>Q2. What should happen to drivers who lose their jobs?</dt>
+<dd>The government and companies should offer retraining programs so drivers can <b>take on</b> new roles, such as monitoring the vehicles remotely. Change is inevitable, but leaving workers behind is a choice we don't have to make.</dd>
+<dt>Q3. Who do you think should be responsible when a self-driving car has an accident?</dt>
+<dd>In my opinion, the manufacturer should bear the main responsibility, because the passenger cannot control the car. However, owners should still be responsible for proper maintenance. A clear law must decide this before the cars spread widely.</dd>
+<dt>Q4. Do you think self-driving cars will be common in Japan in twenty years?</dt>
+<dd>Yes, especially in rural areas where bus services are disappearing and the population is aging. Necessity drives change, and Japan's shrinking workforce means we will need this technology <b>sooner rather than later</b>.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>受動態＋by 以外の前置詞</b>：<i>accidents are caused by human error</i>／<i>It is said that ～</i>「〜と言われている」（伝聞の受動態は要約問題でも必須）。<br>
+② <b>間接疑問文</b>：<i>who should be blamed</i>「誰が責められるべきか」— 疑問詞＋S＋Vの語順に注意。<br>
+③ <b>without -ing</b>：<i>without depending on their families</i>「家族に頼らずに」。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>collision / collide</td><td>衝突（する）</td><td>cause a collision（過去問(10)より）</td></tr>
+<tr><td>premature</td><td>時期尚早の</td><td>would be premature</td></tr>
+<tr><td>inevitable</td><td>避けられない</td><td>Change is inevitable.</td></tr>
+<tr><td>distracted</td><td>気が散った</td><td>distracted drivers</td></tr>
+<tr><td>manufacturer</td><td>製造会社</td><td>car manufacturers</td></tr>
+<tr><td>aging society</td><td>高齢化社会</td><td>in an aging society（日本トピックの必須語）</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>when it comes to ～</b> 〜のこととなると<br>
+・<b>rule out ～</b> 〜の可能性を排除する（過去問(17)より）<br>
+・<b>come at the expense of ～</b> 〜を犠牲にして<br>
+・<b>take on ～</b>（仕事・責任を）引き受ける（過去問(16)より）<br>
+・<b>sooner rather than later</b> 早めに・遠からず<br>
+・<b>rightly so</b> それももっともだ（譲歩の相づち）
+<h4>暗記のコツ</h4>
+「人間のミス90% → 高齢者の自由 → でも責任は誰？ → 段階的導入」。数字（90%）を心のアンカーにする。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p4">
+<summary>4. Is social media doing more harm than good?</summary>
+<div class="pres-body">
+<span class="cat st">Society &amp; Technology</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Hello, everyone. I am a high school student, which means I belong to the first generation that has never known a world without social media. Today I want to answer a difficult question: is social media doing more harm than good? After thinking about it deeply, my answer is that the harm is winning — for now.</p>
+<p>Let me start with the good points, because there are many. Social media connects people <u>who would otherwise never meet</u>. It gives ordinary people a voice, helps small businesses grow, and spreads news faster than any newspaper. During disasters, it saves lives by sharing information instantly. <b>There's no denying that</b> these benefits are real.</p>
+<p>However, the costs are becoming too heavy to ignore. First, social media is designed to be addictive. Companies earn money from our attention, so their apps are built to <b>eat up</b> as much of our time as possible. Many students, including my friends, check their phones hundreds of times a day and <u>find it hard to concentrate</u> on studying. Second, it damages mental health. Everyone posts only their happiest moments, so we constantly compare our ordinary lives with others' highlights. This comparison leads to <b>anxiety</b> and low self-esteem, especially among teenagers. Third, false information spreads six times faster than the truth, <u>which makes it difficult for society to agree on basic facts</u>.</p>
+<p><b>While it's true that</b> we cannot turn back the clock, we are not powerless either. We can set time limits, turn off notifications, and follow accounts that inspire us instead of accounts that make us feel <b>inferior</b>. Schools should also teach students how these apps are designed to capture our attention.</p>
+<p>In conclusion, social media is currently doing more harm than good, but the problem is not the tool itself — it is how we use it. If we become smarter users, the balance can shift. The choice, ultimately, <b>lies in our hands</b>. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. How much time do you spend on social media, and do you think it's too much?</dt>
+<dd>I used to spend about three hours a day, but I realized it was <b>eating up</b> my study time. Now I have switched my phone to English-only media, so even my scrolling time supports my learning goals.</dd>
+<dt>Q2. Should the government regulate social media companies?</dt>
+<dd>To some extent, yes. I don't want the government to control what people say, but companies should be required to protect children's data and to label false information. Freedom of speech and freedom to manipulate are two different things.</dd>
+<dt>Q3. Why do you think teenagers are especially affected?</dt>
+<dd>Teenagers are still forming their identities, so they care deeply about others' opinions. When "likes" become a number that measures your value, every post feels like a test. Adults have more life experience to <b>fall back on</b>, but we don't yet.</dd>
+<dt>Q4. Can social media ever be good for studying?</dt>
+<dd>Absolutely. I follow English-learning accounts, and short videos taught me many natural expressions. The key is to use social media <b>on purpose</b>, with a goal — not just to kill time.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>関係代名詞の非制限用法 “, which ～”</b>：前の文全体を受けて「そしてそのことが〜」。<i>..., which makes it difficult for society to agree on basic facts.</i><br>
+② <b>find it + 形容詞 + to do</b>：<i>find it hard to concentrate</i>「集中するのが難しいと感じる」（it は仮目的語）。<br>
+③ <b>仮定の would：who would otherwise never meet</b>「そうでなければ出会うことのない」— otherwise＋仮定法は上級者の証。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>addictive</td><td>依存性のある</td><td>designed to be addictive</td></tr>
+<tr><td>anxiety</td><td>不安</td><td>lead to anxiety（セッション1の単語！）</td></tr>
+<tr><td>self-esteem</td><td>自尊心</td><td>low self-esteem</td></tr>
+<tr><td>inferior</td><td>劣った</td><td>feel inferior to ～</td></tr>
+<tr><td>notification</td><td>通知</td><td>turn off notifications</td></tr>
+<tr><td>ultimately</td><td>最終的に</td><td>The choice, ultimately, ...</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>eat up ～</b>（時間を）食い尽くす（過去問(18)より！）<br>
+・<b>turn back the clock</b> 時間を巻き戻す<br>
+・<b>lie in our hands</b> 私たちの手の中にある<br>
+・<b>fall back on ～</b> 〜を頼りにする<br>
+・<b>on purpose</b> 意図的に
+<h4>暗記のコツ</h4>
+Good（つながる・声・災害）→ Bad（依存・比較・デマ）を3対3のテーブルで暗記。「3つずつ」構造は面接でも使い回せる。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p5">
+<summary>5. Should governments do more to protect endangered species?</summary>
+<div class="pres-body">
+<span class="cat env">Environment ｜ 2025年第3回 要約問題（biologgers）と直結</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. Every day, dozens of species disappear from our planet forever. Today I would like to discuss whether governments should do more to protect endangered species. My answer is a strong yes, and I will explain why this is not just an animal problem, but a human problem.</p>
+<p>First, we must understand that nature is a system in which everything is connected. When one species disappears, the effect spreads <u>like falling dominoes</u>. For example, if bees continue to decline, many crops cannot grow, and our food supply will be <u>directly threatened</u>. Protecting endangered species is therefore not charity — it is self-defense. <b>In the long run</b>, the cost of doing nothing will be far greater than the cost of action.</p>
+<p>Second, technology now makes protection more effective than ever. Scientists attach small electronic devices called biologgers to animals, <u>which allow researchers to gather data</u> about their heart rates, movements, and even the pollution levels of their environments. Thanks to such tools, governments can identify exactly where animals are in danger and <b>take action</b> before it is too late. However, this research needs money, and only governments can provide it <b>on a large scale</b>.</p>
+<p>Of course, some people argue that protecting the economy should <b>come first</b>, and that strict environmental rules hurt farmers and companies. <b>While it's true that</b> there is sometimes a conflict, the choice between the economy and nature is often a false one. Eco-tourism, for instance, creates jobs precisely because rare animals survive. A dead forest earns nothing forever; a living forest earns money every year.</p>
+<p>In conclusion, governments should definitely do more: stronger laws, more funding for research, and better protection of natural habitats. <u>If we act now, future generations will inherit a rich planet; if we delay, they will inherit a silent one.</u> The animals cannot speak at elections — so we must speak for them. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Is there an endangered species in Japan that you care about?</dt>
+<dd>Yes, the Japanese crested ibis, or toki. It once disappeared completely from the wild in Japan, but thanks to a government breeding program, it is now returning to Sado Island. It proves that action works when we don't give up.</dd>
+<dt>Q2. Some say attaching devices to animals stresses them. What do you think?</dt>
+<dd>That's a fair concern — stressed animals may behave differently, so the data may not be reliable. Researchers should make the devices smaller and lighter, and <b>weigh the benefits against the risks</b> for each species.</dd>
+<dt>Q3. What can ordinary people do to help?</dt>
+<dd>More than we think. We can avoid products that destroy habitats, support conservation groups, and choose eco-friendly tourism. Small choices <b>add up</b> when millions of people make them together.</dd>
+<dt>Q4. Should developing countries be asked to protect nature even if they are poor?</dt>
+<dd>Rich countries should not simply demand it — they should pay for it, because they caused much of the damage while becoming rich. International funds that reward forest protection are <b>a step in the right direction</b>.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>関係代名詞 which の継続用法＋allow</b>：<i>devices called biologgers, which allow researchers to gather data</i>「〜、それにより研究者はデータ収集できる」。<b>allow A to do</b> は無生物主語の定番。<br>
+② <b>対句（parallelism）</b>：<i>If we act now, ... a rich planet; if we delay, ... a silent one.</i> 同じ形を繰り返すと記憶にも採点者にも強く残る。<br>
+③ <b>過去分詞の後置修飾</b>：<i>devices called biologgers</i>「バイオロガーと呼ばれる装置」。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>endangered species</td><td>絶滅危惧種</td><td>protect endangered species</td></tr>
+<tr><td>habitat</td><td>生息地</td><td>natural habitats</td></tr>
+<tr><td>conservation</td><td>（自然）保護</td><td>conservation groups（過去問(12)選択肢より）</td></tr>
+<tr><td>decline</td><td>減少（する）</td><td>bees continue to decline</td></tr>
+<tr><td>inherit</td><td>受け継ぐ</td><td>inherit a rich planet</td></tr>
+<tr><td>funding</td><td>資金（提供）</td><td>funding for research</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>in the long run</b> 長期的には（エッセイ結論の定番）<br>
+・<b>take action</b> 行動を起こす<br>
+・<b>on a large scale</b> 大規模に<br>
+・<b>come first</b> 最優先である<br>
+・<b>a step in the right direction</b> 正しい方向への一歩<br>
+・<b>weigh A against B</b> AとBを比較検討する
+<h4>暗記のコツ</h4>
+「ドミノ（蜂→作物）→ バイオロガー → 経済との対立は偽物 → 動物は投票できない」。最後の一文はQ&Aでも切り札になる。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p6">
+<summary>6. Should Japan rely more on renewable energy?</summary>
+<div class="pres-body">
+<span class="cat env">Environment</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Hello, everyone. Japan imports almost ninety percent of its energy from other countries. Today I would like to discuss whether Japan should rely more on renewable energy, such as solar, wind, and geothermal power. My answer is yes — not only for the environment, but for our security and our economy.</p>
+<p>First, consider our current situation. Because Japan depends heavily on imported oil and gas, our electricity prices rise <u>whenever there is a crisis somewhere in the world</u>. Renewable energy, by contrast, is domestic: the sun and the wind cannot be stopped by international conflicts. <u>If we increased our use of renewables, we would become far less vulnerable</u> to events beyond our control. Energy independence is national security.</p>
+<p>Second, the environmental argument is clear. Japan has promised to reduce carbon <b>emissions</b> to virtually zero by 2050. <b>There is no way</b> to keep this promise while burning fossil fuels. Moreover, Japan is a volcanic country with enormous geothermal potential, and as an island nation, we are surrounded by wind. In other words, nature has already given us the resources; we simply need the will to use them.</p>
+<p>Of course, critics point out real problems. Solar panels do not work at night, wind is unpredictable, and building new systems is expensive. Some also worry that beautiful landscapes could be damaged. These concerns should not be <b>brushed aside</b>. However, battery technology is improving every year, costs have fallen dramatically over the past decade, and careful planning can protect scenery. The problems are shrinking while the benefits are growing.</p>
+<p><b>Taking everything into consideration</b>, I believe Japan should invest boldly in renewable energy. It will clean our air, stabilize our prices, create new industries, and free us from dependence on other nations. <u>What we need is not new technology but new determination.</u> The energy of the future is already shining above us and blowing around us — we just have to catch it. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Which renewable energy source is best for Japan?</dt>
+<dd>I would say geothermal power, because Japan has the world's third-largest geothermal resources, and unlike solar, it works twenty-four hours a day in all weather. Iceland already <b>lives off</b> geothermal energy — Japan could learn from its example.</dd>
+<dt>Q2. What about nuclear power? Is it a good alternative?</dt>
+<dd>That's a difficult question for Japan after 2011. Nuclear power produces no carbon emissions, but the risks and the waste problem remain unsolved. I think it may be necessary <b>for the time being</b>, but renewables should be our final goal.</dd>
+<dt>Q3. Can ordinary households contribute to this change?</dt>
+<dd>Yes. Families can install solar panels, choose electricity companies that use renewables, and simply waste less energy. Government subsidies would encourage more people to <b>take the first step</b>.</dd>
+<dt>Q4. Won't electricity become more expensive if we switch?</dt>
+<dd>In the short term, possibly. But <b>in the long run</b>, sunlight and wind are free, while fossil fuel prices keep rising. The real question is whether we pay a little more now or much more later.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>仮定法過去</b>：<i>If we increased our use of renewables, we would become far less vulnerable.</i>「もし〜すれば…になるだろう」— 現実への提案を控えめに言う型。<br>
+② <b>whenever（複合関係詞）</b>：<i>whenever there is a crisis</i>「危機があるたびに」。<br>
+③ <b>What we need is ～（強調構文）</b>：<i>What we need is not new technology but new determination.</i>「必要なのは〜だ」＋ not A but B。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>emission</td><td>排出（物）</td><td>carbon emissions（過去問(10)選択肢より）</td></tr>
+<tr><td>renewable</td><td>再生可能な</td><td>renewable energy</td></tr>
+<tr><td>vulnerable</td><td>脆弱な</td><td>vulnerable to ～</td></tr>
+<tr><td>domestic</td><td>国内の</td><td>domestic energy</td></tr>
+<tr><td>geothermal</td><td>地熱の</td><td>geothermal power</td></tr>
+<tr><td>stabilize</td><td>安定させる</td><td>stabilize prices</td></tr>
+<tr><td>subsidy</td><td>補助金</td><td>government subsidies</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>brush aside ～</b> 〜を無視する・軽くあしらう<br>
+・<b>taking everything into consideration</b> すべてを考慮すると（結論の合図）<br>
+・<b>for the time being</b> 当分の間<br>
+・<b>take the first step</b> 第一歩を踏み出す<br>
+・<b>live off ～</b> 〜に頼って生きる（アイスランドの例で再登場！）
+<h4>暗記のコツ</h4>
+「輸入90% → 安全保障 → 2050年ゼロ → 火山と風の国 → 決意だけが足りない」。数字2つ（90%・2050）が柱。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p7">
+<summary>7. Who should take responsibility for fighting climate change — individuals or governments?</summary>
+<div class="pres-body">
+<span class="cat env">Environment ｜ 2025年第2回 要約問題（野焼き規制）の対立構造を活用</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. When we talk about climate change, we often hear two opposite opinions. Some say, "Governments must solve it." Others say, "Change begins with each of us." Today I will argue that <u>both are necessary, but government action must come first</u> — and I will explain why with a simple example.</p>
+<p>Consider a farmer who burns the leftover parts of his crops, a practice called stubble burning. The smoke contains harmful chemicals that <u>travel long distances, affecting both rural and urban populations</u>. Should we blame the farmer? He is not evil; buying special equipment to remove stubble is simply too expensive for him. <u>No matter how much he cares about the environment, he cannot afford to act alone.</u> This is exactly why individual effort has limits: people cannot make green choices that they cannot afford.</p>
+<p>This is where governments must <b>step in</b>. Only governments can build charging stations, invest in clean public transportation, and support farmers with subsidies so that eco-friendly choices become affordable choices. Only governments can make laws that stop companies from polluting. <b>To put it simply</b>, individuals decide what to choose, but governments decide what choices exist.</p>
+<p>However, this does not mean we can <b>sit back and do nothing</b>. Governments respond to voters, and companies respond to customers. When millions of people choose eco-friendly products, save energy, and speak up, leaders <b>have no choice but to</b> listen. Our small actions may not cool the planet directly, but they create the political pressure that forces big actions. <u>It is the combination, not the competition, of the two that works.</u></p>
+<p>In conclusion, asking "individuals or governments?" is like asking which wing a bird needs. Governments must build the system; individuals must move within it and demand better. If both wings beat together, we can still change direction — but the window of opportunity is closing fast. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. What do you personally do for the environment?</dt>
+<dd>I carry a reusable bottle, walk to school, and try not to waste food. Honestly, these are small things, but I also talk about environmental issues with my family — influencing others may be the biggest thing an individual can do.</dd>
+<dt>Q2. Should Japan ban practices like stubble burning even if farmers suffer?</dt>
+<dd>A ban alone would be unfair. <b>While it's true that</b> the smoke harms people's health, the government should combine the ban with subsidies for equipment, so farmers are not forced to choose between the law and their living.</dd>
+<dt>Q3. Do you think young people care more about climate change than older people?</dt>
+<dd>I think young people feel more urgency because we will live with the consequences. However, many older people care deeply too. Rather than blaming each other, generations should <b>join forces</b> — experience plus energy is a powerful combination.</dd>
+<dt>Q4. Is economic growth more important than the environment?</dt>
+<dd>I believe that is a false choice. There is no economy on a dead planet. Green industries are already creating millions of jobs, so protecting the environment and growing the economy can <b>go hand in hand</b>.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>No matter how ～</b>：<i>No matter how much he cares, he cannot afford to act alone.</i>「どんなに〜でも」（譲歩の最上級パターン）。<br>
+② <b>強調構文 It is ～ that …</b>：<i>It is the combination, not the competition, that works.</i>「効果があるのはまさに〜だ」。<br>
+③ <b>分詞構文</b>：<i>The smoke travels long distances, affecting both rural and urban populations.</i>「〜しながら／その結果〜」。要約問題の言い換えに超有効。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>rural / urban</td><td>田舎の／都市の</td><td>rural and urban populations（要約問題の頻出ペア）</td></tr>
+<tr><td>affordable</td><td>手頃な価格の</td><td>affordable choices</td></tr>
+<tr><td>subsidy</td><td>補助金</td><td>support ～ with subsidies</td></tr>
+<tr><td>consequence</td><td>結果・影響</td><td>live with the consequences</td></tr>
+<tr><td>urgency</td><td>緊急性</td><td>feel more urgency</td></tr>
+<tr><td>political pressure</td><td>政治的圧力</td><td>create political pressure</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>step in</b> 介入する<br>
+・<b>sit back and do nothing</b> 何もせず傍観する<br>
+・<b>have no choice but to do</b> 〜せざるを得ない<br>
+・<b>join forces</b> 力を合わせる<br>
+・<b>go hand in hand</b> 両立する・密接に関連する<br>
+・<b>to put it simply</b> 簡単に言えば<br>
+・<b>the window of opportunity</b> 好機の窓（チャンスの残り時間）
+<h4>暗記のコツ</h4>
+「農家の野焼き」の物語で始まり「鳥の両翼」の比喩で終わる。物語→論理→比喩の3幕構成として覚える。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p8">
+<summary>8. Should Japan accept more foreign workers?</summary>
+<div class="pres-body">
+<span class="cat jp">Japan-related</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. Japan is facing a quiet crisis: our population is shrinking every year, and by 2040, the country may lack more than ten million workers. Today I would like to discuss whether Japan should accept more foreign workers. My answer is yes — and I believe we should welcome them not just as workers, but as neighbors.</p>
+<p>The economic argument is <b>straightforward</b>. Hospitals, farms, factories, and convenience stores are already struggling to find staff. Without foreign workers, many businesses would <b>go under</b>, and services in rural areas would disappear completely. Elderly care is the clearest example: Japan simply does not have enough young people to care for its aging population. <u>Unless we accept help from abroad, the system will collapse under its own weight.</u></p>
+<p>Beyond economics, diversity itself is a strength. Cities with people from different backgrounds become more <b>cosmopolitan</b> and creative. New food, new music, and new <b>perspectives</b> enrich our culture. Studies also show that diverse teams solve problems better than uniform ones, because they see issues from different angles. Japan's traditional strength has been improving ideas from abroad — accepting people is the natural next step.</p>
+<p>Of course, there are honest concerns. Some people worry about language barriers, cultural misunderstandings, or pressure on wages. These worries should not be dismissed, <u>but they are problems of preparation, not reasons for rejection</u>. If Japan provides proper language education, fair labor protection, and support for local communities, integration can succeed. Countries that planned well have already proven this; countries that ignored preparation have paid the price. <u>We should learn from both.</u></p>
+<p>In conclusion, Japan should accept more foreign workers, with careful preparation and genuine respect. A country that opens its doors with a warm heart will gain not only workers but also friends, ideas, and energy. Our future depends on the choice <u>between shrinking alone and growing together</u> — and I choose growing together. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Have you ever interacted with foreign residents in your town?</dt>
+<dd>Yes, my father is actually from overseas, so my family is multicultural. I have seen both the challenges, like paperwork and language, and the joys. It taught me that differences become small when people share daily life together.</dd>
+<dt>Q2. What is the biggest barrier for foreign workers in Japan?</dt>
+<dd>I believe it is language, followed by housing. Many landlords hesitate to rent to foreigners, which makes settling down difficult. Free Japanese classes and clear anti-discrimination rules would remove the biggest <b>stumbling blocks</b>.</dd>
+<dt>Q3. Some people say foreign workers take jobs from Japanese people. What do you think?</dt>
+<dd>The data suggests the opposite: most foreign workers fill positions that companies cannot fill at all. Japan's problem is too many empty jobs, not too few. In fact, foreign workers often help businesses survive, which protects Japanese jobs too.</dd>
+<dt>Q4. Should foreign workers be encouraged to stay permanently?</dt>
+<dd>If they wish to, yes. People who feel they belong invest in their communities, learn the language, and raise families here. Treating workers as temporary guests forever would be <b>a recipe for</b> social division.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>Unless S V</b>：<i>Unless we accept help from abroad, the system will collapse.</i>「〜しない限り」（if ... not より引き締まる）。<br>
+② <b>not A but B の対比</b>：<i>problems of preparation, not reasons for rejection</i>「拒否の理由ではなく準備の問題」。<br>
+③ <b>between A and B の名詞句対比</b>：<i>the choice between shrinking alone and growing together</i> — 動名詞を並べて対句に。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>cosmopolitan</td><td>国際色豊かな</td><td>a cosmopolitan city（過去問(13)より）</td></tr>
+<tr><td>perspective</td><td>視点</td><td>new perspectives（過去問(2)より）</td></tr>
+<tr><td>go under</td><td>倒産する</td><td>businesses would go under（過去問(15)より）</td></tr>
+<tr><td>integration</td><td>統合・融和</td><td>integration can succeed</td></tr>
+<tr><td>labor shortage</td><td>労働力不足</td><td>face a labor shortage</td></tr>
+<tr><td>dismiss</td><td>退ける</td><td>should not be dismissed</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>straightforward</b> 単純明快な<br>
+・<b>stumbling block</b> 障害物・つまずきの石<br>
+・<b>a recipe for ～</b> 〜を招くもと（a recipe for disaster 等）<br>
+・<b>open its doors</b> 門戸を開く<br>
+・<b>pay the price</b> 代償を払う
+<h4>暗記のコツ</h4>
+ミクの家族自体が multicultural — Q1は実体験で語れる最強の質問。「1000万人不足」→「介護」→「多様性は強さ」→「準備の問題」の流れ。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p9">
+<summary>9. Should more tourists be encouraged to visit rural Japan?</summary>
+<div class="pres-body">
+<span class="cat jp">Japan-related</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Hello, everyone. Last year, a record number of tourists visited Japan — but most of them saw only Tokyo, Kyoto, and Osaka. Meanwhile, in cities like Kurume, where I live, you rarely see foreign visitors at all. Today I will argue that tourists should be encouraged to visit rural Japan, because it would solve two problems <b>at the same time</b>.</p>
+<p>The first problem is overtourism. Popular cities are <b>overwhelmed</b>: crowded trains, rising prices, and residents who feel like strangers in their own neighborhoods. Kyoto's famous streets are so packed that both tourists and locals are unhappy. <u>Spreading visitors across the country would ease this pressure</u> and actually improve the experience for everyone.</p>
+<p>The second problem is rural decline. Young people leave the countryside for jobs in big cities, shops close, and towns slowly empty. Tourism could <b>breathe new life into</b> these communities. When visitors come, they stay in local inns, eat local food, and buy local crafts. One tourist's dinner becomes a farmer's income. Moreover, rural Japan offers <u>what many travelers are actually looking for</u>: hot springs, traditional festivals, beautiful rice fields, and genuine human connection — things that <u>cannot be experienced</u> in a shopping mall.</p>
+<p>Naturally, some residents worry that tourism might disturb their quiet lives, and this concern deserves respect. The goal should be sustainable tourism, not mass tourism. <b>With this in mind</b>, local governments should improve transportation access, provide multilingual information, and train local guides, so that visitors and communities both benefit. Small numbers of respectful visitors are a gift; uncontrolled crowds are a burden. <u>The difference lies in planning.</u></p>
+<p>In conclusion, encouraging tourists to explore rural Japan is <b>a win-win solution</b>: it protects famous cities from overtourism and gives struggling towns a future. Japan's true beauty is not only in its temples but in its countryside — and it is time we shared it with the world. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. What would you recommend a foreign visitor see in your area?</dt>
+<dd>I live in Kyushu, so I would recommend the hot springs and the local food culture — especially ramen and fresh vegetables from the farms. The pace of life is slower here, and visitors can experience real Japanese daily life, not a performance of it.</dd>
+<dt>Q2. Rural areas lack public transportation. How can tourists get around?</dt>
+<dd>That is the biggest obstacle. Local governments could run small shuttle buses connected to train stations, and rental bicycles work well for short distances. In the future, self-driving shuttles may <b>fill the gap</b> in areas where bus drivers are hard to find.</dd>
+<dt>Q3. Could too much tourism destroy the charm of the countryside?</dt>
+<dd>Yes, if it is not managed. That is why I support limits, such as reservation systems for popular spots. The lesson from Kyoto is clear: <b>prevention is better than cure</b>.</dd>
+<dt>Q4. How can rural towns advertise themselves to foreign tourists?</dt>
+<dd>Social media is the cheapest and most powerful tool. A single beautiful video of a festival or a rice field can <b>go viral</b> and reach millions. Towns should also work with foreign influencers who genuinely love Japan.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>関係代名詞 what</b>：<i>what many travelers are actually looking for</i>「旅行者が本当に求めているもの」。<br>
+② <b>助動詞＋受動態</b>：<i>things that cannot be experienced in a shopping mall</i>「体験できないもの」。<br>
+③ <b>動名詞主語</b>：<i>Spreading visitors across the country would ease this pressure.</i>「〜を分散させることは…」— エッセイで多用できる。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>overtourism</td><td>観光公害</td><td>suffer from overtourism</td></tr>
+<tr><td>overwhelmed</td><td>圧倒された</td><td>cities are overwhelmed</td></tr>
+<tr><td>sustainable</td><td>持続可能な</td><td>sustainable tourism</td></tr>
+<tr><td>rural decline</td><td>地方の衰退</td><td>reverse rural decline</td></tr>
+<tr><td>multilingual</td><td>多言語の</td><td>multilingual information</td></tr>
+<tr><td>burden</td><td>負担</td><td>become a burden</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>breathe new life into ～</b> 〜に新しい命を吹き込む<br>
+・<b>a win-win solution</b> 双方に利益のある解決策<br>
+・<b>with this in mind</b> これを念頭に置いて<br>
+・<b>fill the gap</b> 隙間を埋める<br>
+・<b>prevention is better than cure</b> 予防は治療に勝る（ことわざ）<br>
+・<b>go viral</b>（ネットで）拡散する
+<h4>暗記のコツ</h4>
+「二つの問題（京都の混雑×地方の衰退）を一本の矢で」— win-win 構造。久留米の実体験を Q1 で必ず使う。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p10">
+<summary>10. Should high school students have part-time jobs?</summary>
+<div class="pres-body">
+<span class="cat we">Work &amp; Education</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. In many countries, working after school is completely normal for teenagers. In Japan, however, many schools ban part-time jobs. Today I would like to discuss whether high school students should have part-time jobs. My answer is yes — with sensible limits — and I will speak partly from my own experience.</p>
+<p>First, a part-time job teaches lessons <u>that no textbook can teach</u>. When students <b>take on</b> real responsibilities, they learn how to greet customers, manage time, and recover from mistakes. They discover that money does not <u>appear by magic</u>; it is earned through effort. <u>Having earned their own money, students think twice before wasting it.</u> This financial awareness is a skill they will use for the rest of their lives.</p>
+<p>Second, work builds confidence and maturity. At school, students are always the ones being taught. At work, they become useful members of a team whom customers and coworkers rely on. Many students who feel invisible in the classroom <b>come into their own</b> at work, and that confidence often flows back into their studies.</p>
+<p>Of course, opponents have a fair point: a student's main job is studying. If work <b>eats up</b> too many hours, grades suffer and sleep disappears. Some employers also treat young workers poorly, giving them late shifts or unfair wages. <u>This is why limits matter</u>: no more than ten hours a week, no late nights, and parents and schools should <b>keep an eye on</b> the balance. The goal is experience, not exhaustion.</p>
+<p><b>On balance</b>, I believe the benefits clearly outweigh the risks. A generation that understands the value of work and money will make wiser choices as adults. School teaches us knowledge, but a part-time job teaches us life — and students deserve the chance to learn both. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Do you have a part-time job? What have you learned from it?</dt>
+<dd>Yes, I work part-time while going to school. The biggest lesson is time management — I have to plan my studying around my shifts, so I waste much less time than before. I have also become more comfortable talking with adults.</dd>
+<dt>Q2. Doesn't working hurt students' grades?</dt>
+<dd>It can, if the hours are too long. In my case, having less free time actually made me more focused. The research I have read suggests moderate work of about ten hours a week does little harm — the danger starts when work <b>takes over</b>.</dd>
+<dt>Q3. Why do you think many Japanese schools ban part-time jobs?</dt>
+<dd>I think schools want to protect study time and avoid trouble, which I understand. However, a complete ban treats all students the same. I believe permission with conditions, like keeping a certain grade level, would respect both education and independence.</dd>
+<dt>Q4. What kind of job is best for a high school student?</dt>
+<dd>A job with customer service, like a shop or restaurant, because communication skills transfer to everything — even English interviews like this one! Jobs connected to a student's dream, such as working at a bakery if you want to become a chef, are even better.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>完了分詞構文</b>：<i>Having earned their own money, students think twice.</i>「自分で稼いだからこそ〜」（理由・時の前置き）。<br>
+② <b>関係代名詞 whom</b>：<i>members of a team whom customers rely on</i>「客が頼りにするチームの一員」。<br>
+③ <b>This is why S V</b>：<i>This is why limits matter.</i>「だからこそ〜が重要だ」（前文とのつなぎ）。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>take on</td><td>（責任・仕事を）引き受ける</td><td>take on responsibilities（過去問(16)そのもの！）</td></tr>
+<tr><td>maturity</td><td>成熟</td><td>build maturity（セッション1の単語！）</td></tr>
+<tr><td>financial awareness</td><td>金銭感覚</td><td>develop financial awareness</td></tr>
+<tr><td>outweigh</td><td>〜を上回る</td><td>benefits outweigh the risks（エッセイ最重要動詞）</td></tr>
+<tr><td>exhaustion</td><td>疲労困憊</td><td>experience, not exhaustion</td></tr>
+<tr><td>moderate</td><td>適度な</td><td>moderate work</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>come into one's own</b> 本領を発揮する<br>
+・<b>keep an eye on ～</b> 〜に気を配る<br>
+・<b>eat up ～</b>（時間を）食い尽くす（再登場— 定着させる！）<br>
+・<b>on balance</b> 総合的に見れば<br>
+・<b>think twice</b> よく考え直す<br>
+・<b>take over</b> 支配する・乗っ取る
+<h4>暗記のコツ</h4>
+ミク自身がバイトをしている — これは「実体験で語れる」トピック。Q1の答えを自分の言葉で少しアレンジしてもOK。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p11">
+<summary>11. Will remote work become the norm in Japan?</summary>
+<div class="pres-body">
+<span class="cat we">Work &amp; Education</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Hello, everyone. Five years ago, working from home was rare in Japan. Then the pandemic changed everything overnight. Today I would like to discuss whether remote work will become the norm in Japan. My prediction is that it will — but in a hybrid form, and more slowly than in other countries.</p>
+<p>Let me begin with the forces pushing remote work forward. For workers, the appeal is obvious: no crowded trains, more family time, and the freedom to live anywhere. A worker in Tokyo <u>spends, on average, more than one hour commuting each way</u> — time that could be spent on sleep, hobbies, or children. For companies, remote work means lower office costs and access to talented people across the whole country, including parents and people with disabilities <u>who find commuting difficult</u>. It could even help rural towns, as workers move to the countryside <u>in search of</u> cheaper, greener lives.</p>
+<p>However, powerful forces are pushing back. Japanese business culture values face-to-face communication, and many managers still believe that <u>seeing employees work</u> equals productivity. Some workers, too, struggle at home: young employees cannot learn from seniors easily, and the line between work and life <b>blurs</b>, causing some people to <b>burn out</b>. Others feel isolated and miss the energy of the office. <b>There is no denying that</b> something human is lost through a screen.</p>
+<p>So, which force will win? I believe the answer is neither — the future is hybrid. Companies that demand five days in the office will lose talented workers to companies that offer flexibility. <u>Once people have tasted freedom, they rarely give it back.</u> At the same time, completely remote companies will bring people together regularly, because trust is still built in person.</p>
+<p>In conclusion, remote work will not replace the office, but it will end the age of the office as a prison. The norm of the future is choice — and in a country facing a serious labor shortage, giving workers choice is not generosity; it is survival. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Would you like to work remotely in the future?</dt>
+<dd>I would prefer a hybrid style. I actually experience a kind of remote learning already — my English lessons are online, and they work very well. But I also know I concentrate differently when someone is physically beside me, so I want both.</dd>
+<dt>Q2. How can young workers learn skills if they rarely meet seniors?</dt>
+<dd>Companies need to design learning on purpose. For example, new employees could come to the office more often during their first year, with regular mentoring sessions. What used to happen naturally must now be planned — but planned learning can actually be fairer.</dd>
+<dt>Q3. Does remote work help or hurt the countryside?</dt>
+<dd>It could be the countryside's greatest chance in decades. If people can keep a Tokyo salary while living in Kyushu, rural towns gain families, children, and tax income. Towns that prepare good internet and coworking spaces will <b>reap the rewards</b>.</dd>
+<dt>Q4. How can workers avoid burning out at home?</dt>
+<dd>The key is drawing clear lines: a fixed finishing time, a separate work space, and the courage to turn off notifications after hours. Companies should also respect the right to disconnect, as some European countries already do by law.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>Once S V</b>：<i>Once people have tasted freedom, they rarely give it back.</i>「いったん〜すると」。<br>
+② <b>動名詞主語＋equal</b>：<i>seeing employees work equals productivity</i>「社員が働くのを見ること＝生産性（という思い込み）」。知覚動詞 see＋O＋動詞原形も同時に確認。<br>
+③ <b>not A; it is B</b>：<i>giving workers choice is not generosity; it is survival.</i> セミコロンで対比を鋭く。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>burn out</td><td>燃え尽きる</td><td>cause people to burn out（過去問(18)選択肢より）</td></tr>
+<tr><td>the norm</td><td>標準・当たり前</td><td>become the norm</td></tr>
+<tr><td>hybrid</td><td>混合型の</td><td>a hybrid form</td></tr>
+<tr><td>productivity</td><td>生産性</td><td>equal productivity</td></tr>
+<tr><td>isolated</td><td>孤立した</td><td>feel isolated</td></tr>
+<tr><td>blur</td><td>ぼやける</td><td>the line blurs</td></tr>
+<tr><td>commute</td><td>通勤（する）</td><td>spend an hour commuting</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>push back</b> 抵抗する<br>
+・<b>in search of ～</b> 〜を求めて<br>
+・<b>reap the rewards</b> 恩恵を刈り取る・報われる<br>
+・<b>the right to disconnect</b> つながらない権利（時事語）<br>
+・<b>overnight</b> 一夜にして
+<h4>暗記のコツ</h4>
+「押す力（通勤・コスト・地方）VS 押し返す力（対面文化・孤立）→ 勝者はハイブリッド」。綱引きの絵をイメージ。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p12">
+<summary>12. Should university education be free for everyone?</summary>
+<div class="pres-body">
+<span class="cat we">Work &amp; Education</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. In Japan, four years at a private university can cost more than four million yen. For many families, this is the largest expense of their lives. Today I would like to discuss whether university education should be free for everyone. My answer may surprise you: I believe it should be free — but not for everyone in the same way.</p>
+<p>First, let us look at the case for free education. Talent is <u>distributed equally across society, but opportunity is not</u>. Right now, bright students from poor families give up on university, take out heavy student loans, or exhaust themselves with part-time jobs, while their studies suffer. <u>If education were free, universities would select students by ability alone, not by their parents' income.</u> Society as a whole would benefit, because a country's most valuable resource is not oil or gold — it is educated minds. Doctors, engineers, and teachers <b>pay back</b> the cost of their education many times over through taxes and service.</p>
+<p>However, completely free education for everyone has serious weaknesses. It is enormously expensive, and the money <u>would partly support wealthy families who do not need help</u>. Worse, when something costs nothing, some people stop valuing it: in some countries with free universities, many students <b>drop out</b> or stay enrolled for years without graduating. A system with no responsibility invites waste.</p>
+<p>Therefore, I support a middle path: free education based on need and effort. Students from low-income families should study completely free. Others should pay fees connected to their family's income, and loans should be repaid <u>only after graduates start earning a good salary</u>. Scholarships should reward both academic results and improvement, so that effort always <b>pays off</b>.</p>
+<p>In conclusion, university education should be free for those who need it and affordable for everyone else. No talented student should ever be stopped by a price tag — because when we waste talent, the whole nation pays the bill. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Is university necessary for success in life?</dt>
+<dd>Not for everyone. Some successful people build careers through technical skills or business. However, university opens doors that stay closed otherwise, especially in fields like medicine and research. The problem is when the price, not the person, makes the decision.</dd>
+<dt>Q2. Japan has fewer children now. How does this affect universities?</dt>
+<dd>Many universities are already struggling to find students, and some will close. This could actually be a chance: with fewer students, the same national budget could support each student more generously.</dd>
+<dt>Q3. Would free education make students lazy?</dt>
+<dd>Only if it comes without conditions. That is why I support requirements, such as maintaining grades. Free should mean "free from money worries," not "free from responsibility."</dd>
+<dt>Q4. What would you study at university, and why?</dt>
+<dd>I want to study something that connects languages and people — perhaps international communication. Learning English has already shown me how a language can open a completely new world, and I want to <b>build on</b> that experience.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>仮定法過去（政策提案）</b>：<i>If education were free, universities would select students by ability alone.</i> were を使う仮定法はフォーマル度が高い。<br>
+② <b>only after ～</b>：<i>repaid only after graduates start earning</i>「〜して初めて返済」。<br>
+③ <b>対比の受動態</b>：<i>Talent is distributed equally, but opportunity is not.</i> 後半の省略（is not [distributed equally]）がスマート。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>scholarship</td><td>奨学金</td><td>scholarships reward effort（過去問(4)の文脈！）</td></tr>
+<tr><td>enroll</td><td>入学する</td><td>stay enrolled（過去問(4)2025-3より）</td></tr>
+<tr><td>drop out</td><td>中退する</td><td>many students drop out（過去問(17)選択肢より）</td></tr>
+<tr><td>student loan</td><td>学生ローン</td><td>take out student loans</td></tr>
+<tr><td>tuition</td><td>授業料</td><td>tuition fees</td></tr>
+<tr><td>distribute</td><td>分配する</td><td>distributed equally</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>pay off</b>（努力が）実を結ぶ<br>
+・<b>pay back</b> 返済する・恩返しする<br>
+・<b>give up on ～</b> 〜を諦める<br>
+・<b>build on ～</b> 〜を土台にする<br>
+・<b>a price tag</b> 値札（比喩として）
+<h4>暗記のコツ</h4>
+「賛成論 → 弱点 → 中間の道」の3段構成は、どんな Yes/No トピックにも転用できる万能テンプレート。この型ごと暗記！
+</div>
+</div>
+</details>
+
+<details class="pres" id="p13">
+<summary>13. Should schools do more to protect students' mental health?</summary>
+<div class="pres-body">
+<span class="cat hl">Health &amp; Lifestyle</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. Today I want to talk about something we can't see on any test score: the mental health of students. My question is whether schools should do more to protect it, and my answer is a clear yes — because right now, students are struggling silently.</p>
+<p>Let me describe the reality. Japanese students face pressure from every direction: entrance exams, club activities, friendships, and social media that never sleeps. Surveys show that <b>anxiety</b> among teenagers has been rising for years, and sadly, Japan has one of the highest rates of youth suicide among developed countries. <u>Behind every statistic is a real student sitting in a real classroom</u> — perhaps right next to us. <b>There is no denying that</b> this is an emergency, yet mental health is barely discussed at school.</p>
+<p>So what should schools do? First, education: students should learn about stress and emotions <u>just as they learn about physical health</u>. If we know the warning signs — sleeplessness, loss of appetite, losing interest in hobbies — we can help ourselves and notice when a friend is <b>in trouble</b>. Second, access: every school needs counselors <u>who are actually available</u>, not visiting once a month. Talking to a professional should feel as normal as visiting the school nurse for a fever. Third, culture: teachers should praise effort and improvement, not only results, so that one failed test does not feel like <u>the end of the world</u>.</p>
+<p>Some people argue that mental health is a family matter, not the school's job. <b>While it's true that</b> families play the biggest role, students spend most of their waking hours at school. Problems often appear first in the classroom — <u>where teachers, if trained, can catch them early</u>. Schools cannot replace families, but they can be the safety net.</p>
+<p>In conclusion, schools should treat mental health with the same seriousness as physical health: teach it, staff it, and talk about it openly. A healthy mind is not a luxury — it is the foundation <u>on which all learning is built</u>. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. How do you manage stress during exam preparation?</dt>
+<dd>I try to exercise — I go to a gym with my sister — and I break big goals into small daily wins, which keeps me motivated. Preparing for this exam, for example, I follow a study dashboard, so I can see my progress instead of my worries.</dd>
+<dt>Q2. Why do you think students hesitate to ask for help?</dt>
+<dd>Mainly fear of being judged. In Japan, there is still a feeling that struggling means weakness, so students <b>put on a brave face</b>. If famous athletes and artists speak openly about mental health, young people will follow — and this is already starting to happen.</dd>
+<dt>Q3. Does social media make teenagers' mental health worse?</dt>
+<dd>It can. Constant comparison with others' perfect posts damages self-esteem, and cyberbullying follows students home. However, online communities can also support people who feel alone, so the effect <b>depends on</b> how we use it.</dd>
+<dt>Q4. What is one simple change schools could make tomorrow?</dt>
+<dd>Start homeroom with a one-minute check-in where students rate their condition privately. It costs nothing, but it tells every student, "Your feelings matter here" — and it gives teachers an early warning system.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>倒置による強調</b>：<i>Behind every statistic is a real student.</i>「統計の背後には生身の生徒がいる」（場所句＋V＋S）。<br>
+② <b>前置詞＋関係代名詞</b>：<i>the foundation on which all learning is built</i>「その上にすべての学びが築かれる土台」。<br>
+③ <b>just as S V</b>：<i>just as they learn about physical health</i>「〜と全く同じように」。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>anxiety</td><td>不安</td><td>rising anxiety（3回目の登場— もう完璧に！）</td></tr>
+<tr><td>counselor</td><td>カウンセラー</td><td>school counselors</td></tr>
+<tr><td>warning signs</td><td>危険信号</td><td>know the warning signs</td></tr>
+<tr><td>self-esteem</td><td>自尊心</td><td>damage self-esteem</td></tr>
+<tr><td>safety net</td><td>安全網</td><td>be the safety net</td></tr>
+<tr><td>statistics</td><td>統計</td><td>behind every statistic</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>put on a brave face</b> 平気なふりをする<br>
+・<b>in trouble</b> 困っている<br>
+・<b>the end of the world</b> この世の終わり（not the end of the world で「大したことない」）<br>
+・<b>depend on ～</b> 〜次第である<br>
+・<b>check-in</b> 状態確認（名詞）
+<h4>暗記のコツ</h4>
+「教育・アクセス・文化」の3本柱（Three pillars: Educate, Staff, Talk）。Q1 はミク自身のジム通いとダッシュボードの話 — 本当の話として堂々と。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p14">
+<summary>14. Which is better: living in a city or living in the countryside?</summary>
+<div class="pres-body">
+<span class="cat hl">Health &amp; Lifestyle ｜ 2025年第2回 エッセイ（都市の公共交通）の語彙を活用</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Hello, everyone. City or countryside — it is one of the oldest debates in the world, and today it is my turn to answer it. Since I have lived in a smaller city and visited big ones, I will compare them honestly. My conclusion is that the countryside is better for a healthy life, though the city wins in other ways.</p>
+<p>Let me be fair to cities first. <b>When it comes to</b> convenience, cities are unbeatable. Trains come every three minutes, hospitals and universities are close, and there are endless opportunities for jobs and entertainment. Everything you want is <u>within walking distance or a short ride away</u>. For ambitious young people, the city is <u>where careers are made</u>.</p>
+<p>However, this convenience <b>comes at a price</b> — literally and physically. Rent in central Tokyo can be three times higher than in a regional city, so people accept long commutes on <u>trains so crowded that station staff once had to push passengers inside</u>. Noise, pollution, and competition create constant stress. <u>It is no wonder that</u> many city dwellers report feeling tired all the time. In contrast, the countryside offers <b>spacious</b> homes, clean air, fresh local food, and a slower rhythm. Nature itself is medicine: research shows that <u>simply spending time in forests lowers stress hormones</u>. Neighbors know each other, and children grow up with room to play.</p>
+<p>Of course, rural life has real weaknesses — fewer jobs, fewer hospitals, and weak public transportation, especially for young people and the elderly. But here is the interesting part: technology is closing the gap. Remote work brings city salaries to country towns, online shopping delivers anything anywhere, and online lessons connect students to teachers <u>across the world</u> — my own English lessons are proof.</p>
+<p>In conclusion, the city offers opportunity, but the countryside offers health, space, and community — and thanks to technology, we no longer have to choose completely. The wisest life may be one with rural roots and global connections. That is exactly the life I hope to build. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Where would you like to live in the future?</dt>
+<dd>I would like to keep my base in Kyushu but work with people around the world online. My English lessons already connect me to a teacher overseas, so I know this lifestyle is possible. I want local comfort and global opportunity together.</dd>
+<dt>Q2. Should city people be required to use public transportation more?</dt>
+<dd>Requiring it sounds too strong, but encouraging it makes sense — better services, cheaper passes, and car-free zones in city centers. In cities, trains are faster and cleaner than cars anyway, so good design can persuade people <u>without forcing them</u>.</dd>
+<dt>Q3. Why are young people leaving the countryside?</dt>
+<dd>Mainly for universities and jobs — the two things rural areas lack most. To bring them back, towns need remote-work infrastructure and support for young families. Some towns already offer cheap houses to newcomers, and it is working.</dd>
+<dt>Q4. Is country life boring for teenagers?</dt>
+<dd>Sometimes, honestly! There are fewer shops and events. But boredom has a hidden benefit: it pushes us to create our own fun and focus on goals. Some of my best studying happens because there is nothing else to do!</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>so ～ that …</b>：<i>trains so crowded that station staff had to push passengers inside</i>「あまりに混んでいて〜するほど」。<br>
+② <b>It is no wonder that ～</b>：「〜も当然だ」。<br>
+③ <b>関係副詞 where</b>：<i>the city is where careers are made</i>「都市こそキャリアが作られる場所」。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>spacious</td><td>広々とした</td><td>spacious homes（過去問(3)より）</td></tr>
+<tr><td>city dweller</td><td>都市住民</td><td>many city dwellers</td></tr>
+<tr><td>infrastructure</td><td>インフラ</td><td>remote-work infrastructure</td></tr>
+<tr><td>regional</td><td>地方の</td><td>a regional city</td></tr>
+<tr><td>ambitious</td><td>野心的な</td><td>ambitious young people</td></tr>
+<tr><td>rhythm</td><td>リズム・ペース</td><td>a slower rhythm</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>come at a price</b> 代償を伴う<br>
+・<b>within walking distance</b> 徒歩圏内に<br>
+・<b>close the gap</b> 差を縮める<br>
+・<b>when it comes to ～</b> 〜のこととなると（再登場）<br>
+・<b>literally and physically</b> 文字通りにも身体的にも（言葉遊び）
+<h4>暗記のコツ</h4>
+「都市＝機会 / 田舎＝健康 / テクノロジー＝橋」。最後の「rural roots and global connections」はミクの人生プランそのもの — 感情を込めて。
+</div>
+</div>
+</details>
+
+<details class="pres" id="p15">
+<summary>15. Are traditional customs worth preserving in modern Japan?</summary>
+<div class="pres-body">
+<span class="cat cv">Culture &amp; Values</span>
+<h3>🎙 Script (約350語 ≒ 3分)</h3>
+<div class="script">
+<p>Good afternoon. Japan is a country where robots serve coffee across the street from shrines built a thousand years ago. Today I would like to discuss whether traditional customs are worth preserving in modern Japan. My answer is yes — but we must preserve them as living things, not museum pieces.</p>
+<p>First, why do traditions matter? They are our identity. Festivals, tea ceremony, calligraphy, and seasonal customs <u>connect us to the generations who came before us</u>. When I visit my ancestors' graves at Obon, I feel part of a story <u>much larger than myself</u>. In a globalized world where every city has the same shops and the same apps, traditions tell us <u>who we are and where we come from</u>. <b>Without them, we would be culturally homeless.</b></p>
+<p>Traditions are also treasures in a practical sense. Millions of tourists visit Japan precisely because our culture is unique. Traditional crafts support local economies, and values learned through customs — respect, patience, gratitude — <b>carry over into</b> daily life. Even modern Japanese strengths, like attention to detail, <u>have their roots in</u> traditional training.</p>
+<p>However, we must be honest: some traditions struggle to survive, and not every custom deserves to. Some are expensive, some exclude women or young people, and some simply no longer fit modern life. Craftsmen are aging <u>without successors</u>, and young people find some ceremonies boring because <u>they were never taught the meaning behind them</u>. <b>Herein lies the key</b>: traditions survive when they adapt. The festivals that welcome newcomers and use social media are <b>flourishing</b>; the ones that refuse all change are dying. Tradition, after all, was innovation once.</p>
+<p>In conclusion, traditional customs are absolutely worth preserving — by keeping their spirit while updating their form. We should teach the meaning, not just the manners; invite everyone, not just insiders. If each generation adds one new page instead of just protecting old ones, Japanese culture will never end. It will simply continue — as it always has. Thank you very much.</p>
+</div>
+<h3>💬 Interviewer Q&amp;A</h3>
+<dl class="qa">
+<dt>Q1. Which Japanese tradition is most important to you personally?</dt>
+<dd>Obon. My family visits our ancestors' graves together, and my grandmother tells stories about relatives I never met. It taught me that family means more than the people alive today — it is a chain, and I am one link.</dd>
+<dt>Q2. Should schools spend more time teaching traditional culture?</dt>
+<dd>Yes, but through experience, not textbooks. One real tea ceremony teaches more than ten pages about it. If students feel the atmosphere — the silence, the respect — the interest follows naturally.</dd>
+<dt>Q3. Is globalization a threat to Japanese culture?</dt>
+<dd>It is both a threat and an opportunity. Yes, some customs fade as lifestyles change. But globalization also gave Japanese culture its biggest audience in history — anime fans overseas now study calligraphy and visit shrines. Culture that travels, survives.</dd>
+<dt>Q4. If a tradition excludes some people, should it change or be protected as it is?</dt>
+<dd>I believe it should change. The heart of a tradition is its meaning, not its rules. If opening a festival to women or foreigners keeps it alive for another hundred years, that change honors the tradition more than extinction would.</dd>
+</dl>
+<h3>📚 スタディガイド（日本語）</h3>
+<div class="guide">
+<h4>文法ポイント</h4>
+① <b>仮定法＋without</b>：<i>Without them, we would be culturally homeless.</i>「それらがなければ〜だろう」。<br>
+② <b>関係副詞 where（抽象的な場所）</b>：<i>a globalized world where every city has the same shops</i>。<br>
+③ <b>命令形の対句</b>：<i>teach the meaning, not just the manners; invite everyone, not just insiders.</i> スピーチの結論を音楽的に。
+<h4>重要語彙</h4>
+<table>
+<tr><th>英語</th><th>日本語</th><th>コロケーション</th></tr>
+<tr><td>preserve</td><td>保存する・守る</td><td>preserve traditions</td></tr>
+<tr><td>flourish</td><td>栄える</td><td>festivals are flourishing（過去問(11)より）</td></tr>
+<tr><td>successor</td><td>後継者</td><td>without successors（過去問(4)選択肢より）</td></tr>
+<tr><td>ancestor</td><td>先祖</td><td>ancestors' graves（cemetery とセットで）</td></tr>
+<tr><td>gratitude</td><td>感謝</td><td>respect, patience, gratitude</td></tr>
+<tr><td>adapt</td><td>適応する</td><td>traditions survive when they adapt</td></tr>
+</table>
+<h4>イディオム</h4>
+・<b>carry over into ～</b> 〜に持ち越される・波及する<br>
+・<b>have one's roots in ～</b> 〜にルーツがある<br>
+・<b>herein lies the key</b> ここにカギがある（フォーマルな倒置）<br>
+・<b>museum pieces</b> 博物館の陳列品（＝生きていないもの）<br>
+・<b>after all</b> 結局のところ・そもそも
+<h4>暗記のコツ</h4>
+セッション1で習った cemetery / お盆の話がQ1でそのまま使える！「伝統も昔は革新だった」(Tradition was innovation once) は最強の一文。
+</div>
+</div>
+</details>
+
+<div class="card">
+  <h2>✅ カバレッジ・マップ — この15本で身につくもの</h2>
+  <div style="font-size:.88rem;">
+  <h3>文法パターン（30+）</h3>
+  <p class="muted">譲歩構文 (While it's true that / No matter how / Unless)・仮定法過去 (If S were / Without ～, would)・強調構文 (It is ~ that / What we need is)・The 比較級 the 比較級・関係詞全種 (which非制限 / what / whom / where / 前置詞+which)・分詞構文（現在・完了）・受動態（伝聞 It is said that / 助動詞+受動）・間接疑問文・倒置 (Behind every statistic is...)・so ~ that・find it + 形 + to do・動名詞主語・once / whenever / every time</p>
+  <h3>イディオム・表現（70+）</h3>
+  <p class="muted">a double-edged sword・keep pace with・there's no denying・weigh the pros and cons・when it comes to・rule out・take on・eat up・burn out・go under・live off・add up・drop out・in the long run・come at the expense of・go hand in hand・a win-win solution・breathe new life into・step in・pay off・outweigh …ほか各スピーチ3〜6個</p>
+  <h3>語彙（120+ 語）</h3>
+  <p class="muted">過去問頻出語を全スピーチに織り込み済み: obsolete / infringe / fabricate / emission / collision / perspective / cosmopolitan / spacious / flourish / successor / anxiety / maturity / conservation / autonomy / enroll / scholarship / sustainable / vulnerable / inevitable / premature など</p>
+  <h3>おすすめ学習順（週2本 × 7.5週間 = 試験1週間前に完走）</h3>
+  <p class="muted">① AI教育（着手済み）→ ⑩ バイト（実体験）→ ⑬ メンタルヘルス → ④ SNS → ② 広告 → ⑭ 都会vs田舎 → ⑨ 地方観光 → ⑧ 外国人労働者 → ⑤ 絶滅危惧種 → ⑦ 気候変動 → ⑥ 再エネ → ③ 自動運転 → ⑪ リモートワーク → ⑫ 大学無償化 → ⑮ 伝統。<br>易→難、実体験→抽象の順。同じイディオムが別のスピーチで再登場するように設計してあるので、順番に進むほど暗記が楽になります。</p>
+  </div>
+</div>
+
+<!-- END -->
+
+</div>
+</body>
+</html>
