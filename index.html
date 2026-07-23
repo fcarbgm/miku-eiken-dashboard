@@ -63,6 +63,13 @@
   .backup textarea{width:100%; height:70px; font-size:.7rem; border:1px solid var(--line); border-radius:8px; padding:6px; margin-top:8px;}
   .hint{font-size:.72rem; color:var(--sub); margin-top:6px;}
   .total-row{font-weight:700; background:#fafbff;}
+  details.sess{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:0 18px; margin-bottom:12px; box-shadow:0 1px 4px rgba(30,35,64,.06);}
+  details.sess summary{cursor:pointer; padding:14px 0; font-weight:700; color:var(--indigo-d); font-size:.95rem; list-style-position:inside;}
+  details.sess .sess-body{padding:0 2px 16px; font-size:.9rem; line-height:1.65;}
+  details.sess .sess-body h4{color:var(--sakura); font-size:.85rem; margin:14px 0 4px; text-transform:uppercase; letter-spacing:.5px;}
+  details.sess .sess-body h4:first-child{margin-top:0;}
+  details.sess .sess-body b{color:var(--indigo-d);}
+  details.sess .sess-body .goal{background:linear-gradient(120deg,#eef0fb,#fdeef4); border-radius:10px; padding:12px 14px; margin-top:14px; font-weight:600; color:var(--indigo-d);}
 </style>
 </head>
 <body>
@@ -161,6 +168,10 @@
     <div class="hint">Sections: 語彙 Vocabulary /18 · 長文 Reading /13 · 要約 Summary /16 · 英作文 Essay /16 · リスニング Listening /29. Leave blank until taken.</div>
   </div>
 
+  <!-- SESSION EVALUATIONS -->
+  <h3 class="section-title">🌟 Session evaluations <span class="muted">(read this after every lesson, Miku!)</span></h3>
+  <div id="sessionList"></div>
+
   <!-- VOCABULARY LIST -->
   <h3 class="section-title">🗣 Vocabulary list <span class="muted">(from sessions · click any cell to edit · saves automatically)</span></h3>
   <div class="card" style="overflow-x:auto;">
@@ -253,6 +264,18 @@ const DEFAULTS = {
     {w:"obvious", ja:"明らかな", ex:"There are obvious differences in everything.", st:"OB-vi-ous", no:"7/22: good"},
     {w:"disobey", ja:"逆らう", ex:"Younger children disobey their parents more than older children.", st:"dis-o-BEY", no:"7/22: dis + obey (従う)"},
     {w:"eldest", ja:"最年長の", ex:"Eldest siblings differed from others in terms of responsibility.", st:"EL-dest", no:"7/22: good after 3×"},
+  ],
+  sessions:[
+    {date:"2026-07-22", title:"Session 1 — Kickoff & the Birth Order cold reading", html:`
+<h4>✨ What you did brilliantly</h4>
+Miku, let's start with the truth: Frank teaches many students, and he said it out loud tonight — <b>your pronunciation is the best of all of them</b>. That was not a compliment to be nice. It was an observation, and here is the evidence. You corrected <b>"eldest"</b> and <b>"obvious"</b> yourself, before anyone helped you — that is called self-monitoring, and it is the #1 skill of successful language learners. You built an entire original sentence out loud: <i>"We watch the weather forecast to guess what the future weather will be."</i> Nobody gave you that sentence. You made it. And when you had a question, you asked it <b>in English</b> — "Should I... don't read the script?" That is courage. On your very first try, you also read a real 準1級 passage from start to finish in <b>4 minutes 17 seconds</b>. Most students freeze on page one. You finished.
+<h4>🎯 The gold: your three biggest opportunities</h4>
+<b>1. The /bl/ cluster — "siblings."</b> You fought this word about 25 times tonight. Listen carefully: that is not a weakness, that is <b>persistence</b> — you never quit. The problem is one tiny extra sound: シブリングス has a vowel between b and l that English doesn't have. <b>2. Weak first syllables — "genetics."</b> The quiet "ge-" kept disappearing (→ "netics"). English hides its unstressed syllables, but the examiner is listening for them. <b>3. L vs R — "older" vs "order."</b> These are two different words in English, and tonight they were twins in your mouth. Bonus: <b>"extremely"</b> — it wanted to become "externally." It won't win for long.
+<h4>🛠 Your game plan this week (10 minutes a day)</h4>
+<b>Backchaining</b> for siblings: say it backwards in pieces — "lings" → "blings" → "siblings." Three times slow, three times fast, every day. <b>Whisper-start</b> for genetics: whisper "ge" then punch "NE": ge-NE-tics ×5. <b>Minimal pairs, 2 minutes:</b> older/order, light/right, collect/correct — record yourself once at the start of the week and once at the end. You will HEAR the difference, just like the before/after speech videos. And one grammar gift: we <b>give</b> a presentation, <b>take</b> a test, <b>make</b> a mistake — say "give a presentation" ten times so "When I presentation" never visits again.
+<h4>🚀 Why this matters</h4>
+Every one of these fixes shows up on test day. Clear /bl/ gives you "problem," "public," "establish" — words in almost every 準1級 reading. Clear -ed endings and first syllables are exactly what the speaking examiner grades. And reading the <i>title</i> first to predict the meaning — like Frank showed you — is the secret weapon for the summary question.
+<div class="goal">74 days, Miku. Nobody in the family has passed 準1級 at 16 — you are on schedule to be the first. Your ear is already excellent; now we train the mouth to catch up. Next mission: your speech — "Should AI be used in education?" Make the "before" video on day one. Future Miku wants to see how far you came. 🌸</div>`},
   ],
 };
 
@@ -389,6 +412,14 @@ function render(){
     } else pill = `<span class="pill todo">–</span>`;
     statusCells[m].innerHTML = pill;
   }
+
+  // session evaluations (newest first; latest open)
+  const sl = document.getElementById("sessionList");
+  const sess = [...(D.sessions||[])].sort((a,b)=> b.date.localeCompare(a.date));
+  sl.innerHTML = sess.map((s,i)=>`<details class="sess"${i===0?" open":""}>
+    <summary>${s.date.replaceAll("-","/")} · ${s.title}</summary>
+    <div class="sess-body">${s.html}</div>
+  </details>`).join("") || `<div class="card muted">Evaluations will appear here after each session.</div>`;
 
   // vocabulary list
   const vb = document.getElementById("vocabBody");
