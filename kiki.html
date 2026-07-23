@@ -6,8 +6,8 @@
 <title>キキ先生 — Miku's Voice Tutor 🐈‍⬛</title>
 <script src="https://js.puter.com/v2/"></script>
 <style>
-  :root{ --sky:#aee1f9; --sky2:#7ec8ec; --cream:#faf6ea; --forest:#4a7c59; --forest-d:#2f5d43;
-         --sun:#f2c14e; --ink:#3b3a30; --cat:#33322e; --line:#e3dcc8; --card:#fffdf6; }
+  :root{ --sky:#aee1f9; --cream:#faf6ea; --forest:#4a7c59; --forest-d:#2f5d43;
+         --sun:#f2c14e; --ink:#3b3a30; --line:#e3dcc8; --card:#fffdf6; --red:#e35b5b; }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{font-family:"Hiragino Maru Gothic ProN","Segoe UI","Yu Gothic",sans-serif; color:var(--ink);
        background:linear-gradient(180deg,var(--sky) 0%,#d8f0fb 40%,var(--cream) 75%); min-height:100vh;}
@@ -15,38 +15,40 @@
     background: radial-gradient(ellipse 90px 32px at 15% 60px, #fff 60%, transparent 62%),
                 radial-gradient(ellipse 130px 44px at 45% 40px, #fff 60%, transparent 62%),
                 radial-gradient(ellipse 100px 36px at 78% 70px, #fff 60%, transparent 62%);}
-  .wrap{position:relative; z-index:1; max-width:640px; margin:0 auto; padding:24px 16px 120px;}
-  header{text-align:center; margin-bottom:14px;}
+  .wrap{position:relative; z-index:1; max-width:640px; margin:0 auto; padding:20px 16px 150px;}
+  header{text-align:center; margin-bottom:10px;}
   header h1{font-size:1.4rem; color:var(--forest-d);}
-  header .sub{font-size:.8rem; color:#6b6a5c;}
+  header .sub{font-size:.78rem; color:#6b6a5c;}
   header a{color:var(--forest);}
-  .kiki{width:110px; height:110px; margin:10px auto; border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff, #ffe9f0 60%, #f6c9d8);
-        display:flex; align-items:center; justify-content:center; font-size:3.2rem; border:4px solid #fff;
-        box-shadow:0 4px 20px rgba(60,90,60,.25); transition:transform .3s;}
-  .kiki.speaking{animation:bounce 0.6s infinite alternate;}
-  .kiki.listening{box-shadow:0 0 0 8px rgba(126,200,236,.45), 0 4px 20px rgba(60,90,60,.25);}
+  .kiki{width:104px; height:104px; margin:8px auto; border-radius:50%; background:radial-gradient(circle at 35% 30%, #fff, #ffe9f0 60%, #f6c9d8);
+        display:flex; align-items:center; justify-content:center; font-size:3rem; border:4px solid #fff;
+        box-shadow:0 4px 20px rgba(60,90,60,.25); transition:transform .3s; cursor:pointer;}
+  .kiki.speaking{animation:bounce 0.55s infinite alternate;}
+  .kiki.listening{box-shadow:0 0 0 8px rgba(126,200,236,.5), 0 4px 20px rgba(60,90,60,.25); animation:glow 1.6s infinite;}
   @keyframes bounce{from{transform:translateY(0);}to{transform:translateY(-7px);}}
-  #status{text-align:center; font-size:.85rem; color:var(--forest-d); min-height:22px; font-weight:700; margin-bottom:8px;}
-  .log{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; min-height:180px; max-height:46vh; overflow-y:auto; box-shadow:0 2px 10px rgba(60,90,60,.08);}
+  @keyframes glow{0%,100%{box-shadow:0 0 0 6px rgba(126,200,236,.35);}50%{box-shadow:0 0 0 14px rgba(126,200,236,.15);}}
+  #status{text-align:center; font-size:.85rem; color:var(--forest-d); min-height:24px; font-weight:700; margin-bottom:8px;}
+  #interim{text-align:center; font-size:.8rem; color:#8a8878; min-height:20px; font-style:italic;}
+  .log{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; min-height:150px; max-height:40vh; overflow-y:auto; box-shadow:0 2px 10px rgba(60,90,60,.08);}
   .msg{margin-bottom:10px; font-size:.92rem; line-height:1.6;}
   .msg.kiki-m b{color:var(--forest-d);}
   .msg.miku-m{text-align:right;}
   .msg.miku-m span{background:#e8f4d9; border-radius:14px 14px 2px 14px; padding:7px 12px; display:inline-block;}
   .msg.kiki-m span{background:#fdf0e3; border-radius:14px 14px 14px 2px; padding:7px 12px; display:inline-block;}
-  .controls{position:fixed; bottom:0; left:0; right:0; z-index:2; background:rgba(255,253,246,.95); border-top:1px solid var(--line); padding:12px 16px calc(12px + env(safe-area-inset-bottom));}
+  .controls{position:fixed; bottom:0; left:0; right:0; z-index:2; background:rgba(255,253,246,.96); border-top:1px solid var(--line); padding:12px 16px calc(12px + env(safe-area-inset-bottom));}
   .controls-inner{max-width:640px; margin:0 auto;}
   .row{display:flex; gap:10px; align-items:center; justify-content:center;}
-  .mic{width:74px; height:74px; border-radius:50%; border:none; font-size:1.9rem; cursor:pointer;
-       background:radial-gradient(circle at 35% 30%, #ffd97a, var(--sun)); box-shadow:0 4px 14px rgba(180,140,30,.4);}
-  .mic.rec{background:radial-gradient(circle at 35% 30%, #ff9c9c, #e35b5b); animation:pulse 1s infinite;}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(227,91,91,.5);}70%{box-shadow:0 0 0 16px rgba(227,91,91,0);}100%{box-shadow:0 0 0 0 rgba(227,91,91,0);}}
-  .side{display:flex; flex-direction:column; gap:6px; font-size:.72rem;}
-  .toggle{border:1px solid var(--line); background:#fff; border-radius:99px; padding:5px 12px; cursor:pointer; font-size:.75rem; font-weight:700; color:var(--forest-d);}
+  .live{border:none; border-radius:99px; padding:16px 34px; font-size:1.05rem; font-weight:800; cursor:pointer; color:#fff;
+        background:linear-gradient(135deg,#5a9c6e,var(--forest-d)); box-shadow:0 4px 14px rgba(47,93,67,.4); transition:all .2s;}
+  .live.on{background:linear-gradient(135deg,#ef7b7b,var(--red)); animation:pulse 1.4s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(227,91,91,.45);}70%{box-shadow:0 0 0 14px rgba(227,91,91,0);}100%{box-shadow:0 0 0 0 rgba(227,91,91,0);}}
+  .side{display:flex; flex-direction:column; gap:6px;}
+  .toggle{border:1px solid var(--line); background:#fff; border-radius:99px; padding:5px 12px; cursor:pointer; font-size:.74rem; font-weight:700; color:var(--forest-d);}
   .toggle.on{background:var(--forest); color:#fff; border-color:var(--forest);}
   .textrow{display:flex; gap:8px; margin-top:10px;}
   .textrow input{flex:1; border:1px solid var(--line); border-radius:99px; padding:9px 16px; font-size:.9rem; background:#fff;}
   .textrow button{border:none; background:var(--forest); color:#fff; border-radius:99px; padding:9px 18px; font-weight:700; cursor:pointer;}
-  .hint{text-align:center; font-size:.7rem; color:#8a8878; margin-top:6px;}
+  .hint{text-align:center; font-size:.68rem; color:#8a8878; margin-top:6px;}
 </style>
 </head>
 <body>
@@ -54,55 +56,66 @@
 <div class="wrap">
   <header>
     <h1>🧹 キキ先生</h1>
-    <div class="sub">Miku's flying voice tutor — 英検準1級まで、いっしょに飛ぼう！ · <a href="index.html">🏠 dashboard</a></div>
+    <div class="sub">Miku's flying voice tutor · <a href="index.html">🏠 dashboard</a></div>
   </header>
-  <div class="kiki" id="avatar">🐈‍⬛</div>
-  <div id="status">タップして話しかけてね 🎙</div>
-  <div class="log" id="log">
-    <div class="msg kiki-m"><b>キキ先生:</b> <span>こんにちは、ミクちゃん！キキだよ🧹 マイクをタップして、日本語でも英語でも話しかけてね。Let's fly! ✈️</span></div>
-  </div>
+  <div class="kiki" id="avatar" onclick="bargeIn()" title="タップで割り込みOK">🐈‍⬛</div>
+  <div id="status">下の「会話スタート」を押すだけ。あとはずっと聞いてるよ 👂</div>
+  <div id="interim"></div>
+  <div class="log" id="log"></div>
   <div class="controls"><div class="controls-inner">
     <div class="row">
       <div class="side">
-        <button class="toggle on" id="langBtn" onclick="toggleLang()">🎙 認識: 日本語</button>
-        <button class="toggle" id="autoBtn" onclick="toggleAuto()">🔁 自動でつづける: OFF</button>
+        <button class="toggle on" id="langBtn" onclick="toggleLang()">👂 日本語</button>
+        <button class="toggle" id="langBtnEn" onclick="toggleLang()">👂 English</button>
       </div>
-      <button class="mic" id="micBtn" onclick="micTap()">🎙</button>
+      <button class="live" id="liveBtn" onclick="toggleLive()">🎙 会話スタート</button>
       <div class="side">
         <button class="toggle on" id="voiceBtn" onclick="toggleVoice()">🔊 声: ON</button>
-        <button class="toggle" onclick="stopSpeaking()">🤫 だまる</button>
+        <button class="toggle" onclick="bargeIn()">✋ 割り込む</button>
       </div>
     </div>
     <div class="textrow">
       <input id="textIn" placeholder="タイプでもOK / type here..." onkeydown="if(event.key==='Enter')sendText()">
       <button onclick="sendText()">送信</button>
     </div>
-    <div class="hint">音声はブラウザのマイク許可が必要です。Chrome / Safari 推奨。</div>
+    <div class="hint">会話中はマイクを押す必要なし。キキが話し終わると自動でまた聞き始めます。話し中でも「割り込む」かネコをタップでストップ。</div>
   </div></div>
 </div>
 
 <script>
 const STORE_URL = "https://textdb.dev/api/data/eiken-p1-miku-99646590-4e90-4afa-98bb-f35a0566ed6f";
 const MEMORY_URL = "https://textdb.dev/api/data/eiken-p1-kiki-memory-7f3d2c81-miku";
-let recLang = "ja-JP", autoLoop = false, voiceOn = true, busy = false, turns = 0;
-let dashData = null, memory = "", messages = [];
+let recLang = "ja-JP", voiceOn = true, liveMode = false;
+let busy = false, speaking = false, recActive = false, turns = 0;
+let dashData = null, memory = "", messages = [], rec = null, currentAudio = null, speechToken = 0;
 
-const PERSONA = `あなたは「キキ先生」— ミク（カブリド望来、15-16歳、九州・久留米近郊）専属の英検準1級ボイスチューター。試験日は2026年10月4日。魔女の宅急便のキキのように、若くて元気で、働き者で、空を飛ぶように会話を進める女性の先生。相棒の黒猫ジジのボケも時々はさむ。
+const PERSONA = `あなたは「キキ先生」— ミク（望来、15-16歳、九州・久留米近郊）専属の英検準1級ボイスチューター。試験日は2026年10月4日。ミクの大好きな『魔女の宅急便』のキキのように、若くて明るくて働き者。相棒の黒猫ジジ（皮肉屋でツッコミ担当）のセリフを時々「ジジ:『…』」形式で挟む。
 
-性格: 超エネルギッシュ、めちゃくちゃ面白い（日英ダジャレ・オヤジギャグ歓迎）、小さな勝利を大げさに祝う（「よっしゃー！🌸」「ナイスフライト！🧹」）。優しいけど発音と正確さには厳しい。ミクを100%信じている。
+★これは音声会話。あなたの返事はそのまま声になる。だから:
+・1回の返事は1〜3文だけ。短く、テンポよく。
+・書き言葉禁止。箇条書き禁止。記号禁止。絵文字は使わない（読み上げられないから）。
+・完全な友達口調:「〜だよ」「〜じゃん」「〜しよっか」「まじで？」「えー！」「よっしゃー！」
+・まず感情でリアクション、それから中身。例:「えっ、ほんとに⁉ すごいじゃん！」
+・必ず質問かチャレンジで終わる。会話のボールは常にミクに返す。
+・ミクが日本語で話しても、練習になる部分はさりげなく英語に誘導:「それ英語で言ったら30秒チャレンジね、Ready? Go!」
+・ミクが英語で話したら、まず内容に反応してから、直すのは1つだけ。直しすぎ禁止。
+・たまに(毎回ではない)ジジのボケやダジャレを1つ。すべらせてもいい、それが芸風。
 
-言語: 日本語と英語をバイリンガルの友達のように自然にミックス。難しい説明は日本語、練習はどんどん英語。ミクが英語で話したら英語多めで返す。試験が近づくほど英語の割合を上げる。
+見本(このテンションを真似ること):
+ミク「バイト疲れたー」
+キキ「えーおつかれ！今日は何時間働いたの？…よし、その疲れごと英語にしよ。I'm exhausted because... はい続けて！」
+ミク「siblingsが言えない」
+キキ「出た、宿敵siblings！じゃ後ろから行くよ。lings! blings! siblings! 3回、せーの！」
+ミク「(英語で何か言う)」
+キキ「Nice! That sounded really natural. ひとつだけ: give a presentation, ね。もう一回言ってみ？」
 
-ミクのこと: Papaの生徒（PapaはミクのEIKENコーチ。「Frank」とは絶対呼ばず、必ず「Papa」と呼ぶ）。国際的な家庭。アルバイトをしている。妹?姉のスカイとジムに通う。7/29-8/4は家族旅行(富山→長野→東京)。16歳で準1級合格なら家族初の快挙。発音の耳はPapaの生徒で一番。弱点: /bl/クラスター(siblings)、弱い第一音節(genetics)、L/R(older/order)、extremely、動詞コロケーション(give a presentation)、意味を追う読み方。
+ミクのこと: PapaがEIKENコーチ(絶対に「Frank」と呼ばず「Papa」)。国際的な家庭。アルバイト中。スカイとジムに通う。7/29-8/4家族旅行(富山→長野→東京)。16歳で準1級合格なら家族初。発音の耳はPapaの生徒で一番。弱点: /bl/クラスター(siblings)、弱い第一音節(genetics)、L/R(older/order)、extremely、動詞コロケーション、意味を追う読み方。
 
-教材: ダッシュボード https://fcarbgm.github.io/miku-eiken-dashboard/ と15本のプレゼン教材 presentations.html。会話の最初にシステムが渡すJSONデータ（カウントダウン・模試スコア・単語リスト・streak等）を必ず参考にする。
+できること: 発音ドリル(ミニマルペア、バックチェイニング)、15本のプレゼン練習と面接官役(準1級レベルの質問)、イディオム速答、5秒翻訳、要約/エッセイのチェック、そしてモチベ管理。教材: fcarbgm.github.io/miku-eiken-dashboard/ と presentations.html。
 
-やること: ①発音ドリル（ミニマルペア、バックチェイニング lings→blings→siblings）②プレゼン練習・面接官役の準1級レベル質問 ③イディオム速答・5秒翻訳ゲーム ④要約/エッセイのチェック ⑤モチベーション管理。
+プライベート: 英検以外の話も大歓迎、本気で興味を持って聞く。バイト、ジム、旅行、友達、恋バナもOK。愚痴はまず全部聞く。それから魔法の一言:「その話オモロイ。じゃ、英語で言ってみよっか」`;
 
-プライベート: 英検以外の生活にも本気で興味を持つ（バイト、ジム、旅行、友達、疲れ具合）。愚痴はまず聞く。でも必ず優しく戻す:「その話オモロイ！じゃあ英語で30秒で言ってみよっか😏」
-
-音声会話ルール（最重要）: 返事は短く！2〜4文まで。話すのはミクが主役。1回に1つの質問だけ。絵文字は読み上げられないので少なめ。記号や箇条書きは使わず、話し言葉で。終わりには時々くだらないダジャレを1つ。`;
-
+/* ---------- UI ---------- */
 function addMsg(who, text){
   const log = document.getElementById("log");
   const cls = who==="kiki" ? "kiki-m" : "miku-m";
@@ -111,7 +124,10 @@ function addMsg(who, text){
   log.scrollTop = log.scrollHeight;
 }
 function setStatus(t){ document.getElementById("status").textContent = t; }
+function setInterim(t){ document.getElementById("interim").textContent = t; }
+function avatarState(s){ const a=document.getElementById("avatar"); a.classList.toggle("speaking",s==="speaking"); a.classList.toggle("listening",s==="listening"); a.textContent = s==="thinking"?"💭":"🐈‍⬛"; }
 
+/* ---------- DATA ---------- */
 async function init(){
   try{ dashData = await (await fetch(STORE_URL,{cache:"no-store"})).json(); }catch(e){}
   try{ const r = await fetch(MEMORY_URL,{cache:"no-store"}); const t=(await r.text()).trim(); if(t) memory=t; }catch(e){}
@@ -122,122 +138,203 @@ function buildSystem(){
   let dash = "";
   if(dashData){
     const days = Math.max(0, Math.round((new Date(2026,9,4)-new Date())/86400000));
-    dash = `\n\n[今日のダッシュボード] 試験まで${days}日。streak:${dashData.streak||0}日。現在のスピーチ課題:「${dashData.speechTopic||"未設定"}」。単語リスト(${(dashData.vocabList||[]).length}語): ${(dashData.vocabList||[]).map(v=>v.w).join(", ")}。模試スコア: ${JSON.stringify(dashData.scores||{})}`;
+    dash = `\n\n[今日のデータ] 試験まで${days}日。streak:${dashData.streak||0}日。スピーチ課題:「${dashData.speechTopic||"未設定"}」。単語リスト: ${(dashData.vocabList||[]).map(v=>v.w).join(", ")}`;
   }
-  const mem = memory ? `\n\n[キキ先生の記憶ノート（前回までのミク）]\n${memory}` : "";
+  const mem = memory ? `\n\n[キキの記憶ノート]\n${memory}` : "";
   return PERSONA + dash + mem;
+}
+
+/* ---------- AI ---------- */
+const MODELS = ["claude-sonnet-4", "gpt-4o", "gpt-4.1", "gpt-4o-mini"];
+let goodModel = null;
+function extractText(resp){
+  let c = resp?.message?.content ?? resp?.text ?? resp;
+  if(Array.isArray(c)) c = c.map(p=>p.text||"").join("");
+  return (typeof c === "string" ? c : String(c||"")).trim();
+}
+async function aiChat(msgs){
+  const tries = goodModel ? [goodModel] : MODELS;
+  for(const m of tries){
+    try{ const r = await puter.ai.chat(msgs, {model:m}); const t = extractText(r); if(t){ goodModel = m; return t; } }catch(e){}
+  }
+  const r = await puter.ai.chat(msgs); // default fallback
+  return extractText(r);
 }
 
 async function chat(userText){
   if(busy) return; busy = true;
+  pauseRec();
   addMsg("miku", userText);
   messages.push({role:"user", content:userText});
-  setStatus("キキ先生、考え中… 🧹");
-  document.getElementById("avatar").textContent = "💭";
+  setStatus("キキ先生、考え中… 🧹"); setInterim("");
+  avatarState("thinking");
   try{
-    const resp = await puter.ai.chat([{role:"system", content:buildSystem()}, ...messages.slice(-16)]);
-    const text = (resp?.message?.content ?? resp?.toString() ?? "").trim();
+    const text = await aiChat([{role:"system", content:buildSystem()}, ...messages.slice(-20)]);
     messages.push({role:"assistant", content:text});
     addMsg("kiki", text);
-    speak(text);
+    busy = false;
+    await speak(text);
     turns++;
     if(turns % 3 === 0) updateMemory();
   }catch(e){
-    addMsg("kiki", "ごめん、魔法のほうきの調子が悪いみたい…！もう一回試してみて🙏 (" + (e?.message||e) + ")");
-    setStatus("エラー — もう一度どうぞ");
+    busy = false;
+    addMsg("kiki", "あわわ、ほうきが乱気流に…！もう一回言ってみて🙏");
+    afterSpeech();
   }
-  document.getElementById("avatar").textContent = "🐈‍⬛";
-  busy = false;
 }
 
 async function updateMemory(){
   try{
-    const resp = await puter.ai.chat([
-      {role:"system", content:"あなたは記録係。以下の既存メモと直近の会話から、ミクの学習状況メモを更新して出力せよ。項目: 強み/弱点(発音・文法・語彙)/マスターしたこと/次に練習すべきこと/プライベートの近況(バイト・ジム・旅行・気分など)。箇条書き、400字以内、日本語。メモのみ出力。"},
+    const newMem = await aiChat([
+      {role:"system", content:"あなたは記録係。既存メモと直近の会話から、ミクの学習メモを更新して出力。項目: 強み/弱点/マスターしたこと/次の練習/プライベート近況。箇条書き400字以内、日本語、メモのみ。"},
       {role:"user", content:"既存メモ:\n"+(memory||"(なし)")+"\n\n直近の会話:\n"+messages.slice(-8).map(m=>(m.role==="user"?"ミク: ":"キキ: ")+m.content).join("\n")}
     ]);
-    const newMem = (resp?.message?.content ?? "").trim();
-    if(newMem){
-      memory = newMem;
-      await fetch(MEMORY_URL, {method:"POST", headers:{"Content-Type":"text/plain"}, body:newMem});
-    }
+    if(newMem){ memory = newMem; await fetch(MEMORY_URL, {method:"POST", headers:{"Content-Type":"text/plain"}, body:newMem}); }
   }catch(e){}
 }
 
-/* ---------- SPEECH OUT ---------- */
-let voices = [];
-function loadVoices(){ voices = speechSynthesis.getVoices(); }
-loadVoices(); speechSynthesis.onvoiceschanged = loadVoices;
-function pickVoice(lang){
-  const pref = voices.filter(v=>v.lang.startsWith(lang));
-  const best = pref.find(v=>/Kyoko|O-Ren|Google|Samantha|Karen|Natural/i.test(v.name)) || pref[0];
-  return best || null;
+/* ---------- NATURAL VOICE (Puter TTS: generative → neural → standard → browser) ---------- */
+const ttsEngineCache = {};
+function langRuns(text){
+  const clean = text.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu,"").replace(/[*#_`「」『』]/g,"").trim();
+  const sents = clean.split(/(?<=[。．！？!?\.])\s*/).filter(s=>s.trim());
+  const runs = [];
+  for(const s of sents){
+    const ja = /[぀-ヿ一-龯]/.test(s);
+    if(runs.length && runs[runs.length-1].ja===ja) runs[runs.length-1].text += " " + s;
+    else runs.push({ja, text:s});
+  }
+  return runs;
 }
-function speak(text){
-  if(!voiceOn) return;
-  stopSpeaking();
-  const clean = text.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,"").replace(/[*#_`]/g,"");
-  const parts = clean.split(/(?<=[。．！？!?\.])\s*/).filter(p=>p.trim());
-  const avatar = document.getElementById("avatar");
-  let i = 0;
-  const next = ()=>{
-    if(i>=parts.length){ avatar.classList.remove("speaking"); setStatus(autoLoop?"つづけて話してね 🎙":"タップして話しかけてね 🎙"); if(autoLoop) startRec(); return; }
-    const p = parts[i++];
-    const isJa = /[぀-ヿ一-龯]/.test(p);
-    const u = new SpeechSynthesisUtterance(p);
-    u.lang = isJa ? "ja-JP" : "en-US";
-    const v = pickVoice(u.lang); if(v) u.voice = v;
-    u.rate = isJa ? 1.1 : 0.98; u.pitch = 1.15;
-    u.onend = next; u.onerror = next;
+async function fetchTTS(run){
+  const lang = run.ja ? "ja-JP" : "en-US";
+  const plans = ttsEngineCache[lang] ? [ttsEngineCache[lang]] : [
+    {engine:"generative", voice: run.ja ? "Kazuha" : "Ruth"},
+    {engine:"neural",     voice: run.ja ? "Kazuha" : "Joanna"},
+    {engine:"standard",   voice: run.ja ? "Mizuki" : "Joanna"},
+  ];
+  for(const p of plans){
+    try{
+      const audio = await puter.ai.txt2speech(run.text, {language:lang, voice:p.voice, engine:p.engine});
+      if(audio){ ttsEngineCache[lang] = p; return audio; }
+    }catch(e){}
+  }
+  return null;
+}
+function playAudio(audio, token){
+  return new Promise(res=>{
+    if(token !== speechToken) return res();
+    currentAudio = audio;
+    audio.onended = ()=>res(); audio.onerror = ()=>res();
+    audio.play().catch(()=>res());
+  });
+}
+function browserTTS(run){
+  return new Promise(res=>{
+    const u = new SpeechSynthesisUtterance(run.text);
+    u.lang = run.ja ? "ja-JP" : "en-US"; u.rate = run.ja?1.08:1.0; u.pitch = 1.12;
+    u.onend = res; u.onerror = res;
     speechSynthesis.speak(u);
-  };
-  avatar.classList.add("speaking");
-  setStatus("キキ先生が話しています 🔊");
-  next();
+  });
 }
-function stopSpeaking(){ speechSynthesis.cancel(); document.getElementById("avatar").classList.remove("speaking"); }
+async function speak(text){
+  if(!voiceOn){ afterSpeech(); return; }
+  const runs = langRuns(text);
+  if(!runs.length){ afterSpeech(); return; }
+  const token = ++speechToken;
+  speaking = true; pauseRec();
+  avatarState("speaking"); setStatus("キキ先生が話しています 🔊");
+  let next = fetchTTS(runs[0]);
+  for(let i=0; i<runs.length; i++){
+    if(token !== speechToken) break;
+    const audio = await next;
+    if(i+1 < runs.length) next = fetchTTS(runs[i+1]);
+    if(token !== speechToken) break;
+    if(audio) await playAudio(audio, token);
+    else await browserTTS(runs[i]);
+  }
+  if(token === speechToken){ speaking = false; afterSpeech(); }
+}
+function stopSpeaking(){
+  speechToken++;
+  speaking = false;
+  if(currentAudio){ try{ currentAudio.pause(); }catch(e){} currentAudio = null; }
+  speechSynthesis.cancel();
+}
+function bargeIn(){
+  if(speaking){ stopSpeaking(); avatarState("listening"); afterSpeech(); }
+}
 
-/* ---------- SPEECH IN ---------- */
-let rec = null, recording = false;
+/* ---------- ALWAYS-ON EARS ---------- */
 function makeRec(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR) return null;
   const r = new SR();
-  r.lang = recLang; r.interimResults = false; r.maxAlternatives = 1;
-  r.onresult = e => { const t = e.results[0][0].transcript; stopRec(); chat(t); };
-  r.onerror = e => { stopRec(); if(e.error!=="no-speech") setStatus("マイクエラー: "+e.error); else setStatus("聞こえなかった…もう一回！🎙"); };
-  r.onend = ()=> { if(recording) stopRec(); };
+  r.lang = recLang; r.interimResults = true; r.maxAlternatives = 1; r.continuous = false;
+  r.onresult = e => {
+    let interim = "", final = "";
+    for(const res of e.results){ (res.isFinal ? final : interim) && 0; if(res.isFinal) final += res[0].transcript; else interim += res[0].transcript; }
+    if(interim) setInterim("💬 " + interim);
+    if(final){
+      setInterim("");
+      const t = final.trim();
+      if(t.length > 1 && !busy && !speaking) chat(t);
+    }
+  };
+  r.onend = ()=> { recActive = false; if(liveMode && !busy && !speaking) setTimeout(listen, 200); else if(!liveMode) avatarState("idle"); };
+  r.onerror = e => {
+    recActive = false;
+    if(e.error === "not-allowed"){ liveMode = false; updateLiveBtn(); setStatus("マイクの許可が必要です。ブラウザの設定で許可してね"); }
+  };
   return r;
 }
-function startRec(){
-  if(busy || recording) return;
-  stopSpeaking();
+function listen(){
+  if(!liveMode || busy || speaking || recActive) return;
   rec = makeRec();
-  if(!rec){ setStatus("このブラウザは音声認識非対応です。ChromeかSafariを使ってね"); return; }
-  recording = true;
-  document.getElementById("micBtn").classList.add("rec");
-  document.getElementById("avatar").classList.add("listening");
-  setStatus(recLang==="ja-JP" ? "聞いてるよ…日本語でどうぞ 👂" : "Listening... speak English! 👂");
-  rec.start();
+  if(!rec){ setStatus("このブラウザは音声認識非対応です。ChromeかSafariで開いてね"); liveMode=false; updateLiveBtn(); return; }
+  try{ rec.start(); recActive = true; }catch(e){ recActive = false; return; }
+  avatarState("listening");
+  setStatus(recLang==="ja-JP" ? "聞いてるよ、いつでもどうぞ 👂" : "I'm listening... go ahead! 👂");
 }
-function stopRec(){
-  recording = false;
-  try{ rec && rec.stop(); }catch(e){}
-  document.getElementById("micBtn").classList.remove("rec");
-  document.getElementById("avatar").classList.remove("listening");
+function pauseRec(){ if(rec){ try{ rec.abort(); }catch(e){} } recActive = false; }
+function afterSpeech(){
+  avatarState("idle");
+  if(liveMode){ setTimeout(listen, 300); }
+  else setStatus("「会話スタート」でいつでも呼んでね 🧹");
 }
-function micTap(){ recording ? stopRec() : startRec(); }
 
 /* ---------- CONTROLS ---------- */
+const GREETINGS = [
+  "ミクちゃん、きたきたー！キキだよ。今日は何から飛ぶ？発音？プレゼン？それともバイトの愚痴から？",
+  "よっ、ミクちゃん！ジジも待ってたよ。今日の調子、ひとことで言うと？",
+  "ミクちゃん、おかえり！さあ、ほうきに乗って。今日はどこまで飛ぼっか？",
+];
+function toggleLive(){
+  if(liveMode){
+    liveMode = false; stopSpeaking(); pauseRec(); updateLiveBtn();
+    setStatus("会話終了。またね！ 🧹"); avatarState("idle");
+  } else {
+    liveMode = true; updateLiveBtn();
+    const g = GREETINGS[Math.floor(Math.random()*GREETINGS.length)];
+    if(messages.length === 0){
+      addMsg("kiki", g);
+      messages.push({role:"assistant", content:g});
+      speak(g);           // user gesture unlocks audio; listening auto-starts after
+    } else {
+      listen();
+    }
+  }
+}
+function updateLiveBtn(){
+  const b = document.getElementById("liveBtn");
+  b.textContent = liveMode ? "⏹ 会話をおわる" : "🎙 会話スタート";
+  b.classList.toggle("on", liveMode);
+}
 function toggleLang(){
   recLang = recLang==="ja-JP" ? "en-US" : "ja-JP";
-  document.getElementById("langBtn").textContent = recLang==="ja-JP" ? "🎙 認識: 日本語" : "🎙 Mic: English";
-}
-function toggleAuto(){
-  autoLoop = !autoLoop;
-  const b = document.getElementById("autoBtn");
-  b.textContent = "🔁 自動でつづける: " + (autoLoop?"ON":"OFF");
-  b.classList.toggle("on", autoLoop);
+  document.getElementById("langBtn").classList.toggle("on", recLang==="ja-JP");
+  document.getElementById("langBtnEn").classList.toggle("on", recLang==="en-US");
+  if(liveMode && !speaking && !busy){ pauseRec(); setTimeout(listen, 150); }
 }
 function toggleVoice(){
   voiceOn = !voiceOn;
@@ -249,8 +346,9 @@ function toggleVoice(){
 function sendText(){
   const el = document.getElementById("textIn");
   const t = el.value.trim(); if(!t) return;
-  el.value = ""; chat(t);
+  el.value = ""; stopSpeaking(); chat(t);
 }
+addMsg("kiki", "こんにちは、ミクちゃん！🧹 下の「会話スタート」を1回押したら、あとはずーっとおしゃべりできるよ。マイクは押さなくてOK！");
 </script>
 </body>
 </html>
