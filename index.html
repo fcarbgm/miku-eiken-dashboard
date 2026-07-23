@@ -6,13 +6,20 @@
 <title>Miku — EIKEN 準1級 Dashboard</title>
 <style>
   :root{
-    --ink:#1e2340; --sub:#6b7194; --bg:#f4f5fb; --card:#ffffff;
-    --indigo:#4c56c0; --indigo-d:#343d99; --sakura:#e8628c; --gold:#e5a93d;
-    --green:#3ba272; --red:#d9534f; --line:#e6e8f4;
+    --ink:#3b3a30; --sub:#7a7866; --bg:#f4efe1; --card:#fffdf6;
+    --indigo:#4a7c59; --indigo-d:#2f5d43; --sakura:#d9536f; --gold:#c98f2d;
+    --green:#3ba272; --red:#c0554f; --line:#e3dcc8;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  body{font-family:"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif; background:var(--bg); color:var(--ink); padding-bottom:60px;}
-  header{background:linear-gradient(120deg,var(--indigo-d),var(--indigo) 55%,var(--sakura)); color:#fff; padding:28px 24px 22px; text-align:center;}
+  body{font-family:"Hiragino Maru Gothic ProN","Segoe UI","Yu Gothic",sans-serif; background:linear-gradient(180deg,#d8f0fb 0%,var(--bg) 260px); color:var(--ink); padding-bottom:60px;}
+  header{background:linear-gradient(180deg,#7ec8ec,#aee1f9 70%,#d8f0fb),
+    radial-gradient(ellipse 90px 30px at 18% 78%, #fff 60%, transparent 62%);
+    background-blend-mode:normal; color:var(--indigo-d); padding:28px 24px 22px; text-align:center; position:relative; overflow:hidden;}
+  header::before{content:""; position:absolute; inset:0; pointer-events:none;
+    background: radial-gradient(ellipse 100px 34px at 15% 70%, rgba(255,255,255,.9) 60%, transparent 62%),
+                radial-gradient(ellipse 140px 44px at 55% 30%, rgba(255,255,255,.85) 60%, transparent 62%),
+                radial-gradient(ellipse 110px 36px at 85% 60%, rgba(255,255,255,.9) 60%, transparent 62%);}
+  header > *{position:relative;}
   header h1{font-size:1.5rem; letter-spacing:.5px;}
   header .sub{opacity:.85; font-size:.85rem; margin-top:4px;}
   #syncStatus{position:fixed; top:10px; right:12px; z-index:50; background:#fff; border:1px solid var(--line); border-radius:99px; padding:4px 12px; font-size:.72rem; color:var(--sub); box-shadow:0 1px 4px rgba(30,35,64,.15);}
@@ -77,8 +84,8 @@
 <div id="syncStatus" onclick="copyShareLink()" title="Click to copy the share link" style="cursor:pointer;">⚪ connecting…</div>
 
 <header>
-  <h1>Miku's Road to EIKEN 準1級 🌸</h1>
-  <div class="sub">First stage: Sunday, October 4, 2026 &nbsp;·&nbsp; Shared live between Frank &amp; Miku — edits sync automatically.</div>
+  <h1>⛅ Miku's Road to EIKEN 準1級 🌱</h1>
+  <div class="sub">First stage: Sunday, October 4, 2026 &nbsp;·&nbsp; Shared live between Papa &amp; Miku — edits sync automatically. 🐈‍⬛</div>
 </header>
 
 <div class="wrap">
@@ -115,7 +122,7 @@
         <label><input type="checkbox" data-k="s1" onchange="save()"> Draft written &amp; leveled</label>
         <label><input type="checkbox" data-k="s2" onchange="save()"> Pronunciation drilled</label>
         <label><input type="checkbox" data-k="s3" onchange="save()"> Memorized</label>
-        <label><input type="checkbox" data-k="s4" onchange="save()"> Delivered to Frank</label>
+        <label><input type="checkbox" data-k="s4" onchange="save()"> Delivered to Papa</label>
         <label><input type="checkbox" data-k="s5" onchange="save()"> Q&amp;A practiced</label>
       </div>
       <div class="flex" style="margin-top:8px;">
@@ -240,7 +247,7 @@ const DEFAULTS = {
   streak:0, lastStudy:null, totalStudyDays:0,
   speechTopic:"", speechChecks:{}, speechCount:0,
   links:[
-    {name:"📹 Online meeting (Frank)", url:""},
+    {name:"📹 Papa's meeting room (Zoom)", url:""},
     {name:"📄 Speech & Q&A transcripts", url:""},
     {name:"🏛 EIKEN official — 準1級", url:"https://www.eiken.or.jp/eiken/exam/grade_p1/"},
     {name:"🗂 Past papers (過去問)", url:"https://www.eiken.or.jp/eiken/exam/"},
@@ -268,13 +275,13 @@ const DEFAULTS = {
   sessions:[
     {date:"2026-07-22", title:"Session 1 — Kickoff & the Birth Order cold reading", html:`
 <h4>✨ What you did brilliantly</h4>
-Miku, let's start with the truth: Frank teaches many students, and he said it out loud tonight — <b>your pronunciation is the best of all of them</b>. That was not a compliment to be nice. It was an observation, and here is the evidence. You corrected <b>"eldest"</b> and <b>"obvious"</b> yourself, before anyone helped you — that is called self-monitoring, and it is the #1 skill of successful language learners. You built an entire original sentence out loud: <i>"We watch the weather forecast to guess what the future weather will be."</i> Nobody gave you that sentence. You made it. And when you had a question, you asked it <b>in English</b> — "Should I... don't read the script?" That is courage. On your very first try, you also read a real 準1級 passage from start to finish in <b>4 minutes 17 seconds</b>. Most students freeze on page one. You finished.
+Miku, let's start with the truth: Papa teaches many students, and he said it out loud tonight — <b>your pronunciation is the best of all of them</b>. That was not a compliment to be nice. It was an observation, and here is the evidence. You corrected <b>"eldest"</b> and <b>"obvious"</b> yourself, before anyone helped you — that is called self-monitoring, and it is the #1 skill of successful language learners. You built an entire original sentence out loud: <i>"We watch the weather forecast to guess what the future weather will be."</i> Nobody gave you that sentence. You made it. And when you had a question, you asked it <b>in English</b> — "Should I... don't read the script?" That is courage. On your very first try, you also read a real 準1級 passage from start to finish in <b>4 minutes 17 seconds</b>. Most students freeze on page one. You finished.
 <h4>🎯 The gold: your three biggest opportunities</h4>
 <b>1. The /bl/ cluster — "siblings."</b> You fought this word about 25 times tonight. Listen carefully: that is not a weakness, that is <b>persistence</b> — you never quit. The problem is one tiny extra sound: シブリングス has a vowel between b and l that English doesn't have. <b>2. Weak first syllables — "genetics."</b> The quiet "ge-" kept disappearing (→ "netics"). English hides its unstressed syllables, but the examiner is listening for them. <b>3. L vs R — "older" vs "order."</b> These are two different words in English, and tonight they were twins in your mouth. Bonus: <b>"extremely"</b> — it wanted to become "externally." It won't win for long.
 <h4>🛠 Your game plan this week (10 minutes a day)</h4>
 <b>Backchaining</b> for siblings: say it backwards in pieces — "lings" → "blings" → "siblings." Three times slow, three times fast, every day. <b>Whisper-start</b> for genetics: whisper "ge" then punch "NE": ge-NE-tics ×5. <b>Minimal pairs, 2 minutes:</b> older/order, light/right, collect/correct — record yourself once at the start of the week and once at the end. You will HEAR the difference, just like the before/after speech videos. And one grammar gift: we <b>give</b> a presentation, <b>take</b> a test, <b>make</b> a mistake — say "give a presentation" ten times so "When I presentation" never visits again.
 <h4>🚀 Why this matters</h4>
-Every one of these fixes shows up on test day. Clear /bl/ gives you "problem," "public," "establish" — words in almost every 準1級 reading. Clear -ed endings and first syllables are exactly what the speaking examiner grades. And reading the <i>title</i> first to predict the meaning — like Frank showed you — is the secret weapon for the summary question.
+Every one of these fixes shows up on test day. Clear /bl/ gives you "problem," "public," "establish" — words in almost every 準1級 reading. Clear -ed endings and first syllables are exactly what the speaking examiner grades. And reading the <i>title</i> first to predict the meaning — like Papa showed you — is the secret weapon for the summary question.
 <div class="goal">74 days, Miku. Nobody in the family has passed 準1級 at 16 — you are on schedule to be the first. Your ear is already excellent; now we train the mouth to catch up. Next mission: your speech — "Should AI be used in education?" Make the "before" video on day one. Future Miku wants to see how far you came. 🌸</div>`},
   ],
 };
