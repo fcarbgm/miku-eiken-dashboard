@@ -192,8 +192,7 @@
 const TEST_DATE = new Date(2026,9,4);        // Oct 4, 2026 00:00 local
 const START_DATE = new Date(2026,6,22);      // Jul 22, 2026
 const KEY = "miku_eiken_dash_v2";
-const BIN_ID = "__BIN_ID__";                 // set at deploy time
-const API = "https://jsonblob.com/api/jsonBlob/";
+const STORE_URL = "https://textdb.dev/api/data/eiken-p1-miku-99646590-4e90-4afa-98bb-f35a0566ed6f";
 const POLL_MS = 8000;
 
 const SECTIONS = [
@@ -222,9 +221,6 @@ const DEFAULTS = {
 };
 
 let D = loadLocal();
-const hashBin = (location.hash.match(/b=([A-Za-z0-9-]+)/)||[])[1] || null;
-let binId = (BIN_ID && !BIN_ID.startsWith("__")) ? BIN_ID
-          : hashBin || localStorage.getItem(KEY+"_bin") || null;
 let saveTimer = null, dirty = false;
 
 function loadLocal(){
@@ -236,31 +232,20 @@ function persistLocal(){ localStorage.setItem(KEY, JSON.stringify(D)); }
 function setStatus(icon, msg){ document.getElementById("syncStatus").textContent = icon+" "+msg; }
 
 async function cloudInit(){
-  if(!binId){
-    try{
-      const r = await fetch(API, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(D)});
-      const loc = r.headers.get("Location") || r.headers.get("X-jsonblob");
-      if(loc){ binId = loc.split("/").pop(); }
-    }catch(e){}
-  }
-  if(binId){
-    localStorage.setItem(KEY+"_bin", binId);
-    if((BIN_ID.startsWith("__")) && !location.hash.includes(binId)){
-      history.replaceState(null,"","#b="+binId);
-    }
-    await cloudPull(); setInterval(cloudPull, POLL_MS);
-  }
-  else setStatus("🟡","offline — saving on this device only");
+  await cloudPull();
+  setInterval(cloudPull, POLL_MS);
 }
 function copyShareLink(){
-  navigator.clipboard.writeText(location.href).then(()=>alert("Link copied — send this exact link to Miku so you both share the same data."));
+  navigator.clipboard.writeText(location.href).then(()=>alert("Link copied — send it to Miku. You both see the same live data."));
 }
 async function cloudPull(){
-  if(!binId || dirty) return;
+  if(dirty) return;
   try{
-    const r = await fetch(API+binId, {cache:"no-store"});
+    const r = await fetch(STORE_URL, {cache:"no-store"});
     if(!r.ok) throw 0;
-    const remote = await r.json();
+    const txt = (await r.text()).trim();
+    if(!txt){ await cloudPushNow(); return; }   // empty store: seed it
+    const remote = JSON.parse(txt);
     if((remote.updatedAt||0) > (D.updatedAt||0)){
       D = Object.assign(structuredClone(DEFAULTS), remote);
       persistLocal(); render();
@@ -268,14 +253,14 @@ async function cloudPull(){
     setStatus("🟢","live · synced "+new Date().toLocaleTimeString());
   }catch(e){ setStatus("🟡","offline — will retry"); }
 }
-async function cloudPush(){
-  if(!binId){ dirty=false; return; }
+async function cloudPushNow(){
   try{
-    await fetch(API+binId, {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(D)});
+    const r = await fetch(STORE_URL, {method:"POST", headers:{"Content-Type":"text/plain"}, body:JSON.stringify(D)});
+    if(!r.ok) throw 0;
     setStatus("🟢","live · saved "+new Date().toLocaleTimeString());
   }catch(e){ setStatus("🟡","offline — saved locally"); }
-  dirty = false;
 }
+async function cloudPush(){ await cloudPushNow(); dirty = false; }
 
 function daysBetween(a,b){ return Math.round((b-a)/86400000); }
 function today0(){ const t=new Date(); return new Date(t.getFullYear(),t.getMonth(),t.getDate()); }
