@@ -161,6 +161,24 @@
     <div class="hint">Sections: 語彙 Vocabulary /18 · 長文 Reading /13 · 要約 Summary /16 · 英作文 Essay /16 · リスニング Listening /29. Leave blank until taken.</div>
   </div>
 
+  <!-- VOCABULARY LIST -->
+  <h3 class="section-title">🗣 Vocabulary list <span class="muted">(from sessions · click any cell to edit · saves automatically)</span></h3>
+  <div class="card" style="overflow-x:auto;">
+    <table id="vocabTable">
+      <thead><tr>
+        <th style="min-width:110px;">Word</th><th style="min-width:90px;">日本語</th>
+        <th style="min-width:220px;">Sample sentence</th><th style="min-width:110px;">Stress / 発音</th>
+        <th style="min-width:160px;">Session notes</th><th></th>
+      </tr></thead>
+      <tbody id="vocabBody"></tbody>
+    </table>
+    <div class="flex" style="margin-top:10px;">
+      <button class="btn-ghost btn-sm" onclick="addVocab()">+ add word</button>
+      <span class="spacer"></span>
+      <span class="muted"><b id="vocabCount">0</b> words covered — feeds the vocabulary meter above</span>
+    </div>
+  </div>
+
   <!-- LINKS + QUOTE -->
   <div class="grid cols2" style="margin-top:16px;">
     <div class="card">
@@ -218,6 +236,24 @@ const DEFAULTS = {
     {name:"📖 Vocabulary list / flashcards", url:""},
     {name:"🎧 Listening practice", url:""},
   ],
+  vocabList:[
+    {w:"genetics", ja:"遺伝学", ex:"Personality is determined more by genetics and one's living environment.", st:"ge-NE-tics /dʒəˈnetɪks/", no:"7/22: 「ジェ」が消えがち — start with a clear 'je-' sound"},
+    {w:"extremely", ja:"極めて・非常に", ex:"The differences for every birth position were extremely slight.", st:"ex-TREME-ly /ɪkˈstriːmli/", no:"7/22: hardest word tonight — not 'externally'; drill daily"},
+    {w:"siblings", ja:"兄弟姉妹", ex:"Youngest siblings were more rebellious.", st:"SIB-lings /ˈsɪblɪŋz/", no:"7/22: /bl/ cluster — no vowel between b and l (× sibi-lings)"},
+    {w:"anxiety", ja:"不安", ex:"Eldest siblings differed in terms of responsibility and anxiety.", st:"ang-ZY-e-ty /æŋˈzaɪəti/", no:"7/22: stress ZY; adjective = anxious"},
+    {w:"rebelliousness", ja:"反抗心", ex:"There are differences in everything from maturity to rebelliousness.", st:"re-BEL-lious-ness", no:"7/22: build up — rebel → rebellious → rebelliousness"},
+    {w:"stereotype", ja:"固定観念", ex:"They tended to be less anxious, which did not fit the stereotype.", st:"STE-re-o-type /ˈsteriətaɪp/", no:"7/22: good on first tries"},
+    {w:"maturity", ja:"成熟", ex:"...obvious differences in everything from maturity to rebelliousness.", st:"ma-TU-ri-ty /məˈtʃʊrəti/", no:"7/22: family — mature ⇔ immature; fruit = ripe"},
+    {w:"conducted", ja:"（研究を）実施した", ex:"Extensive research has been conducted on birth order.", st:"con-DUC-ted", no:"7/22: pronounce final -ted clearly"},
+    {w:"notable", ja:"注目すべき", ex:"One notable study examined thousands of teenagers.", st:"NO-ta-ble", no:"7/22: note + able"},
+    {w:"diplomatic", ja:"如才ない・外交的な", ex:"Middle children were more diplomatic.", st:"dip-lo-MA-tic", no:"7/22: from Birth Order cold reading"},
+    {w:"between", ja:"〜の間", ex:"Associations between birth order and a person's character.", st:"be-TWEEN /bɪˈtwiːn/", no:"7/22: long /iː/ — 'tween' not 'twin'; passed after drilling"},
+    {w:"older / order", ja:"年上の / 順序", ex:"Older children disobey less. / Birth order matters.", st:"OL-der vs OR-der", no:"7/22: L vs R minimal pair — daily practice"},
+    {w:"temporary", ja:"一時的な", ex:"...really just the temporary stages of development.", st:"TEM-po-ra-ry", no:"7/22: passed fast ×3 drill"},
+    {w:"obvious", ja:"明らかな", ex:"There are obvious differences in everything.", st:"OB-vi-ous", no:"7/22: good"},
+    {w:"disobey", ja:"逆らう", ex:"Younger children disobey their parents more than older children.", st:"dis-o-BEY", no:"7/22: dis + obey (従う)"},
+    {w:"eldest", ja:"最年長の", ex:"Eldest siblings differed from others in terms of responsibility.", st:"EL-dest", no:"7/22: good after 3×"},
+  ],
 };
 
 let D = loadLocal();
@@ -240,6 +276,7 @@ function copyShareLink(){
 }
 async function cloudPull(){
   if(dirty) return;
+  if(document.activeElement && document.activeElement.isContentEditable) return; // don't clobber an edit in progress
   try{
     const r = await fetch(STORE_URL, {cache:"no-store"});
     if(!r.ok) throw 0;
@@ -312,6 +349,10 @@ function render(){
     else if(!activeFound){ el.className="active"; activeFound=true; }
   });
 
+  // vocab meter auto-counts the vocabulary list
+  D.vocabNow = (D.vocabList||[]).length;
+  document.getElementById("vocabNow").disabled = true;
+
   [["vocab","vocabNow","vocabMax"],["gram","gramNow","gramMax"],["idiom","idiomNow","idiomMax"]].forEach(([p,nk,mk])=>{
     document.getElementById(nk).value = D[nk];
     document.getElementById(mk).value = D[mk];
@@ -348,6 +389,19 @@ function render(){
     } else pill = `<span class="pill todo">–</span>`;
     statusCells[m].innerHTML = pill;
   }
+
+  // vocabulary list
+  const vb = document.getElementById("vocabBody");
+  const esc = s => String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  vb.innerHTML = (D.vocabList||[]).map((v,i)=>`<tr>
+    <td style="text-align:left;font-weight:600;" contenteditable data-vi="${i}" data-vf="w" onblur="vocabEdit(this)">${esc(v.w)}</td>
+    <td style="text-align:left;" contenteditable data-vi="${i}" data-vf="ja" onblur="vocabEdit(this)">${esc(v.ja)}</td>
+    <td style="text-align:left;" contenteditable data-vi="${i}" data-vf="ex" onblur="vocabEdit(this)">${esc(v.ex)}</td>
+    <td style="text-align:left;color:var(--sakura);font-weight:600;" contenteditable data-vi="${i}" data-vf="st" onblur="vocabEdit(this)">${esc(v.st)}</td>
+    <td style="text-align:left;color:var(--sub);" contenteditable data-vi="${i}" data-vf="no" onblur="vocabEdit(this)">${esc(v.no)}</td>
+    <td><button class="btn-ghost btn-sm" onclick="delVocab(${i})">✕</button></td>
+  </tr>`).join("");
+  document.getElementById("vocabCount").textContent = (D.vocabList||[]).length;
 
   const ul = document.getElementById("linkList");
   ul.innerHTML = D.links.map((l,i)=>{
@@ -410,6 +464,19 @@ function editLink(i){
   D.links[i] = {name,url}; commit();
 }
 function delLink(i){ if(confirm("Remove this link?")){ D.links.splice(i,1); commit(); } }
+
+function vocabEdit(td){
+  const i = +td.dataset.vi, f = td.dataset.vf;
+  if(D.vocabList[i] && D.vocabList[i][f] !== td.textContent.trim()){
+    D.vocabList[i][f] = td.textContent.trim(); commit();
+  }
+}
+function addVocab(){
+  D.vocabList = D.vocabList || [];
+  D.vocabList.push({w:"new word", ja:"", ex:"", st:"", no:""});
+  commit();
+}
+function delVocab(i){ if(confirm("Remove this word?")){ D.vocabList.splice(i,1); commit(); } }
 
 function exportData(){ document.getElementById("backupBox").value = JSON.stringify(D); }
 function importData(){
