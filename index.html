@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miku — EIKEN 準1級 Dashboard</title>
+<style>
+  :root{
+    --ink:#1e2340; --sub:#6b7194; --bg:#f4f5fb; --card:#ffffff;
+    --indigo:#4c56c0; --indigo-d:#343d99; --sakura:#e8628c; --gold:#e5a93d;
+    --green:#3ba272; --red:#d9534f; --line:#e6e8f4;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Segoe UI","Hiragino Sans","Yu Gothic",sans-serif; background:var(--bg); color:var(--ink); padding-bottom:60px;}
+  header{background:linear-gradient(120deg,var(--indigo-d),var(--indigo) 55%,var(--sakura)); color:#fff; padding:28px 24px 22px; text-align:center;}
+  header h1{font-size:1.5rem; letter-spacing:.5px;}
+  header .sub{opacity:.85; font-size:.85rem; margin-top:4px;}
+  #syncStatus{position:fixed; top:10px; right:12px; z-index:50; background:#fff; border:1px solid var(--line); border-radius:99px; padding:4px 12px; font-size:.72rem; color:var(--sub); box-shadow:0 1px 4px rgba(30,35,64,.15);}
+  .wrap{max-width:1000px; margin:0 auto; padding:18px;}
+  .grid{display:grid; gap:16px;}
+  @media(min-width:760px){ .grid.cols3{grid-template-columns:repeat(3,1fr);} .grid.cols2{grid-template-columns:repeat(2,1fr);} }
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; box-shadow:0 1px 4px rgba(30,35,64,.06);}
+  .card h2{font-size:.95rem; color:var(--indigo-d); margin-bottom:12px; display:flex; align-items:center; gap:8px;}
+  .big{font-size:3rem; font-weight:700; line-height:1;}
+  .countdown-card{text-align:center; background:linear-gradient(160deg,#fff, #f2f3ff);}
+  .countdown-card .big{color:var(--indigo);}
+  .hms{font-variant-numeric:tabular-nums; font-size:1.1rem; color:var(--sakura); font-weight:700; margin-top:2px;}
+  .muted{color:var(--sub); font-size:.8rem;}
+  .bar{background:#edeef7; border-radius:99px; height:14px; overflow:hidden; margin:6px 0 2px;}
+  .bar > span{display:block; height:100%; border-radius:99px; transition:width .4s;}
+  .meter-row{margin-bottom:14px;}
+  .meter-row .lbl{display:flex; justify-content:space-between; font-size:.85rem; margin-bottom:2px;}
+  input[type=number]{width:70px; padding:3px 6px; border:1px solid var(--line); border-radius:6px; font-size:.85rem; text-align:right;}
+  input[type=text], input[type=url], input[type=date]{padding:5px 8px; border:1px solid var(--line); border-radius:6px; font-size:.85rem; width:100%;}
+  table{width:100%; border-collapse:collapse; font-size:.85rem;}
+  th,td{padding:6px 6px; text-align:center; border-bottom:1px solid var(--line);}
+  th{color:var(--sub); font-weight:600; font-size:.75rem;}
+  td:first-child, th:first-child{text-align:left;}
+  .pill{display:inline-block; padding:2px 10px; border-radius:99px; font-size:.72rem; font-weight:600;}
+  .pill.todo{background:#eef0fb; color:var(--indigo);}
+  .pill.soon{background:#fdf1dc; color:#a97817;}
+  .pill.done{background:#e2f4ea; color:var(--green);}
+  .pct-good{color:var(--green); font-weight:700;}
+  .pct-mid{color:var(--gold); font-weight:700;}
+  .pct-low{color:var(--red); font-weight:700;}
+  .links li{list-style:none; display:flex; gap:8px; margin-bottom:8px; align-items:center;}
+  .links a{color:var(--indigo); font-weight:600; text-decoration:none; font-size:.9rem; white-space:nowrap;}
+  .links a:hover{text-decoration:underline;}
+  button{cursor:pointer; border:none; border-radius:8px; padding:7px 14px; font-size:.85rem; font-weight:600;}
+  .btn-primary{background:var(--indigo); color:#fff;}
+  .btn-ghost{background:#eef0fb; color:var(--indigo);}
+  .btn-sm{padding:3px 9px; font-size:.75rem;}
+  .streak-num{font-size:2.4rem; font-weight:700; color:var(--sakura);}
+  .phase{display:flex; gap:4px; margin-top:8px;}
+  .phase div{flex:1; text-align:center; font-size:.68rem; padding:6px 2px; border-radius:6px; background:#edeef7; color:var(--sub);}
+  .phase div.active{background:var(--indigo); color:#fff; font-weight:700;}
+  .phase div.past{background:#d8dbf0; color:var(--indigo-d);}
+  .checks label{display:flex; gap:8px; align-items:center; font-size:.85rem; margin-bottom:6px; cursor:pointer;}
+  .quote{font-style:italic; color:var(--indigo-d); font-size:.9rem; text-align:center; padding:10px 6px 0;}
+  .section-title{margin:26px 0 12px; font-size:1.05rem; color:var(--indigo-d);}
+  .flex{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+  .spacer{flex:1;}
+  .backup textarea{width:100%; height:70px; font-size:.7rem; border:1px solid var(--line); border-radius:8px; padding:6px; margin-top:8px;}
+  .hint{font-size:.72rem; color:var(--sub); margin-top:6px;}
+  .total-row{font-weight:700; background:#fafbff;}
+</style>
+</head>
+<body>
+
+<div id="syncStatus" onclick="copyShareLink()" title="Click to copy the share link" style="cursor:pointer;">⚪ connecting…</div>
+
+<header>
+  <h1>Miku's Road to EIKEN 準1級 🌸</h1>
+  <div class="sub">First stage: Sunday, October 4, 2026 &nbsp;·&nbsp; Shared live between Frank &amp; Miku — edits sync automatically.</div>
+</header>
+
+<div class="wrap">
+
+  <!-- TOP ROW -->
+  <div class="grid cols3">
+    <div class="card countdown-card">
+      <h2>⏳ Countdown</h2>
+      <div class="big" id="daysLeft">–</div>
+      <div class="muted">days until the test</div>
+      <div class="hms" id="hms"></div>
+      <div class="phase" id="phaseBar">
+        <div data-end="2026-08-15">Foundation<br>7/22–8/15</div>
+        <div data-end="2026-09-05">Build<br>8/16–9/5</div>
+        <div data-end="2026-09-26">Intensive<br>9/6–9/26</div>
+        <div data-end="2026-10-04">Polish<br>9/27–10/3</div>
+      </div>
+    </div>
+
+    <div class="card" style="text-align:center;">
+      <h2>🔥 Study streak</h2>
+      <div class="streak-num" id="streakNum">0</div>
+      <div class="muted">days in a row</div>
+      <div style="margin-top:12px;">
+        <button class="btn-primary" id="studiedBtn" onclick="logStudy()">I studied today ✔</button>
+      </div>
+      <div class="muted" id="totalDays" style="margin-top:8px;"></div>
+    </div>
+
+    <div class="card">
+      <h2>🎤 Current speech cycle</h2>
+      <input type="text" id="speechTopic" placeholder="Speech topic..." onchange="save()">
+      <div class="checks" style="margin-top:10px;" id="speechChecks">
+        <label><input type="checkbox" data-k="s1" onchange="save()"> Draft written &amp; leveled</label>
+        <label><input type="checkbox" data-k="s2" onchange="save()"> Pronunciation drilled</label>
+        <label><input type="checkbox" data-k="s3" onchange="save()"> Memorized</label>
+        <label><input type="checkbox" data-k="s4" onchange="save()"> Delivered to Frank</label>
+        <label><input type="checkbox" data-k="s5" onchange="save()"> Q&amp;A practiced</label>
+      </div>
+      <div class="flex" style="margin-top:8px;">
+        <span class="muted">Speeches completed: <b id="speechCount">0</b></span>
+        <span class="spacer"></span>
+        <button class="btn-ghost btn-sm" onclick="completeSpeech()">Complete cycle →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COVERAGE -->
+  <h3 class="section-title">📚 Coverage meters <span class="muted">(update after each speech / Q&amp;A transcript review)</span></h3>
+  <div class="card">
+    <div class="meter-row">
+      <div class="lbl"><span>Vocabulary — 準1級 core words used &amp; mastered</span>
+        <span><input type="number" id="vocabNow" min="0" onchange="save()"> / <input type="number" id="vocabMax" min="1" onchange="save()"></span></div>
+      <div class="bar"><span id="vocabBar" style="background:var(--indigo); width:0%"></span></div>
+      <div class="muted" id="vocabPct"></div>
+    </div>
+    <div class="meter-row">
+      <div class="lbl"><span>Grammar — target patterns produced correctly</span>
+        <span><input type="number" id="gramNow" min="0" onchange="save()"> / <input type="number" id="gramMax" min="1" onchange="save()"></span></div>
+      <div class="bar"><span id="gramBar" style="background:var(--sakura); width:0%"></span></div>
+      <div class="muted" id="gramPct"></div>
+    </div>
+    <div class="meter-row" style="margin-bottom:2px;">
+      <div class="lbl"><span>Idioms &amp; collocations — used naturally in speech</span>
+        <span><input type="number" id="idiomNow" min="0" onchange="save()"> / <input type="number" id="idiomMax" min="1" onchange="save()"></span></div>
+      <div class="bar"><span id="idiomBar" style="background:var(--gold); width:0%"></span></div>
+      <div class="muted" id="idiomPct"></div>
+    </div>
+  </div>
+
+  <!-- MOCK TESTS -->
+  <h3 class="section-title">📝 Mock tests <span class="muted">(2024-renewal format · enter raw scores after each mock · aim ≥ 70%)</span></h3>
+  <div class="card" style="overflow-x:auto;">
+    <table id="mockTable">
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Mock 1<br><input type="date" data-mock="0" class="mockDate" onchange="save()"></th>
+          <th>Mock 2<br><input type="date" data-mock="1" class="mockDate" onchange="save()"></th>
+          <th>Mock 3<br><input type="date" data-mock="2" class="mockDate" onchange="save()"></th>
+          <th>Mock 4<br><input type="date" data-mock="3" class="mockDate" onchange="save()"></th>
+        </tr>
+        <tr><th></th><th class="mockStatus"></th><th class="mockStatus"></th><th class="mockStatus"></th><th class="mockStatus"></th></tr>
+      </thead>
+      <tbody id="mockBody"></tbody>
+    </table>
+    <div class="hint">Sections: 語彙 Vocabulary /18 · 長文 Reading /13 · 要約 Summary /16 · 英作文 Essay /16 · リスニング Listening /29. Leave blank until taken.</div>
+  </div>
+
+  <!-- LINKS + QUOTE -->
+  <div class="grid cols2" style="margin-top:16px;">
+    <div class="card">
+      <h2>🔗 Important links <button class="btn-ghost btn-sm" style="margin-left:auto;" onclick="addLink()">+ add</button></h2>
+      <ul class="links" id="linkList"></ul>
+      <div class="hint">Click ✎ to edit a name/URL, ✕ to remove.</div>
+    </div>
+    <div class="card">
+      <h2>💪 Today's focus</h2>
+      <div class="quote" id="quote"></div>
+      <div style="margin-top:14px;">
+        <div class="lbl muted" style="margin-bottom:2px;">Journey progress (Jul 22 → Oct 4)</div>
+        <div class="bar"><span id="journeyBar" style="background:linear-gradient(90deg,var(--indigo),var(--sakura)); width:0%"></span></div>
+        <div class="muted" id="journeyPct"></div>
+      </div>
+      <div class="backup" style="margin-top:14px;">
+        <div class="flex">
+          <button class="btn-ghost btn-sm" onclick="exportData()">Backup data</button>
+          <button class="btn-ghost btn-sm" onclick="importData()">Restore</button>
+        </div>
+        <textarea id="backupBox" placeholder="Backup JSON appears here / paste here to restore"></textarea>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const TEST_DATE = new Date(2026,9,4);        // Oct 4, 2026 00:00 local
+const START_DATE = new Date(2026,6,22);      // Jul 22, 2026
+const KEY = "miku_eiken_dash_v2";
+const BIN_ID = "__BIN_ID__";                 // set at deploy time
+const API = "https://jsonblob.com/api/jsonBlob/";
+const POLL_MS = 8000;
+
+const SECTIONS = [
+  {id:"vocabQ", name:"語彙 Vocabulary", max:18},
+  {id:"read",  name:"長文 Reading", max:13},
+  {id:"summ",  name:"要約 Summary Writing", max:16},
+  {id:"essay", name:"英作文 Essay", max:16},
+  {id:"list",  name:"リスニング Listening", max:29},
+];
+
+const DEFAULTS = {
+  updatedAt:0,
+  mockDates:["2026-07-25","2026-08-15","2026-09-05","2026-09-26"],
+  scores:{},
+  vocabNow:0, vocabMax:1500, gramNow:0, gramMax:60, idiomNow:0, idiomMax:200,
+  streak:0, lastStudy:null, totalStudyDays:0,
+  speechTopic:"", speechChecks:{}, speechCount:0,
+  links:[
+    {name:"📹 Online meeting (Frank)", url:""},
+    {name:"📄 Speech & Q&A transcripts", url:""},
+    {name:"🏛 EIKEN official — 準1級", url:"https://www.eiken.or.jp/eiken/exam/grade_p1/"},
+    {name:"🗂 Past papers (過去問)", url:"https://www.eiken.or.jp/eiken/exam/"},
+    {name:"📖 Vocabulary list / flashcards", url:""},
+    {name:"🎧 Listening practice", url:""},
+  ],
+};
+
+let D = loadLocal();
+const hashBin = (location.hash.match(/b=([A-Za-z0-9-]+)/)||[])[1] || null;
+let binId = (BIN_ID && !BIN_ID.startsWith("__")) ? BIN_ID
+          : hashBin || localStorage.getItem(KEY+"_bin") || null;
+let saveTimer = null, dirty = false;
+
+function loadLocal(){
+  try{ const raw = localStorage.getItem(KEY); if(raw) return Object.assign(structuredClone(DEFAULTS), JSON.parse(raw)); }catch(e){}
+  return structuredClone(DEFAULTS);
+}
+function persistLocal(){ localStorage.setItem(KEY, JSON.stringify(D)); }
+
+function setStatus(icon, msg){ document.getElementById("syncStatus").textContent = icon+" "+msg; }
+
+async function cloudInit(){
+  if(!binId){
+    try{
+      const r = await fetch(API, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(D)});
+      const loc = r.headers.get("Location") || r.headers.get("X-jsonblob");
+      if(loc){ binId = loc.split("/").pop(); }
+    }catch(e){}
+  }
+  if(binId){
+    localStorage.setItem(KEY+"_bin", binId);
+    if((BIN_ID.startsWith("__")) && !location.hash.includes(binId)){
+      history.replaceState(null,"","#b="+binId);
+    }
+    await cloudPull(); setInterval(cloudPull, POLL_MS);
+  }
+  else setStatus("🟡","offline — saving on this device only");
+}
+function copyShareLink(){
+  navigator.clipboard.writeText(location.href).then(()=>alert("Link copied — send this exact link to Miku so you both share the same data."));
+}
+async function cloudPull(){
+  if(!binId || dirty) return;
+  try{
+    const r = await fetch(API+binId, {cache:"no-store"});
+    if(!r.ok) throw 0;
+    const remote = await r.json();
+    if((remote.updatedAt||0) > (D.updatedAt||0)){
+      D = Object.assign(structuredClone(DEFAULTS), remote);
+      persistLocal(); render();
+    }
+    setStatus("🟢","live · synced "+new Date().toLocaleTimeString());
+  }catch(e){ setStatus("🟡","offline — will retry"); }
+}
+async function cloudPush(){
+  if(!binId){ dirty=false; return; }
+  try{
+    await fetch(API+binId, {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify(D)});
+    setStatus("🟢","live · saved "+new Date().toLocaleTimeString());
+  }catch(e){ setStatus("🟡","offline — saved locally"); }
+  dirty = false;
+}
+
+function daysBetween(a,b){ return Math.round((b-a)/86400000); }
+function today0(){ const t=new Date(); return new Date(t.getFullYear(),t.getMonth(),t.getDate()); }
+
+function tick(){
+  const now = new Date();
+  const dl = daysBetween(today0(), TEST_DATE);
+  document.getElementById("daysLeft").textContent = Math.max(dl,0);
+  let ms = TEST_DATE - now;
+  if(ms>0){
+    const h=Math.floor(ms/3600000)%24, m=Math.floor(ms/60000)%60, s=Math.floor(ms/1000)%60;
+    const pad=n=>String(n).padStart(2,"0");
+    document.getElementById("hms").textContent = `+ ${pad(h)}:${pad(m)}:${pad(s)}`;
+  } else document.getElementById("hms").textContent = "Test day — がんばって! 🌸";
+}
+
+function buildMockTable(){
+  const tb = document.getElementById("mockBody");
+  let html = "";
+  SECTIONS.forEach(s=>{
+    html += `<tr><td>${s.name} <span class="muted">/${s.max}</span></td>`;
+    for(let m=0;m<4;m++){
+      html += `<td><input type="number" min="0" max="${s.max}" data-score="${s.id}_${m}" onchange="save()" style="width:55px;"></td>`;
+    }
+    html += "</tr>";
+  });
+  html += `<tr class="total-row"><td>Total <span class="muted">/92</span></td>`;
+  for(let m=0;m<4;m++) html += `<td id="tot_${m}">–</td>`;
+  html += "</tr>";
+  tb.innerHTML = html;
+}
+
+function pctClass(p){ return p>=70?"pct-good":(p>=55?"pct-mid":"pct-low"); }
+
+function render(){
+  tick();
+
+  const total = daysBetween(START_DATE, TEST_DATE);
+  const done = Math.min(Math.max(daysBetween(START_DATE, today0()),0), total);
+  const jp = Math.round(done/total*100);
+  document.getElementById("journeyBar").style.width = jp+"%";
+  document.getElementById("journeyPct").textContent = `${jp}% of the journey complete — ${done} of ${total} days`;
+
+  let activeFound=false;
+  document.querySelectorAll("#phaseBar div").forEach(el=>{
+    const end = new Date(el.dataset.end+"T23:59:59");
+    el.className = "";
+    if(today0()>end) el.className="past";
+    else if(!activeFound){ el.className="active"; activeFound=true; }
+  });
+
+  [["vocab","vocabNow","vocabMax"],["gram","gramNow","gramMax"],["idiom","idiomNow","idiomMax"]].forEach(([p,nk,mk])=>{
+    document.getElementById(nk).value = D[nk];
+    document.getElementById(mk).value = D[mk];
+    const pct = Math.min(Math.round(D[nk]/Math.max(D[mk],1)*100),100);
+    document.getElementById(p+"Bar").style.width = pct+"%";
+    document.getElementById(p+"Pct").textContent = pct+"% covered";
+  });
+
+  document.getElementById("streakNum").textContent = D.streak;
+  document.getElementById("totalDays").textContent = `${D.totalStudyDays} study days logged in total`;
+  const t = today0().toISOString().slice(0,10);
+  document.getElementById("studiedBtn").disabled = (D.lastStudy===t);
+  document.getElementById("studiedBtn").textContent = (D.lastStudy===t) ? "Logged for today ✔" : "I studied today ✔";
+
+  document.getElementById("speechTopic").value = D.speechTopic;
+  document.querySelectorAll("#speechChecks input").forEach(cb=> cb.checked = !!D.speechChecks[cb.dataset.k]);
+  document.getElementById("speechCount").textContent = D.speechCount;
+
+  document.querySelectorAll(".mockDate").forEach(inp=> inp.value = D.mockDates[+inp.dataset.mock] || "");
+  document.querySelectorAll("[data-score]").forEach(inp=> inp.value = (D.scores[inp.dataset.score] ?? ""));
+  const statusCells = document.querySelectorAll(".mockStatus");
+  for(let m=0;m<4;m++){
+    let sum=0, any=false;
+    SECTIONS.forEach(s=>{ const v=D.scores[s.id+"_"+m]; if(v!==""&&v!=null){ sum+=+v; any=true; } });
+    const totEl = document.getElementById("tot_"+m);
+    if(any){ const pct=Math.round(sum/92*100); totEl.innerHTML = `${sum} <span class="${pctClass(pct)}">(${pct}%)</span>`; }
+    else totEl.textContent = "–";
+    const dstr = D.mockDates[m];
+    let pill;
+    if(any) pill = `<span class="pill done">done</span>`;
+    else if(dstr){
+      const dd = daysBetween(today0(), new Date(dstr+"T00:00:00"));
+      pill = dd<=7 && dd>=0 ? `<span class="pill soon">in ${dd}d</span>` : (dd<0 ? `<span class="pill soon">overdue</span>` : `<span class="pill todo">in ${dd}d</span>`);
+    } else pill = `<span class="pill todo">–</span>`;
+    statusCells[m].innerHTML = pill;
+  }
+
+  const ul = document.getElementById("linkList");
+  ul.innerHTML = D.links.map((l,i)=>{
+    const a = l.url ? `<a href="${l.url}" target="_blank" rel="noopener">${l.name}</a>` : `<span class="muted">${l.name} — <i>no URL yet</i></span>`;
+    return `<li>${a}<span class="spacer"></span>
+      <button class="btn-ghost btn-sm" onclick="editLink(${i})">✎</button>
+      <button class="btn-ghost btn-sm" onclick="delLink(${i})">✕</button></li>`;
+  }).join("");
+
+  const quotes = [
+    "Small daily wins become a passing score. 継続は力なり。",
+    "Speak it, don't just study it — your speeches are your superpower.",
+    "70% on a mock isn't luck; it's 21 days of deliberate work.",
+    "Perfect pronunciation is built one drilled sentence at a time.",
+    "You don't rise to the test — you fall to your training. Train well.",
+    "Every idiom you own is a point nobody can take from you.",
+  ];
+  document.getElementById("quote").textContent = "“" + quotes[today0().getDate() % quotes.length] + "”";
+}
+
+function save(){
+  ["vocabNow","vocabMax","gramNow","gramMax","idiomNow","idiomMax"].forEach(k=> D[k] = +document.getElementById(k).value || 0);
+  D.speechTopic = document.getElementById("speechTopic").value;
+  document.querySelectorAll("#speechChecks input").forEach(cb=> D.speechChecks[cb.dataset.k]=cb.checked);
+  document.querySelectorAll(".mockDate").forEach(inp=> D.mockDates[+inp.dataset.mock]=inp.value);
+  document.querySelectorAll("[data-score]").forEach(inp=> D.scores[inp.dataset.score]=inp.value);
+  commit();
+}
+function commit(){
+  D.updatedAt = Date.now();
+  persistLocal(); render();
+  dirty = true;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(cloudPush, 800);
+}
+
+function logStudy(){
+  const t = today0().toISOString().slice(0,10);
+  if(D.lastStudy===t) return;
+  const y = new Date(today0()-86400000).toISOString().slice(0,10);
+  D.streak = (D.lastStudy===y) ? D.streak+1 : 1;
+  D.lastStudy = t; D.totalStudyDays++;
+  commit();
+}
+
+function completeSpeech(){
+  if(!confirm("Complete this speech cycle and reset for the next topic?")) return;
+  D.speechCount++; D.speechTopic=""; D.speechChecks={};
+  commit();
+}
+
+function addLink(){
+  const name = prompt("Link name:"); if(!name) return;
+  const url = prompt("URL (https://...):") || "";
+  D.links.push({name,url}); commit();
+}
+function editLink(i){
+  const name = prompt("Link name:", D.links[i].name); if(name===null) return;
+  const url = prompt("URL:", D.links[i].url); if(url===null) return;
+  D.links[i] = {name,url}; commit();
+}
+function delLink(i){ if(confirm("Remove this link?")){ D.links.splice(i,1); commit(); } }
+
+function exportData(){ document.getElementById("backupBox").value = JSON.stringify(D); }
+function importData(){
+  try{ const v = document.getElementById("backupBox").value.trim(); if(!v) return;
+    D = Object.assign(structuredClone(DEFAULTS), JSON.parse(v)); commit(); alert("Restored ✔");
+  }catch(e){ alert("Invalid backup data."); }
+}
+
+buildMockTable();
+render();
+setInterval(tick, 1000);
+setInterval(render, 60000);   // refresh day-based widgets
+cloudInit();
+</script>
+</body>
+</html>
