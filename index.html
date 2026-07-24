@@ -180,7 +180,9 @@
   <div id="sessionList"></div>
 
   <!-- VOCABULARY LIST -->
-  <h3 class="section-title">🗣 Vocabulary list <span class="muted">(from sessions · click any cell to edit · saves automatically)</span></h3>
+  <h3 class="section-title" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">🗣 Vocabulary list <span class="muted">(from sessions · click any cell to edit · saves automatically · hardest words float to the top)</span>
+    <a href="vocab-trainer.html" style="margin-left:auto; text-decoration:none;"><button class="btn-primary btn-sm">🎮 単語トレーニング →</button></a>
+  </h3>
   <div class="card" style="overflow-x:auto;">
     <table id="vocabTable">
       <thead><tr>
@@ -284,6 +286,8 @@ Miku, let's start with the truth: Papa teaches many students, and he said it out
 Every one of these fixes shows up on test day. Clear /bl/ gives you "problem," "public," "establish" — words in almost every 準1級 reading. Clear -ed endings and first syllables are exactly what the speaking examiner grades. And reading the <i>title</i> first to predict the meaning — like Papa showed you — is the secret weapon for the summary question.
 <div class="goal">74 days, Miku. Nobody in the family has passed 準1級 at 16 — you are on schedule to be the first. Your ear is already excellent; now we train the mouth to catch up. Next mission: your speech — "Should AI be used in education?" Make the "before" video on day one. Future Miku wants to see how far you came. 🌸</div>`},
   ],
+  leitner:{},
+  trainerStats:{xp:0, totalCorrect:0, totalWrong:0, bestStreak:0, sessionsCompleted:0},
 };
 
 let D = loadLocal();

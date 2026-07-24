@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miku — Vocabulary Trainer (Leitner)</title>
+<style>
+  :root{
+    --ink:#3b3a30; --sub:#7a7866; --bg:#f4efe1; --card:#fffdf6;
+    --indigo:#4a7c59; --indigo-d:#2f5d43; --sakura:#d9536f; --gold:#c98f2d;
+    --green:#3ba272; --red:#c0554f; --line:#e3dcc8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:"Hiragino Maru Gothic ProN","Segoe UI","Yu Gothic",sans-serif; background:linear-gradient(180deg,#d8f0fb 0%,var(--bg) 260px); color:var(--ink); padding-bottom:60px;}
+  header{background:linear-gradient(180deg,#7ec8ec,#aee1f9 70%,#d8f0fb); color:var(--indigo-d); padding:26px 24px 20px; text-align:center;}
+  header h1{font-size:1.4rem; letter-spacing:.5px;}
+  header .sub{opacity:.9; font-size:.85rem; margin-top:6px;}
+  header a{color:var(--indigo-d); font-weight:600;}
+  #syncStatus{position:fixed; top:10px; right:12px; z-index:50; background:#fff; border:1px solid var(--line); border-radius:99px; padding:4px 12px; font-size:.72rem; color:var(--sub); box-shadow:0 1px 4px rgba(30,35,64,.15);}
+  .wrap{max-width:820px; margin:0 auto; padding:18px;}
+  .grid{display:grid; gap:14px;}
+  @media(min-width:700px){ .grid.cols5{grid-template-columns:repeat(5,1fr);} .grid.cols3{grid-template-columns:repeat(3,1fr);} .grid.cols2{grid-template-columns:repeat(2,1fr);} }
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:0 1px 4px rgba(30,35,64,.06);}
+  .stat{text-align:center;}
+  .stat .num{font-size:1.5rem; font-weight:700; color:var(--indigo-d);}
+  .stat .lbl{font-size:.68rem; color:var(--sub); text-transform:uppercase; letter-spacing:.3px; margin-top:2px;}
+  .section-title{margin:22px 0 10px; font-size:1.02rem; color:var(--indigo-d);}
+  .muted{color:var(--sub); font-size:.82rem;}
+  button{cursor:pointer; border:none; border-radius:8px; padding:9px 16px; font-size:.9rem; font-weight:600; font-family:inherit;}
+  .btn-primary{background:var(--indigo); color:#fff;}
+  .btn-primary:disabled{opacity:.5; cursor:default;}
+  .btn-ghost{background:#eef0fb; color:var(--indigo);}
+  .btn-sm{padding:5px 11px; font-size:.78rem;}
+  .flex{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+  .spacer{flex:1;}
+  select{padding:7px 10px; border:1px solid var(--line); border-radius:8px; font-size:.85rem; font-family:inherit;}
+
+  .setup-card{text-align:center; padding:34px 20px;}
+  .setup-card h2{color:var(--indigo-d); font-size:1.15rem; margin-bottom:8px;}
+  .setup-card p{color:var(--sub); font-size:.9rem; margin-bottom:18px;}
+
+  .qcard{padding:26px 22px;}
+  .qmeta{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
+  .qtype-pill{display:inline-block; padding:3px 11px; border-radius:99px; font-size:.68rem; font-weight:700; background:#eef0fb; color:var(--indigo);}
+  .progress-bar{background:#edeef7; border-radius:99px; height:8px; overflow:hidden; flex:1; margin:0 12px;}
+  .progress-bar > span{display:block; height:100%; background:var(--indigo); border-radius:99px; transition:width .3s;}
+  .qlabel{font-size:.8rem; color:var(--sub); text-align:center; margin-bottom:6px;}
+  .qword{font-size:1.7rem; font-weight:700; color:var(--indigo-d); text-align:center; margin-bottom:6px;}
+  .qword.jp{font-size:1.5rem;}
+  .qctx{font-size:1.02rem; color:var(--ink); text-align:center; background:#fafbff; border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin:10px 0 6px; line-height:1.6;}
+  .qctx.big{font-size:1.08rem;}
+  .qctx u{text-decoration:none; border-bottom:3px solid var(--sakura); padding:0 2px;}
+  .options{display:grid; gap:10px; margin-top:18px;}
+  @media(min-width:560px){ .options{grid-template-columns:1fr 1fr;} }
+  .opt{background:#fff; border:2px solid var(--line); border-radius:10px; padding:13px 14px; text-align:left; font-size:.95rem; color:var(--ink); font-weight:600; transition:all .15s;}
+  .opt:hover:not(:disabled){border-color:var(--indigo); background:#f6f8ff;}
+  .opt.correct{background:#e2f4ea; border-color:var(--green); color:#1e6b47;}
+  .opt.wrong{background:#fbe9e8; border-color:var(--red); color:#8f3a35;}
+  .opt:disabled{cursor:default;}
+  .feedback{margin-top:16px; text-align:center; font-weight:700; font-size:.98rem; min-height:1.4em;}
+  .feedback.good{color:var(--green);}
+  .feedback.bad{color:var(--red);}
+  .explain{text-align:center; font-size:.82rem; color:var(--sub); margin-top:4px;}
+  .next-row{text-align:center; margin-top:16px;}
+
+  .summary{text-align:center; padding:30px 20px;}
+  .summary .big{font-size:2.6rem; font-weight:700; color:var(--indigo-d);}
+
+  .box-dist{display:flex; gap:6px; margin-top:8px;}
+  .box-dist .b{flex:1; text-align:center; border-radius:8px; padding:8px 2px; background:#edeef7;}
+  .box-dist .b .n{font-weight:700; color:var(--indigo-d); font-size:1rem;}
+  .box-dist .b .t{font-size:.62rem; color:var(--sub); text-transform:uppercase;}
+  .box-dist .b.mastered{background:#e2f4ea;}
+  .box-dist .b.mastered .n{color:var(--green);}
+
+  .problem-list{list-style:none;}
+  .problem-list li{display:flex; justify-content:space-between; align-items:center; padding:8px 4px; border-bottom:1px solid var(--line); font-size:.88rem;}
+  .problem-list li:last-child{border-bottom:none;}
+  .problem-list .w{font-weight:700; color:var(--indigo-d);}
+  .problem-list .ja{color:var(--sub); margin-left:6px; font-weight:400;}
+  .pill.hot{background:#fbe9e8; color:var(--red); font-size:.68rem; padding:2px 9px; border-radius:99px; font-weight:700;}
+</style>
+</head>
+<body>
+
+<div id="syncStatus">⚪ connecting…</div>
+
+<header>
+  <h1>🧠 ミクの単語トレーニング</h1>
+  <div class="sub">苦手な単語を優先して出題するよ &nbsp;·&nbsp; <a href="index.html">← ダッシュボードにもどる</a></div>
+</header>
+
+<div class="wrap">
+
+  <div class="grid cols3" id="statBar">
+    <div class="card stat"><div class="num" id="statXp">0</div><div class="lbl">ポイント</div></div>
+    <div class="card stat"><div class="num" id="statStreak">0</div><div class="lbl">連続正解</div></div>
+    <div class="card stat"><div class="num" id="statMastered">0</div><div class="lbl">マスター済み</div></div>
+  </div>
+
+  <div id="gameArea" style="margin-top:16px;"></div>
+
+  <details class="card" id="advancedPanel" style="margin-top:22px;">
+    <summary style="cursor:pointer; font-weight:700; color:var(--indigo-d); font-size:.85rem;">📊 くわしい統計（Papa用）</summary>
+    <div style="margin-top:14px;">
+      <div class="flex" style="gap:22px; margin-bottom:14px;">
+        <div class="muted">正答率: <b id="statAccuracy" style="color:var(--indigo-d);">–</b></div>
+        <div class="muted">復習待ち: <b id="statDue" style="color:var(--indigo-d);">0</b></div>
+      </div>
+      <div class="box-dist" id="boxDist"></div>
+      <div class="muted" style="margin-top:8px;">Box 1 = 毎回復習 ・ Box 5 = 約16日ごと ・ 2回連続でBox 5を通過するとマスター。間違えると必ずBox 1に戻る（ライトナー方式）。</div>
+      <h4 style="margin:16px 0 6px; font-size:.85rem; color:var(--indigo-d);">🔥 苦手な単語トップ5</h4>
+      <ul class="problem-list" id="problemList"></ul>
+      <div class="muted" id="noProblemMsg" style="display:none;">まだ苦手な単語はありません。下のセッションを始めてみよう！</div>
+    </div>
+  </details>
+
+</div>
+
+<script>
+/* ---------------- shared storage contract (same as index.html) ---------------- */
+const KEY = "miku_eiken_dash_v2";
+const STORE_URL = "https://textdb.dev/api/data/eiken-p1-miku-99646590-4e90-4afa-98bb-f35a0566ed6f";
+const POLL_MS = 8000;
+
+const SECTIONS = [
+  {id:"vocabQ", name:"語彙 Vocabulary", max:18},
+  {id:"read",  name:"長文 Reading", max:13},
+  {id:"summ",  name:"要約 Summary Writing", max:16},
+  {id:"essay", name:"英作文 Essay", max:16},
+  {id:"list",  name:"リスニング Listening", max:29},
+];
+
+const DEFAULTS = {
+  updatedAt:0,
+  mockDates:["2026-07-25","2026-08-15","2026-09-05","2026-09-26"],
+  scores:{},
+  vocabNow:0, vocabMax:1500, gramNow:0, gramMax:60, idiomNow:0, idiomMax:200,
+  streak:0, lastStudy:null, totalStudyDays:0,
+  speechTopic:"", speechChecks:{}, speechCount:0,
+  links:[
+    {name:"📹 Papa's meeting room (Zoom)", url:""},
+    {name:"📄 Speech & Q&A transcripts", url:""},
+    {name:"🏛 EIKEN official — 準1級", url:"https://www.eiken.or.jp/eiken/exam/grade_p1/"},
+    {name:"🗂 Past papers (過去問)", url:"https://www.eiken.or.jp/eiken/exam/"},
+    {name:"📖 Vocabulary list / flashcards", url:""},
+    {name:"🎧 Listening practice", url:""},
+  ],
+  vocabList:[
+    {w:"genetics", ja:"遺伝学", ex:"Personality is determined more by genetics and one's living environment.", st:"ge-NE-tics /dʒəˈnetɪks/", no:"7/22: 「ジェ」が消えがち — start with a clear 'je-' sound"},
+    {w:"extremely", ja:"極めて・非常に", ex:"The differences for every birth position were extremely slight.", st:"ex-TREME-ly /ɪkˈstriːmli/", no:"7/22: hardest word tonight — not 'externally'; drill daily"},
+    {w:"siblings", ja:"兄弟姉妹", ex:"Youngest siblings were more rebellious.", st:"SIB-lings /ˈsɪblɪŋz/", no:"7/22: /bl/ cluster — no vowel between b and l (× sibi-lings)"},
+    {w:"anxiety", ja:"不安", ex:"Eldest siblings differed in terms of responsibility and anxiety.", st:"ang-ZY-e-ty /æŋˈzaɪəti/", no:"7/22: stress ZY; adjective = anxious"},
+    {w:"rebelliousness", ja:"反抗心", ex:"There are differences in everything from maturity to rebelliousness.", st:"re-BEL-lious-ness", no:"7/22: build up — rebel → rebellious → rebelliousness"},
+    {w:"stereotype", ja:"固定観念", ex:"They tended to be less anxious, which did not fit the stereotype.", st:"STE-re-o-type /ˈsteriətaɪp/", no:"7/22: good on first tries"},
+    {w:"maturity", ja:"成熟", ex:"...obvious differences in everything from maturity to rebelliousness.", st:"ma-TU-ri-ty /məˈtʃʊrəti/", no:"7/22: family — mature ⇔ immature; fruit = ripe"},
+    {w:"conducted", ja:"（研究を）実施した", ex:"Extensive research has been conducted on birth order.", st:"con-DUC-ted", no:"7/22: pronounce final -ted clearly"},
+    {w:"notable", ja:"注目すべき", ex:"One notable study examined thousands of teenagers.", st:"NO-ta-ble", no:"7/22: note + able"},
+    {w:"diplomatic", ja:"如才ない・外交的な", ex:"Middle children were more diplomatic.", st:"dip-lo-MA-tic", no:"7/22: from Birth Order cold reading"},
+    {w:"between", ja:"〜の間", ex:"Associations between birth order and a person's character.", st:"be-TWEEN /bɪˈtwiːn/", no:"7/22: long /iː/ — 'tween' not 'twin'; passed after drilling"},
+    {w:"older / order", ja:"年上の / 順序", ex:"Older children disobey less. / Birth order matters.", st:"OL-der vs OR-der", no:"7/22: L vs R minimal pair — daily practice"},
+    {w:"temporary", ja:"一時的な", ex:"...really just the temporary stages of development.", st:"TEM-po-ra-ry", no:"7/22: passed fast ×3 drill"},
+    {w:"obvious", ja:"明らかな", ex:"There are obvious differences in everything.", st:"OB-vi-ous", no:"7/22: good"},
+    {w:"disobey", ja:"逆らう", ex:"Younger children disobey their parents more than older children.", st:"dis-o-BEY", no:"7/22: dis + obey (従う)"},
+    {w:"eldest", ja:"最年長の", ex:"Eldest siblings differed from others in terms of responsibility.", st:"EL-dest", no:"7/22: good after 3×"},
+  ],
+  sessions:[],
+  leitner:{},
+  trainerStats:{xp:0, totalCorrect:0, totalWrong:0, bestStreak:0, sessionsCompleted:0},
+};
+
+let D = loadLocal();
+let saveTimer = null, dirty = false;
+let inQuestion = false; // guard so cloud sync never clobbers mid-session state
+
+function loadLocal(){
+  try{ const raw = localStorage.getItem(KEY); if(raw) return Object.assign(structuredClone(DEFAULTS), JSON.parse(raw)); }catch(e){}
+  return structuredClone(DEFAULTS);
+}
+function persistLocal(){ localStorage.setItem(KEY, JSON.stringify(D)); }
+function setStatus(icon, msg){ document.getElementById("syncStatus").textContent = icon+" "+msg; }
+
+async function cloudInit(){ await cloudPull(); setInterval(cloudPull, POLL_MS); }
+async function cloudPull(){
+  if(dirty || inQuestion) return;
+  try{
+    const r = await fetch(STORE_URL, {cache:"no-store"});
+    if(!r.ok) throw 0;
+    const txt = (await r.text()).trim();
+    if(!txt){ await cloudPushNow(); return; }
+    const remote = JSON.parse(txt);
+    if((remote.updatedAt||0) > (D.updatedAt||0)){
+      D = Object.assign(structuredClone(DEFAULTS), remote);
+      D.leitner = D.leitner || {};
+      D.trainerStats = D.trainerStats || {xp:0, totalCorrect:0, totalWrong:0, bestStreak:0, sessionsCompleted:0};
+      persistLocal();
+      refreshDashboardStats();
+    }
+    setStatus("🟢","live · synced "+new Date().toLocaleTimeString());
+  }catch(e){ setStatus("🟡","offline — will retry"); }
+}
+async function cloudPushNow(){
+  try{
+    const r = await fetch(STORE_URL, {method:"POST", headers:{"Content-Type":"text/plain"}, body:JSON.stringify(D)});
+    if(!r.ok) throw 0;
+    setStatus("🟢","live · saved "+new Date().toLocaleTimeString());
+  }catch(e){ setStatus("🟡","offline — saved locally"); }
+}
+function commit(){
+  D.updatedAt = Date.now();
+  persistLocal();
+  dirty = true;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async ()=>{ await cloudPushNow(); dirty=false; }, 700);
+}
+
+/* ---------------- Leitner engine ---------------- */
+const BOX_INTERVAL_DAYS = [0, 1, 3, 7, 16]; // index = box-1
+
+function getStat(word){
+  const k = String(word||"").trim().toLowerCase();
+  if(!k) return {box:1, seen:0, correct:0, wrong:0, streak:0, lastSeenAt:0, dueAt:0, mastered:false};
+  if(!D.leitner[k]) D.leitner[k] = {box:1, seen:0, correct:0, wrong:0, streak:0, lastSeenAt:0, dueAt:0, mastered:false};
+  return D.leitner[k];
+}
+
+function difficultyScore(v){
+  const s = getStat(v.w);
+  if(s.seen===0) return 1;                       // untested: sits above mastered, below anything actually missed
+  if(s.mastered) return -10 - s.correct;          // mastered words sink to the bottom
+  const errRate = s.wrong / Math.max(s.seen,1);
+  return errRate*10 + (5-s.box)*2 + Math.min(s.wrong,5);
+}
+
+function reorderVocabByDifficulty(){
+  D.vocabList = (D.vocabList||[]).slice().sort((a,b)=> difficultyScore(b) - difficultyScore(a));
+}
+
+function recordAnswer(word, correct){
+  const s = getStat(word);
+  s.seen++;
+  s.lastSeenAt = Date.now();
+  if(correct){
+    s.correct++; s.streak++;
+    s.box = Math.min(s.box+1, 5);
+    if(s.box===5 && s.streak>=2) s.mastered = true;
+    D.trainerStats.xp += 10 + Math.min(s.streak,5);
+    D.trainerStats.totalCorrect++;
+  } else {
+    s.wrong++; s.streak=0; s.box=1; s.mastered=false;
+    D.trainerStats.totalWrong++;
+  }
+  D.trainerStats.bestStreak = Math.max(D.trainerStats.bestStreak||0, s.streak);
+  s.dueAt = Date.now() + BOX_INTERVAL_DAYS[s.box-1]*86400000;
+  reorderVocabByDifficulty();
+  commit();
+  refreshDashboardStats();
+}
+
+/* ---------------- word bank: extra confusable words to sharpen distractors ---------------- */
+const EXTRA_BANK = [
+  {w:"genesis", ja:"起源・発生"}, {w:"generic", ja:"一般的な"}, {w:"genuine", ja:"本物の"},
+  {w:"eternally", ja:"永遠に"}, {w:"externally", ja:"外部から"}, {w:"extensively", ja:"広範囲に"}, {w:"essentially", ja:"本質的に"},
+  {w:"descendants", ja:"子孫"}, {w:"ancestors", ja:"祖先"},
+  {w:"annuity", ja:"年金"}, {w:"agony", ja:"苦悩"}, {w:"anguish", ja:"苦しみ"},
+  {w:"recklessness", ja:"無謀さ"}, {w:"righteousness", ja:"正義感"},
+  {w:"prototype", ja:"原型"}, {w:"archetype", ja:"典型"},
+  {w:"majority", ja:"大多数"}, {w:"maternity", ja:"妊産婦であること"}, {w:"minority", ja:"少数派"},
+  {w:"conducive", ja:"助けとなる"}, {w:"conductive", ja:"伝導性の"},
+  {w:"notorious", ja:"悪名高い"}, {w:"noticeable", ja:"目立つ"},
+  {w:"domestic", ja:"国内の"}, {w:"dramatic", ja:"劇的な"},
+  {w:"beyond", ja:"〜を超えて"}, {w:"beneath", ja:"〜の下に"},
+  {w:"ordinary", ja:"普通の"}, {w:"orderly", ja:"整然とした"},
+  {w:"contemporary", ja:"現代の"}, {w:"temporal", ja:"一時的な・現世の"},
+  {w:"oblivious", ja:"気づいていない"}, {w:"obscure", ja:"不明瞭な"},
+  {w:"disregard", ja:"無視する"}, {w:"disrupt", ja:"混乱させる"},
+  {w:"ambiguous", ja:"曖昧な"}, {w:"meticulous", ja:"几帳面な"}, {w:"resilient", ja:"回復力のある"},
+  {w:"controversial", ja:"物議を醸す"}, {w:"plausible", ja:"もっともらしい"}, {w:"redundant", ja:"余分な"},
+  {w:"arbitrary", ja:"恣意的な"}, {w:"feasible", ja:"実行可能な"}, {w:"deteriorate", ja:"悪化する"},
+  {w:"mitigate", ja:"緩和する"}, {w:"indigenous", ja:"先住の"}, {w:"unprecedented", ja:"前例のない"},
+  {w:"versatile", ja:"多才な"}, {w:"subsequent", ja:"その後の"}, {w:"sufficient", ja:"十分な"},
+  {w:"substantial", ja:"かなりの"}, {w:"discrepancy", ja:"食い違い"}, {w:"empirical", ja:"経験に基づく"},
+  {w:"hypothesis", ja:"仮説"}, {w:"skeptical", ja:"懐疑的な"}, {w:"vulnerable", ja:"脆弱な"},
+  {w:"obsolete", ja:"廃れた"}, {w:"meager", ja:"乏しい"}, {w:"robust", ja:"頑健な"},
+  {w:"tedious", ja:"退屈な"}, {w:"arduous", ja:"骨の折れる"}, {w:"candid", ja:"率直な"},
+  {w:"blatant", ja:"あからさまな"}, {w:"tangible", ja:"具体的な・触れられる"}, {w:"intangible", ja:"無形の"},
+  {w:"coherent", ja:"一貫した"}, {w:"comprehensive", ja:"包括的な"}, {w:"jeopardize", ja:"危険にさらす"},
+  {w:"legitimate", ja:"正当な"}, {w:"leniency", ja:"寛大さ"}, {w:"magnitude", ja:"規模"},
+  {w:"marginal", ja:"わずかな"}, {w:"mundane", ja:"平凡な"}, {w:"optimal", ja:"最適な"},
+  {w:"outweigh", ja:"〜より重要である"}, {w:"pessimistic", ja:"悲観的な"}, {w:"plummet", ja:"急落する"},
+  {w:"ponder", ja:"じっくり考える"}, {w:"precarious", ja:"不安定な"}, {w:"predominant", ja:"主要な"},
+  {w:"prestige", ja:"名声"}, {w:"presume", ja:"推定する"}, {w:"prevail", ja:"普及する・勝る"},
+  {w:"prohibit", ja:"禁止する"}, {w:"prominent", ja:"著名な"}, {w:"prone", ja:"〜しがちな"},
+  {w:"prudent", ja:"慎重な"}, {w:"reluctant", ja:"気が進まない"}, {w:"renowned", ja:"有名な"},
+  {w:"resent", ja:"憤慨する"}, {w:"resign", ja:"辞職する"}, {w:"retrieve", ja:"取り戻す"},
+  {w:"rigorous", ja:"厳格な"},
+];
+
+/* ---------------- similarity / distractor selection ---------------- */
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++) dp[i][0]=i;
+  for(let j=0;j<=n;j++) dp[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
+  return dp[m][n];
+}
+function normJa(s){ return String(s||"").replace(/[\s・、。/]/g,""); }
+function similarity(a,b){
+  const aw=a.w.toLowerCase(), bw=b.w.toLowerCase();
+  let score=0;
+  score -= Math.abs(aw.length-bw.length)*0.6;
+  if(aw.slice(-3)===bw.slice(-3)) score+=3; else if(aw.slice(-2)===bw.slice(-2)) score+=1.5;
+  if(aw.slice(0,2)===bw.slice(0,2)) score+=2;
+  const ld = levenshtein(aw,bw);
+  if(ld>=1 && ld<=4) score += (5-ld);
+  score += Math.random()*0.8;
+  return score;
+}
+function buildPool(target){
+  const vocabWords = new Set((D.vocabList||[]).map(x=>x.w.toLowerCase()));
+  const extra = EXTRA_BANK.filter(x=>!vocabWords.has(x.w.toLowerCase()));
+  return (D.vocabList||[]).filter(x=>x.w.toLowerCase()!==target.w.toLowerCase() && x.w.trim() && x.ja.trim()).concat(extra);
+}
+function buildDistractors(target, count){
+  const pool = buildPool(target);
+  const targetJa = normJa(target.ja);
+  const seenW = new Set([target.w.toLowerCase()]);
+  const scored = pool.filter(c=>{
+    if(seenW.has(c.w.toLowerCase())) return false;
+    if(normJa(c.ja)===targetJa) return false;
+    return true;
+  }).map(c=>({c, score:similarity(target,c)}));
+  scored.sort((a,b)=> b.score-a.score);
+  const topSlice = scored.slice(0, Math.max(count*4,12));
+  shuffle(topSlice);
+  const result=[];
+  for(const item of topSlice){
+    if(result.length>=count) break;
+    if(seenW.has(item.c.w.toLowerCase())) continue;
+    seenW.add(item.c.w.toLowerCase());
+    result.push(item.c);
+  }
+  let idx=0;
+  while(result.length<count && idx<scored.length){
+    const c = scored[idx].c;
+    if(!seenW.has(c.w.toLowerCase())){ seenW.add(c.w.toLowerCase()); result.push(c); }
+    idx++;
+  }
+  return result;
+}
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+function esc(s){ return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+function escapeRe(s){ return String(s).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+
+/* ---------------- question generation ---------------- */
+function makeQuestion(v){
+  const distractors = buildDistractors(v, 3);
+  const hasCloze = v.ex && v.w && new RegExp("\\b"+escapeRe(v.w.split(" / ")[0])+"\\b","i").test(v.ex);
+  const typePool = ["word2ja","word2ja","ja2word","ja2word"];
+  if(hasCloze) typePool.push("cloze","cloze","cloze");
+  const type = typePool[Math.floor(Math.random()*typePool.length)];
+
+  let options, correctIdx, promptHtml, questionLabel;
+  if(type==="word2ja"){
+    options = shuffle([v, ...distractors]).map(o=>o.ja);
+    correctIdx = options.indexOf(v.ja);
+    promptHtml = `<div class="qword">${esc(v.w)}</div>` + (v.ex ? `<div class="qctx">${esc(v.ex)}</div>` : "");
+    questionLabel = "この単語の意味は?";
+  } else if(type==="ja2word"){
+    options = shuffle([v, ...distractors]).map(o=>o.w);
+    correctIdx = options.indexOf(v.w);
+    promptHtml = `<div class="qword jp">${esc(v.ja)}</div>`;
+    questionLabel = "この意味に合う英単語は?";
+  } else {
+    const firstForm = v.w.split(" / ")[0];
+    const re = new RegExp("\\b"+escapeRe(firstForm)+"\\b","i");
+    const blanked = v.ex.replace(re, "_____");
+    options = shuffle([v, ...distractors]).map(o=>o.w);
+    correctIdx = options.indexOf(v.w);
+    promptHtml = `<div class="qctx big">${esc(blanked)}</div>`;
+    questionLabel = "空欄に入る単語は?";
+  }
+  return {v, type, options, correctIdx, promptHtml, questionLabel};
+}
+
+/* ---------------- session queue ---------------- */
+function trainableWords(){
+  return (D.vocabList||[]).filter(v=> v.w && v.w.trim() && v.ja && v.ja.trim() && v.w.trim().toLowerCase()!=="new word");
+}
+function buildQueue(n){
+  const now = Date.now();
+  const words = trainableWords();
+  const withMeta = words.map(v=>({v, s:getStat(v.w), diff:difficultyScore(v)}));
+  const due = withMeta.filter(x=> x.s.seen===0 || x.s.dueAt<=now);
+  const notDue = withMeta.filter(x=> !(x.s.seen===0 || x.s.dueAt<=now));
+  due.sort((a,b)=> (b.diff-a.diff) + (Math.random()-0.5)*0.5);
+  notDue.sort((a,b)=> a.s.dueAt-b.s.dueAt);
+  let queue = due.map(x=>x.v).concat(notDue.map(x=>x.v));
+  const result=[]; let i=0;
+  while(result.length<n && queue.length>0 && i<n*4){ result.push(queue[i % queue.length]); i++; }
+  return result;
+}
+
+/* ---------------- UI: stats & problem words ---------------- */
+function refreshDashboardStats(){
+  const words = trainableWords();
+  const ts = D.trainerStats || {xp:0,totalCorrect:0,totalWrong:0,bestStreak:0,sessionsCompleted:0};
+  const totalAnswered = ts.totalCorrect + ts.totalWrong;
+  document.getElementById("statAccuracy").textContent = totalAnswered ? Math.round(ts.totalCorrect/totalAnswered*100)+"%" : "–";
+  document.getElementById("statXp").textContent = ts.xp||0;
+  document.getElementById("statStreak").textContent = ts.bestStreak||0;
+
+  let mastered=0, due=0;
+  const boxCounts=[0,0,0,0,0];
+  const now = Date.now();
+  words.forEach(v=>{
+    const s = getStat(v.w);
+    if(s.mastered) mastered++;
+    else boxCounts[s.box-1]++;
+    if(s.seen===0 || s.dueAt<=now) due++;
+  });
+  document.getElementById("statMastered").textContent = mastered;
+  document.getElementById("statDue").textContent = due;
+
+  const bd = document.getElementById("boxDist");
+  bd.innerHTML = boxCounts.map((c,i)=>`<div class="b"><div class="n">${c}</div><div class="t">Box ${i+1}</div></div>`).join("")
+    + `<div class="b mastered"><div class="n">${mastered}</div><div class="t">Mastered</div></div>`;
+
+  const ranked = words.map(v=>({v, s:getStat(v.w), d:difficultyScore(v)}))
+    .filter(x=>x.s.wrong>0 || x.s.seen>0 && !x.s.mastered)
+    .sort((a,b)=>b.d-a.d).slice(0,5);
+  const list = document.getElementById("problemList");
+  const noMsg = document.getElementById("noProblemMsg");
+  if(ranked.length===0){
+    list.innerHTML=""; noMsg.style.display="block";
+  } else {
+    noMsg.style.display="none";
+    list.innerHTML = ranked.map(r=>`<li>
+      <span><span class="w">${esc(r.v.w)}</span><span class="ja">${esc(r.v.ja)}</span></span>
+      <span class="pill hot">${r.s.wrong} miss${r.s.wrong===1?"":"es"} · box ${r.s.box}</span>
+    </li>`).join("");
+  }
+}
+
+/* ---------------- UI: game flow ---------------- */
+let session = null; // {queue, idx, correct, length}
+
+function renderSetup(){
+  const words = trainableWords();
+  const area = document.getElementById("gameArea");
+  if(words.length===0){
+    area.innerHTML = `<div class="card setup-card"><h2>まだ単語がありません 🌱</h2><p>ダッシュボードの単語リストに英単語と日本語の意味を追加してから、また来てね。</p><a href="index.html"><button class="btn-primary">ダッシュボードへ →</button></a></div>`;
+    return;
+  }
+  area.innerHTML = `
+    <div class="card setup-card">
+      <h2>練習を始めよう、ミク！</h2>
+      <p>苦手な単語から順番に出てくるよ。正直に答えてね。</p>
+      <div class="flex" style="justify-content:center;">
+        <label class="muted">問題数</label>
+        <select id="sessionLen">
+          <option value="10">10問</option>
+          <option value="15" selected>15問</option>
+          <option value="20">20問</option>
+        </select>
+        <button class="btn-primary" onclick="startSession()">スタート →</button>
+      </div>
+    </div>`;
+}
+
+function startSession(){
+  const n = +document.getElementById("sessionLen").value || 15;
+  const queue = buildQueue(n);
+  if(queue.length===0){ renderSetup(); return; }
+  session = {queue, idx:0, correct:0, length:queue.length};
+  inQuestion = true;
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const area = document.getElementById("gameArea");
+  const v = session.queue[session.idx];
+  const q = makeQuestion(v);
+  session.current = q;
+  const pct = Math.round(session.idx/session.length*100);
+  const typeLabel = {word2ja:"英→日", ja2word:"日→英", cloze:"穴うめ"}[q.type];
+
+  area.innerHTML = `
+    <div class="card qcard">
+      <div class="qmeta">
+        <span class="muted">${session.idx+1} / ${session.length} 問目</span>
+        <div class="progress-bar"><span style="width:${pct}%"></span></div>
+        <span class="qtype-pill">${typeLabel}</span>
+      </div>
+      <div class="qlabel">${esc(q.questionLabel)}</div>
+      ${q.promptHtml}
+      <div class="options" id="optWrap">
+        ${q.options.map((o,i)=>`<button class="opt" data-i="${i}" onclick="answer(${i})">${esc(o)}</button>`).join("")}
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <div class="explain" id="explain"></div>
+      <div class="next-row" id="nextRow"></div>
+    </div>`;
+}
+
+function answer(i){
+  const q = session.current;
+  const opts = document.querySelectorAll("#optWrap .opt");
+  opts.forEach(b=>b.disabled=true);
+  const correct = (i===q.correctIdx);
+  opts[i].classList.add(correct?"correct":"wrong");
+  if(!correct) opts[q.correctIdx].classList.add("correct");
+
+  const fb = document.getElementById("feedback");
+  const ex = document.getElementById("explain");
+  if(correct){
+    fb.textContent = "⭕ せいかい！よくできました。";
+    fb.className = "feedback good";
+  } else {
+    fb.textContent = "✕ おしい！もう一度復習しよう。";
+    fb.className = "feedback bad";
+  }
+  ex.textContent = `${q.v.w}  ―  ${q.v.ja}`;
+  if(correct) session.correct++;
+
+  recordAnswer(q.v.w, correct);
+
+  document.getElementById("nextRow").innerHTML =
+    `<button class="btn-primary" onclick="nextQuestion()">${session.idx+1 < session.length ? "つぎへ →" : "結果を見る →"}</button>`;
+}
+
+function nextQuestion(){
+  session.idx++;
+  if(session.idx >= session.length){ renderSummary(); return; }
+  renderQuestion();
+}
+
+function renderSummary(){
+  inQuestion = false;
+  D.trainerStats.sessionsCompleted = (D.trainerStats.sessionsCompleted||0) + 1;
+  commit();
+  const pct = Math.round(session.correct/session.length*100);
+  const area = document.getElementById("gameArea");
+  area.innerHTML = `
+    <div class="card summary">
+      <div class="muted">おつかれさま！</div>
+      <div class="big">${session.correct} / ${session.length}</div>
+      <div class="muted" style="margin-top:2px;">せいかい率 ${pct}%</div>
+      <div class="flex" style="justify-content:center; margin-top:20px;">
+        <button class="btn-primary" onclick="renderSetup()">もう一度練習する</button>
+        <a href="index.html"><button class="btn-ghost">ダッシュボードへ</button></a>
+      </div>
+    </div>`;
+  session = null;
+  refreshDashboardStats();
+}
+
+/* ---------------- boot ---------------- */
+if(!D.leitner) D.leitner = {};
+if(!D.trainerStats) D.trainerStats = {xp:0, totalCorrect:0, totalWrong:0, bestStreak:0, sessionsCompleted:0};
+renderSetup();
+refreshDashboardStats();
+cloudInit();
+</script>
+</body>
+</html>
