@@ -79,6 +79,23 @@
   .problem-list .w{font-weight:700; color:var(--indigo-d);}
   .problem-list .ja{color:var(--sub); margin-left:6px; font-weight:400;}
   .pill.hot{background:#fbe9e8; color:var(--red); font-size:.68rem; padding:2px 9px; border-radius:99px; font-weight:700;}
+
+  /* --- rank & badges --- */
+  .rankbar{background:linear-gradient(135deg,#fffbe8,var(--card)); border:1px solid var(--gold); border-radius:14px; padding:14px 16px; margin-bottom:14px;}
+  .rank-top{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .rank-title{font-weight:800; color:var(--indigo-d); font-size:1.05rem;}
+  .rank-xp{margin-left:auto; font-size:.78rem; color:var(--sub); font-weight:700;}
+  .rank-bar{background:#eae4d3; border-radius:99px; height:11px; overflow:hidden; margin:9px 0 5px;}
+  .rank-bar>span{display:block; height:100%; background:linear-gradient(90deg,var(--indigo),var(--gold)); border-radius:99px; transition:width .5s;}
+  .rank-next{font-size:.72rem; color:var(--sub);}
+  .badge-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:9px; margin-top:12px;}
+  .badge{text-align:center; padding:10px 4px; border-radius:11px; border:1px solid var(--line); background:#faf7ec; opacity:.35; filter:grayscale(1);}
+  .badge.on{opacity:1; filter:none; background:linear-gradient(160deg,#fffbe8,#fff5f9); border-color:var(--gold); box-shadow:0 2px 7px rgba(201,143,45,.2);}
+  .badge .ic{font-size:1.5rem;}
+  .badge .nm{font-size:.64rem; font-weight:700; color:var(--indigo-d); margin-top:3px; line-height:1.25;}
+  .badge .ds{font-size:.57rem; color:var(--sub); line-height:1.2;}
+  .ktoast{position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:var(--indigo-d); color:#fff; padding:13px 22px; border-radius:12px; font-weight:800; font-size:.92rem; box-shadow:0 4px 18px rgba(0,0,0,.25); z-index:100; opacity:0; transition:opacity .3s,bottom .3s; pointer-events:none;}
+  .ktoast.show{opacity:1; bottom:40px;}
 </style>
 </head>
 <body>
@@ -91,6 +108,16 @@
 </header>
 
 <div class="wrap">
+
+  <div class="card rankbar">
+    <div class="rank-top">
+      <span class="rank-title" id="rankTitle">🌱 ルーキーチアリーダー</span>
+      <span class="rank-xp" id="rankXp">0 pt</span>
+    </div>
+    <div class="rank-bar"><span id="rankBar" style="width:0%"></span></div>
+    <div class="rank-next" id="rankNext">つぎのランクまで…</div>
+    <div class="badge-grid" id="badgeGrid"></div>
+  </div>
 
   <div class="grid cols3" id="statBar">
     <div class="card stat"><div class="num" id="statXp">0</div><div class="lbl">ポイント</div></div>
@@ -442,6 +469,7 @@ function refreshDashboardStats(){
       <span class="pill hot">${r.s.wrong} miss${r.s.wrong===1?"":"es"} · box ${r.s.box}</span>
     </li>`).join("");
   }
+  renderGame();
 }
 
 /* ---------------- UI: game flow ---------------- */
@@ -560,9 +588,55 @@ function renderSummary(){
 /* ---------------- boot ---------------- */
 if(!D.leitner) D.leitner = {};
 if(!D.trainerStats) D.trainerStats = {xp:0, totalCorrect:0, totalWrong:0, bestStreak:0, sessionsCompleted:0};
+
+/* ---------------- ランク＆バッジ（キキ先生ページと共通ロジック） ---------------- */
+const LEVELS=[{xp:0,t:"🌱 ルーキーチアリーダー"},{xp:150,t:"📣 声出し担当"},{xp:400,t:"🎀 チームメイト"},{xp:800,t:"⭐ スターティングメンバー"},{xp:1300,t:"🔥 エースアタッカー"},{xp:2000,t:"👑 キャプテン"},{xp:2800,t:"🏆 準1級ファイナリスト"},{xp:4000,t:"🌈 レジェンド・オブ・久留米"}];
+const BADGES=[{id:"first",ic:"🌸",nm:"はじめの一歩",ds:"初セッション"},{id:"streak5",ic:"🔥",nm:"ホットストリーク",ds:"5連続正解"},{id:"streak10",ic:"⚡",nm:"サンダーボルト",ds:"10連続正解"},{id:"xp500",ic:"💰",nm:"ポイントハンター",ds:"500pt"},{id:"xp1500",ic:"👑",nm:"ポイントクイーン",ds:"1500pt"},{id:"m10",ic:"💎",nm:"ワードコレクター",ds:"10語マスター"},{id:"m50",ic:"🏅",nm:"ボキャブラリー王",ds:"50語マスター"},{id:"m100",ic:"🌈",nm:"レジェンド",ds:"100語マスター"},{id:"sniper",ic:"🎯",nm:"スナイパー",ds:"正答率80%↑"},{id:"revenge",ic:"🦋",nm:"リベンジャー",ds:"苦手を克服"}];
+let ktoastTimer=null;
+function ktoast(msg){const el=document.getElementById("ktoast"); if(!el)return; el.textContent=msg; el.classList.add("show"); clearTimeout(ktoastTimer); ktoastTimer=setTimeout(()=>el.classList.remove("show"),3200);}
+function earnedBadges(){
+  const words=trainableWords(), ts=D.trainerStats||{};
+  const mastered=words.filter(v=>getStat(v.w).mastered).length;
+  const answered=(ts.totalCorrect||0)+(ts.totalWrong||0);
+  const acc=answered?ts.totalCorrect/answered:0; const out=[];
+  if((ts.sessionsCompleted||0)>=1) out.push("first");
+  if((ts.bestStreak||0)>=5) out.push("streak5");
+  if((ts.bestStreak||0)>=10) out.push("streak10");
+  if((ts.xp||0)>=500) out.push("xp500");
+  if((ts.xp||0)>=1500) out.push("xp1500");
+  if(mastered>=10) out.push("m10");
+  if(mastered>=50) out.push("m50");
+  if(mastered>=100) out.push("m100");
+  if(answered>=40&&acc>=0.8) out.push("sniper");
+  if(words.some(v=>{const s=getStat(v.w); return s.mastered&&s.wrong>=2;})) out.push("revenge");
+  return out;
+}
+let shownBadges=null;
+function renderGame(){
+  const ts=D.trainerStats||{}, xp=ts.xp||0;
+  let cur=LEVELS[0],nxt=null;
+  for(let i=0;i<LEVELS.length;i++){ if(xp>=LEVELS[i].xp){cur=LEVELS[i];nxt=LEVELS[i+1]||null;} }
+  const T=document.getElementById("rankTitle"); if(!T) return;
+  T.textContent=cur.t;
+  document.getElementById("rankXp").textContent=xp+" pt";
+  if(nxt){ const span=nxt.xp-cur.xp, got=xp-cur.xp;
+    document.getElementById("rankBar").style.width=Math.min(100,Math.round(got/span*100))+"%";
+    document.getElementById("rankNext").textContent="つぎの「"+nxt.t+"」まであと "+(nxt.xp-xp)+" pt";
+  }else{ document.getElementById("rankBar").style.width="100%";
+    document.getElementById("rankNext").textContent="最高ランク到達！すごい！！🌈"; }
+  const owned=earnedBadges();
+  if(shownBadges){ owned.filter(b=>!shownBadges.includes(b)).forEach(id=>{ const b=BADGES.find(x=>x.id===id); if(b) ktoast("🎉 バッジ獲得！ "+b.ic+" "+b.nm); }); }
+  shownBadges=owned;
+  document.getElementById("badgeGrid").innerHTML=BADGES.map(b=>'<div class="badge '+(owned.includes(b.id)?"on":"")+'"><div class="ic">'+b.ic+'</div><div class="nm">'+b.nm+'</div><div class="ds">'+b.ds+'</div></div>').join("");
+}
+
+/* refreshDashboardStats のあとに必ずランク＆バッジも更新 */
+const __origRefresh = refreshDashboardStats;
+refreshDashboardStats = function(){ __origRefresh.apply(this, arguments); try{ renderGame(); }catch(e){} };
 renderSetup();
 refreshDashboardStats();
 cloudInit();
 </script>
+<div class="ktoast" id="ktoast"></div>
 </body>
 </html>
