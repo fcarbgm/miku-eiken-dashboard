@@ -186,8 +186,8 @@
   <div class="controls"><div class="controls-inner">
     <div class="row">
       <div class="side">
-        <button class="toggle on" id="langBtn" onclick="toggleLang()">👂 日本語</button>
-        <button class="toggle" id="langBtnEn" onclick="toggleLang()">👂 English</button>
+        <button class="toggle on" id="langBtn" onclick="cycleLang()">🌐 自動</button>
+        <button class="toggle" id="micLevel" title="マイク">🎤</button>
       </div>
       <button class="live" id="liveBtn" onclick="toggleLive()">🎙 会話スタート</button>
       <div class="side">
@@ -199,7 +199,7 @@
       <input id="textIn" placeholder="タイプでもOK / type here..." onkeydown="if(event.key==='Enter')sendText()">
       <button onclick="sendText()">送信</button>
     </div>
-    <div class="hint">会話中はマイクを押す必要なし。キキが話し終わると自動でまた聞き始めます。話し中でも「割り込む」かキキ先生をタップでストップ。</div>
+    <div class="hint">会話中はマイクを押す必要なし。日本語↔英語は自動で切り替わるよ。キキが話している最中でも、そのまま話しかければ止まって聞いてくれる。</div>
   </div></div>
 </div>
 
@@ -449,7 +449,7 @@ async function speak(text){
   const runs = langRuns(text);
   if(!runs.length){ afterSpeech(); return; }
   const token = ++speechToken;
-  speaking = true; pauseRec();
+  speaking = true; pauseRec(); watchBarge(token);
   avatarState("speaking"); setStatus("キキ先生が話しています 🔊");
   let next = fetchTTS(runs[0]);
   for(let i=0; i<runs.length; i++){
@@ -477,7 +477,7 @@ function makeRec(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR) return null;
   const r = new SR();
-  r.lang = recLang; r.interimResults = true; r.maxAlternatives = 1; r.continuous = false;
+  r.lang = currentLang(); r.interimResults = true; r.maxAlternatives = 1; r.continuous = false;
   r.onresult = e => {
     let interim = "", final = "";
     for(const res of e.results){ (res.isFinal ? final : interim) && 0; if(res.isFinal) final += res[0].transcript; else interim += res[0].transcript; }
@@ -521,7 +521,7 @@ function toggleLive(){
     liveMode = false; stopSpeaking(); pauseRec(); updateLiveBtn();
     setStatus("会話終了。またね！ 🧹"); avatarState("idle");
   } else {
-    liveMode = true; updateLiveBtn();
+    liveMode = true; updateLiveBtn(); initMonitor().then(ok=>{ if(!ok) setStatus("🎤 マイクを許可すると、声だけで割り込めるよ（キーボードでもOK）"); });
     const g = GREETINGS[Math.floor(Math.random()*GREETINGS.length)];
     if(messages.length === 0){
       addMsg("kiki", g);
@@ -537,11 +537,59 @@ function updateLiveBtn(){
   b.textContent = liveMode ? "⏹ 会話をおわる" : "🎙 会話スタート";
   b.classList.toggle("on", liveMode);
 }
-function toggleLang(){
-  recLang = recLang==="ja-JP" ? "en-US" : "ja-JP";
-  document.getElementById("langBtn").classList.toggle("on", recLang==="ja-JP");
-  document.getElementById("langBtnEn").classList.toggle("on", recLang==="en-US");
-  if(liveMode && !speaking && !busy){ pauseRec(); setTimeout(listen, 150); }
+let langMode="auto";
+function jaRatio(s){ s=String(s||""); const j=(s.match(/[぀-ヿ一-龯]/g)||[]).length; const a=(s.match(/[A-Za-z]/g)||[]).length; return j/(j+a+0.001); }
+function pickLang(){
+  if(langMode!=="auto") return langMode;
+  const lastKiki=[...messages].reverse().find(m=>m.role==="assistant");
+  if(lastKiki && /英語で|in English|say it in English|Ready\?\s*Go|repeat after me|もう一回言って/i.test(lastKiki.content)) return "en-US";
+  const lastUser=[...messages].reverse().find(m=>m.role==="user");
+  if(lastUser) return jaRatio(lastUser.content)>0.25 ? "ja-JP" : "en-US";
+  return "ja-JP";
+}
+function currentLang(){ recLang=pickLang(); return recLang; }
+function cycleLang(){
+  langMode = langMode==="auto" ? "ja-JP" : (langMode==="ja-JP" ? "en-US" : "auto");
+  const b=document.getElementById("langBtn");
+  b.textContent = langMode==="auto" ? "🌐 自動" : (langMode==="ja-JP" ? "👂 日本語" : "👂 English");
+  b.classList.add("on");
+  if(liveMode && !speaking && !busy){ pauseRec(); setTimeout(listen,150); }
+}
+/* ---------- 常時マイク監視：声で割り込み ---------- */
+let micStream=null, actx=null, analyser=null, buf=null, noiseFloor=0.012;
+async function initMonitor(){
+  if(micStream) return true;
+  try{
+    micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==="suspended") await actx.resume();
+    const srcNode=actx.createMediaStreamSource(micStream);
+    analyser=actx.createAnalyser(); analyser.fftSize=1024; srcNode.connect(analyser);
+    buf=new Uint8Array(analyser.fftSize);
+    let peak=0; const t0=performance.now();
+    await new Promise(res=>{ const s=()=>{ const l=micLevel(); if(l>peak)peak=l;
+      if(performance.now()-t0<800) requestAnimationFrame(s); else res(); }; s(); });
+    noiseFloor=Math.max(peak,0.010);
+    return true;
+  }catch(e){ return false; }
+}
+function micLevel(){
+  if(!analyser) return 0;
+  analyser.getByteTimeDomainData(buf);
+  let sum=0; for(let i=0;i<buf.length;i++){ const v=(buf[i]-128)/128; sum+=v*v; }
+  return Math.sqrt(sum/buf.length);
+}
+function watchBarge(token){
+  if(!analyser) return;
+  const thr=Math.max(noiseFloor*3.4,0.050);
+  let hot=0;
+  const step=()=>{
+    if(token!==speechToken||!speaking) return;
+    hot = micLevel()>thr ? hot+1 : 0;
+    if(hot>=7){ setStatus("……どうぞ！ 👂"); bargeIn(); return; }
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 function toggleVoice(){
   voiceOn = !voiceOn;
