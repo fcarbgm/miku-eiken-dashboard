@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🎤 英検準1級 カラオケ — ミク</title>
+<style>
+  :root{--ink:#f2efe4;--dim:#5c6478;--gold:#ffd451;--pink:#ff8fc4;--cyan:#63e0ff;--green:#7dffb0;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:"Hiragino Maru Gothic ProN","Segoe UI","Yu Gothic",sans-serif;background:#070a12;color:var(--ink);overflow:hidden;height:100vh;}
+  #bg{position:fixed;inset:0;z-index:0;transition:background .5s;}
+  #rain{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .rw{position:absolute;font-weight:800;white-space:nowrap;opacity:0;animation:rain linear forwards;}
+  @keyframes rain{0%{opacity:0;transform:translateY(0) scale(.85);}14%{opacity:.13;}86%{opacity:.13;}100%{opacity:0;transform:translateY(-110px) scale(1.2);}}
+  #sect{position:fixed;top:14px;left:0;right:0;z-index:5;text-align:center;font-size:.7rem;font-weight:800;letter-spacing:4px;color:var(--dim);text-transform:uppercase;}
+  #pips{position:fixed;top:38px;left:0;right:0;z-index:5;text-align:center;height:16px;}
+  .pip{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--gold);margin:0 5px;opacity:.25;}
+  .pip.on{opacity:1;box-shadow:0 0 14px var(--gold);}
+  #stage{position:fixed;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px 170px;}
+  #cur{font-size:clamp(1.4rem,4.5vw,2.9rem);font-weight:900;line-height:1.5;text-align:center;}
+  #nxt{margin-top:26px;font-size:clamp(.82rem,2vw,1.2rem);font-weight:700;color:var(--dim);text-align:center;line-height:1.5;}
+  .kw{display:inline-block;margin:0 .13em;position:relative;
+      background:linear-gradient(90deg,var(--gold) var(--p,0%),#8e97ad var(--p,0%));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 2px 10px rgba(0,0,0,.75));transition:transform .12s;}
+  .kw.tgt{background:linear-gradient(90deg,#ffe98a var(--p,0%),#7b8398 var(--p,0%));-webkit-background-clip:text;background-clip:text;}
+  .kw.jp{background:linear-gradient(90deg,var(--cyan) var(--p,0%),#5d6a80 var(--p,0%));-webkit-background-clip:text;background-clip:text;}
+  .kw.live{transform:scale(1.09);}
+  .gl{display:block;font-size:.36em;font-weight:800;color:var(--pink);letter-spacing:.5px;margin-top:.1em;-webkit-text-fill-color:var(--pink);opacity:.95;}
+  #ui{position:fixed;left:0;right:0;bottom:0;z-index:8;background:linear-gradient(180deg,rgba(7,10,18,0),rgba(7,10,18,.95) 36%);padding:30px 14px 14px;}
+  .row{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto;}
+  button,select{font-family:inherit;font-weight:800;border:none;border-radius:99px;padding:10px 15px;font-size:.84rem;cursor:pointer;background:#18203a;color:var(--ink);}
+  button.pri{background:linear-gradient(135deg,var(--pink),#b34a86);color:#fff;padding:13px 30px;font-size:1rem;}
+  button.on{background:var(--green);color:#06210f;}
+  #bar{height:7px;background:#18203a;border-radius:99px;overflow:hidden;max-width:900px;margin:0 auto 12px;cursor:pointer;}
+  #bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--gold));}
+  .lbl{font-size:.68rem;color:var(--dim);font-weight:700;}
+  #load{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:#070a12;font-weight:800;color:var(--dim);}
+  a.home{color:var(--cyan);text-decoration:none;font-size:.78rem;font-weight:800;}
+</style>
+</head>
+<body>
+<div id="bg"></div><div id="rain"></div>
+<div id="sect"></div><div id="pips"></div>
+<div id="stage"><div id="cur"></div><div id="nxt"></div></div>
+<div id="load">🎤 歌詞データを読み込み中…</div>
+<div id="ui">
+  <div id="bar"><span id="barFill"></span></div>
+  <div class="row">
+    <select id="sel"></select>
+    <button class="pri" id="play">▶ 再生</button>
+    <span class="lbl">速度</span>
+    <select id="rate"><option value="0.5">0.5x</option><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option></select>
+    <button id="loop">🔁 リピート</button>
+    <button id="glossBtn" class="on">🇯🇵 意味 ON</button>
+    <button id="prev">⏮</button><button id="next">⏭</button>
+    <a class="home" href="index.html">🏠 ダッシュボード</a>
+  </div>
+</div>
+
+<script>
+const ALIGN_URL="https://textdb.dev/api/data/miku-eiken-karaoke-align-v1";
+const HUE={ "01":[145,185],"02":[275,325],"03":[25,55],"04":[45,70],"05":[195,240],"06":[250,290],
+ "07":[210,245],"08":[95,135],"09":[320,355],"10":[330,360],"11":[180,220],"12":[15,45],
+ "13":[105,145],"14":[200,235],"15":[70,110],"16":[165,200],"17":[350,380],"18":[35,65],"19":[255,295],"20":[300,340] };
+
+/* ===== 準1級 語彙グロス（全20曲共通・約560語） ===== */
+const G={
+ecosystem:"生態系",emission:"排出",emissions:"排出",rising:"上昇する",deforestation:"森林伐採",drought:"干ばつ",famine:"飢饉",endangered:"絶滅危惧の",species:"種",pollute:"汚染する",contaminate:"混入汚染する",toxic:"有毒な",soil:"土壌",sustainable:"持続可能な",preserve:"保護する",habitat:"生息地",conservation:"自然保護",curb:"抑制する",offset:"相殺する",glacier:"氷河",melting:"溶ける",eruption:"噴火",evacuate:"避難する",landfill:"埋立地",sewage:"下水",dump:"投棄する",fertile:"肥沃な",barren:"不毛な",scarce:"乏しい",abundant:"豊富な",coastal:"沿岸の",marine:"海の",arctic:"北極の",moisture:"水分",atmosphere:"大気",worsen:"悪化させる",deteriorate:"悪化する",wildlife:"野生生物",extinction:"絶滅",
+immune:"免疫の",symptom:"症状",checkup:"健診",diagnose:"診断する",prescription:"処方箋",dose:"服用量",medication:"薬",vaccine:"ワクチン",nutrient:"栄養素",protein:"たんぱく質",intake:"摂取量",nutritious:"栄養のある",epidemic:"流行病",outbreak:"発生",systematic:"組織的な",recover:"回復する",relieve:"和らげる",fatigue:"疲労",kidney:"腎臓",liver:"肝臓",cell:"細胞",tissue:"組織",digestive:"消化の",respiratory:"呼吸の",germ:"細菌",obesity:"肥満",diabetes:"糖尿病",cholesterol:"コレステロール",inflammation:"炎症",exhausted:"疲れ果てた",dehydration:"脱水",surgeon:"外科医",physician:"内科医",therapy:"療法",hygiene:"衛生",chronic:"慢性の",acute:"急性の",
+resume:"履歴書",applicant:"応募者",candidate:"候補者",qualified:"資格のある",keen:"熱心な",recruit:"採用する",corporation:"大企業",supervisor:"上司",colleague:"同僚",promotion:"昇進",negotiate:"交渉する",contract:"契約",submit:"提出する",deadline:"締切",commute:"通勤する",productivity:"生産性",efficient:"効率的な",competent:"有能な",branch:"支店",headquarters:"本社",personnel:"職員",workforce:"労働力",employment:"雇用",wage:"賃金",salary:"給料",outsource:"外注する",transaction:"取引",merger:"合併",client:"顧客",enterprise:"企業",hectic:"大忙しの",paperwork:"書類仕事",delegate:"委任する",assignment:"任務",resign:"辞職する",expertise:"専門知識",postpone:"延期する",reschedule:"予定変更する",
+budget:"予算",income:"収入",expense:"支出",profit:"利益",profitable:"利益になる",invest:"投資する",stock:"株",currency:"通貨",revenue:"収益",fund:"資金",demand:"需要",supply:"供給",shortage:"不足",surplus:"余剰",inflation:"インフレ",affordable:"手頃な",purchase:"購入する",bargain:"お買い得",refund:"返金",bankrupt:"破産した",soar:"急上昇する",plunge:"急落する",fluctuate:"変動する",recession:"不況",downturn:"景気下降",retail:"小売",wholesale:"卸売",tariff:"関税",tax:"税",debt:"借金",loan:"融資",consumer:"消費者",voucher:"商品券",subscription:"定期購読",insurance:"保険",mortgage:"住宅ローン",poverty:"貧困",wealth:"富",fortune:"財産",economical:"節約になる",costly:"高くつく",caution:"注意",waste:"無駄",
+ignition:"点火",innovation:"技術革新",laboratory:"実験室",experiment:"実験",hypothesis:"仮説",analyze:"分析する",precise:"正確な",calculate:"計算する",devise:"考案する",artificial:"人工の",genetic:"遺伝子の",genome:"ゲノム",generate:"生み出す",sophisticated:"高性能な",breakthrough:"大発見",phenomenon:"現象",satellite:"人工衛星",orbit:"軌道",molecule:"分子",particle:"粒子",hydrogen:"水素",device:"装置",appliance:"家電",circuit:"回路",drone:"ドローン",transmit:"送信する",detect:"感知する",decode:"解読する",virtual:"仮想の",digital:"デジタルの",automatic:"自動の",mechanical:"機械の",replicate:"再現する",evolve:"進化する",physics:"物理学",browse:"閲覧する",spark:"火花",
+justice:"正義",violate:"違反する",illegal:"違法の",witness:"証人",testimony:"証言",evidence:"証拠",solid:"確固たる",jury:"陪審",attorney:"弁護士",prosecutor:"検察官",theft:"窃盗",robbery:"強盗",burglar:"泥棒",fraud:"詐欺",bribe:"賄賂",trial:"裁判",accuse:"訴える",crime:"犯罪",verdict:"評決",legitimate:"合法の",enforce:"施行する",regulate:"規制する",convict:"有罪にする",sentence:"判決",penalty:"刑罰",fine:"罰金",jail:"刑務所",prisoner:"囚人",kidnap:"誘拐する",assault:"暴行",counterfeit:"偽造の",forge:"偽造する",smuggle:"密輸する",trespass:"不法侵入する",suspect:"容疑者",custody:"拘留",detain:"勾留する",interrogate:"尋問する",confess:"自白する",deny:"否定する",abide:"順守する",prohibit:"禁止する",ban:"禁止する",
+election:"選挙",vote:"投票する",ballot:"投票用紙",campaign:"選挙運動",poll:"世論調査",democracy:"民主主義",democratic:"民主的な",conservative:"保守的な",radical:"急進的な",liberal:"自由主義の",policy:"政策",legislation:"立法",enact:"制定する",amend:"改正する",parliament:"議会",citizen:"市民",ambassador:"大使",embassy:"大使館",diplomat:"外交官",treaty:"条約",summit:"首脳会談",sanction:"制裁",coalition:"連立",minister:"大臣",ministry:"省",dictator:"独裁者",monarch:"君主",oppression:"抑圧",corrupt:"腐敗した",regime:"政権",protest:"抗議する",riot:"暴動",revolt:"反乱",unrest:"騒乱",refugee:"難民",immigrant:"移民",advocate:"擁護する",federal:"連邦の",council:"評議会",
+enroll:"入学する",tuition:"授業料",scholarship:"奨学金",curriculum:"カリキュラム",semester:"学期",lecture:"講義",seminar:"ゼミ",due:"締切の",memorize:"暗記する",recall:"思い出す",comprehend:"理解する",grasp:"理解する",academic:"学問の",bachelor:"学士",master:"修士",diploma:"卒業証書",undergraduate:"学部生",faculty:"教授陣",dean:"学部長",dormitory:"寮",auditorium:"講堂",thesis:"論文",degree:"学位",literacy:"読み書き能力",tutor:"個別指導する",mentor:"助言者",apprentice:"見習い",evaluate:"評価する",assess:"査定する",criteria:"基準",cheat:"カンニングする",conscience:"良心",intellectual:"知的な",cognitive:"認知の",revise:"復習する",attendance:"出席",
+diversity:"多様性",resident:"居住者",inhabitant:"住民",generation:"世代",discrimination:"差別",prejudice:"偏見",bias:"偏見",stereotype:"固定観念",equality:"平等",inequality:"不平等",racism:"人種差別",integrate:"統合する",segregate:"分離する",tolerance:"寛容",empathy:"共感",coexist:"共存する",solidarity:"連帯",unity:"団結",welfare:"福祉",charity:"慈善",donate:"寄付する",volunteer:"ボランティア",vulnerable:"弱い立場の",minority:"少数派",majority:"多数派",disabled:"障害のある",disadvantaged:"恵まれない",heritage:"遺産",tradition:"伝統",ancestor:"先祖",descendants:"子孫",aging:"高齢化の",demographic:"人口統計の",ethical:"倫理的な",moral:"道徳の",norm:"規範",renew:"更新する",gender:"ジェンダー",custom:"慣習",upbringing:"養育",
+reluctant:"気が進まない",willing:"快くする",eager:"熱望して",enthusiastic:"熱狂的な",passionate:"情熱的な",ambitious:"野心的な",supreme:"最高の",confident:"自信のある",arrogant:"傲慢な",humble:"謙虚な",modest:"控えめな",cheerful:"陽気な",optimistic:"楽観的な",pessimistic:"悲観的な",generous:"気前のよい",stingy:"けちな",considerate:"思いやりのある",compassionate:"慈悲深い",anxious:"不安な",uneasy:"落ち着かない",nervous:"緊張した",tense:"張り詰めた",calm:"穏やかな",serene:"平静な",gloomy:"陰気な",dejected:"落胆した",miserable:"惨めな",stubborn:"頑固な",persistent:"粘り強い",diligent:"勤勉な",lazy:"怠惰な",witty:"機知に富んだ",sensible:"分別のある",curious:"好奇心の強い",bold:"大胆な",daring:"勇敢な",hostile:"敵意のある",furious:"激怒した",skeptical:"懐疑的な",timid:"臆病な",
+expand:"拡大する",extend:"延ばす",enlarge:"大きくする",boost:"押し上げる",enhance:"高める",heighten:"高める",accelerate:"加速する",surge:"急増する",exceed:"超える",surpass:"上回る",triple:"3倍にする",double:"2倍にする",outnumber:"数で上回る",outweigh:"上回る",transform:"一変させる",convert:"変換する",alter:"変える",modify:"修正する",adapt:"適応する",adjust:"調整する",decline:"減少する",decrease:"減る",diminish:"減らす",shrink:"縮む",dwindle:"先細る",plummet:"急落する",collapse:"崩壊する",improve:"改善する",restore:"回復させる",revive:"復活させる",emerge:"現れる",stabilize:"安定させる",vanish:"消える",
+claim:"主張する",assert:"断言する",declare:"宣言する",proclaim:"宣言する",convince:"納得させる",persuade:"説得する",urge:"強く勧める",cause:"大義",emphasize:"強調する",highlight:"強調する",applause:"拍手",oppose:"反対する",contradict:"矛盾する",dispute:"異議を唱える",compromise:"妥協する",acknowledge:"認める",admit:"認める",concede:"しぶしぶ認める",clarify:"明確にする",define:"定義する",interpret:"解釈する",predict:"予測する",anticipate:"予期する",foresee:"予見する",speculate:"推測する",presume:"推定する",assume:"想定する",verify:"検証する",confirm:"確認する",conclude:"結論づける",testify:"証言する",quote:"引用する",dismiss:"退ける",imply:"ほのめかす",infer:"推論する",summarize:"要約する",elaborate:"詳述する",translate:"翻訳する",remark:"述べる",
+seize:"つかむ",grab:"つかむ",grip:"握る",clutch:"すがりつく",toss:"放る",hurl:"投げつける",drag:"引きずる",haul:"運搬する",shove:"押しのける",leap:"跳ぶ",bounce:"弾む",crawl:"はう",creep:"忍び寄る",sneak:"こっそり動く",sprint:"全力疾走する",spin:"回る",rotate:"回転する",swing:"揺らす",ascend:"上る",descend:"下る",glide:"滑る",hover:"空中に止まる",roam:"歩き回る",wander:"さまよう",stroll:"散歩する",stray:"はぐれる",stumble:"つまずく",tumble:"転がる",slip:"滑る",pursue:"追う",chase:"追いかける",flee:"逃げる",retreat:"退く",navigate:"操縦する",steer:"かじを取る",sway:"揺れる",tremble:"震える",shiver:"震える",stretch:"伸ばす",bend:"曲げる",twist:"ひねる",dive:"潜る",
+therefore:"それゆえ",thus:"このように",hence:"それゆえ",consequently:"その結果",accordingly:"それに応じて",evidently:"明らかに",furthermore:"さらに",moreover:"その上",likewise:"同様に",nevertheless:"それでも",nonetheless:"それでもなお",whereas:"一方",despite:"にもかかわらず",eventually:"最終的に",ultimately:"究極的に",meanwhile:"その間に",subsequently:"その後",previously:"以前に",approximately:"およそ",roughly:"おおよそ",virtually:"事実上",literally:"文字通り",barely:"かろうじて",scarcely:"ほとんど〜ない",merely:"単に",solely:"単独で",primarily:"主に",notably:"特に",wholly:"完全に",apparently:"どうやら",presumably:"おそらく",arguably:"ほぼ間違いなく",deliberately:"故意に",intentionally:"意図的に",gradually:"徐々に",abruptly:"突然に",simultaneously:"同時に",otherwise:"さもなければ",regardless:"かかわらず",logic:"論理",progress:"進歩",doubt:"疑う",
+mammal:"哺乳類",reptile:"爬虫類",amphibian:"両生類",predator:"捕食者",prey:"獲物",herd:"群れ",swarm:"大群",flock:"群れ",migrate:"渡る",breed:"繁殖する",hatch:"孵化する",offspring:"子",instinct:"本能",camouflage:"擬態",nocturnal:"夜行性の",hibernate:"冬眠する",graze:"草を食む",organism:"生物",microbe:"微生物",bacteria:"細菌",fungus:"菌類",parasite:"寄生虫",termite:"シロアリ",pollen:"花粉",pollinate:"受粉させる",photosynthesis:"光合成",stem:"茎",trunk:"幹",bark:"樹皮",root:"根",seed:"種子",sprout:"芽を出す",bloom:"咲く",ripe:"熟した",wither:"しおれる",decay:"腐る",fossil:"化石",evolution:"進化",aquatic:"水生の",dawn:"夜明け",
+itinerary:"旅程",destination:"目的地",departure:"出発",fare:"運賃",brochure:"パンフレット",reservation:"予約",accommodation:"宿泊施設",spacious:"広々とした",cozy:"居心地よい",luggage:"手荷物",customs:"税関",landmark:"名所",scenic:"景色のよい",voyage:"船旅",cruise:"クルーズ",expedition:"遠征",errand:"お使い",chore:"家事",laundry:"洗濯",utensil:"調理器具",recipe:"レシピ",cuisine:"料理",beverage:"飲み物",leftover:"残り物",blessing:"恵み",detour:"回り道",congestion:"渋滞",pedestrian:"歩行者",tread:"踏む",vehicle:"車両",transit:"輸送",souvenir:"土産",venue:"会場",admission:"入場料",complimentary:"無料の",ingredient:"材料",
+account:"占める",adhere:"順守する",allow:"考慮する",bank:"当てにする",bring:"もたらす",bump:"ばったり会う",burn:"燃え尽きる",call:"中止する",catch:"取り戻す",chip:"出し合う",clear:"解明する",comply:"従う",cope:"対処する",contribute:"貢献する",count:"当てにする",dispose:"処分する",draw:"活用する",dream:"考え出す",figure:"理解する",embark:"乗り出す",follow:"やり抜く",fall:"失敗に終わる",hold:"持ちこたえる",track:"把握する",kick:"効き始める",live:"応える",narrow:"絞り込む",miss:"逃す",pile:"たまる",pin:"特定する",pull:"やってのける",rule:"除外する",rely:"頼る",resort:"訴える",run:"使い果たす",aside:"取っておく",single:"選び出す",sort:"解決する",stick:"固守する",settle:"落ち着く",sink:"じわじわ理解される",step:"辞任する",take:"引き受ける",turn:"判明する",wear:"薄れる",wipe:"全滅させる",wind:"結局〜になる",watch:"警戒する",vain:"無駄に",contrary:"それどころか",stake:"危機に瀕して",favor:"賛成して",behalf:"代表して",terms:"観点から",verge:"寸前で"
+};
+
+let key="01", DATA=null, lines=[], audio=new Audio(), curIdx=-1, showGloss=true, looping=false, rainWords=[];
+const $=i=>document.getElementById(i);
+const clean=s=>s.toLowerCase().replace(/[^a-z']/g,"");
+
+function parse(words){
+  const out=[]; let cur=null, sect="";
+  for(const a of words){
+    let txt=a[0], s=a[1], e=a[2];
+    const m=txt.match(/^\[([^\]]+)\]\n/);
+    if(m){ sect=m[1]; txt=txt.slice(m[0].length); }
+    const brk=/\n/.test(txt);
+    txt=txt.replace(/\n+$/,"");
+    if(!cur) cur={sect,words:[]};
+    if(txt.trim()!=="") cur.words.push({t:txt,s,e});
+    if(brk){ if(cur.words.length) out.push(cur); cur=null; }
+  }
+  if(cur&&cur.words.length) out.push(cur);
+  out.forEach(l=>{
+    for(let i=0;i<l.words.length;i++){
+      let t=l.words[i].t.trim();
+      if(/\($/.test(t)&&l.words[i+1]){ t=t.replace(/\s*\($/,""); l.words[i+1].t="("+l.words[i+1].t.trim(); }
+      l.words[i].t=t;
+    }
+    l.words=l.words.filter(w=>w.t!=="");
+    l.s=l.words[0].s; l.e=l.words[l.words.length-1].e;
+  });
+  return out.filter(l=>l.words.length);
+}
+function buildLine(el,line){
+  el.innerHTML="";
+  line.words.forEach(w=>{
+    const sp=document.createElement("span");
+    const isJa=/[぀-ヿ一-龯]/.test(w.t);
+    const g=G[clean(w.t)];
+    sp.className="kw"+(isJa?" jp":"")+(g?" tgt":"");
+    sp.textContent=w.t;
+    if(g&&showGloss){ const i=document.createElement("i"); i.className="gl"; i.textContent=g; sp.appendChild(i); }
+    el.appendChild(sp);
+  });
+}
+function showLine(i){
+  curIdx=i; const L=lines[i];
+  $("sect").textContent=L?L.sect:"";
+  buildLine($("cur"),L);
+  const N=lines[i+1];
+  $("nxt").textContent=N?N.words.map(w=>w.t).join(" "):"";
+  const [a,b]=HUE[key]||[200,240], h=a+Math.random()*(b-a);
+  $("bg").style.background=`radial-gradient(125% 95% at 50% 8%, hsl(${h} 58% 19%), #070a12 74%)`;
+}
+function paint(t){
+  const L=lines[curIdx]; if(!L) return;
+  const sp=$("cur").children;
+  for(let i=0;i<L.words.length;i++){
+    const w=L.words[i], el=sp[i]; if(!el) continue;
+    let p=0;
+    if(t>=w.e) p=100; else if(t>w.s) p=Math.max(0,Math.min(100,(t-w.s)/Math.max(w.e-w.s,.001)*100));
+    el.style.setProperty("--p",p+"%");
+    el.classList.toggle("live",t>=w.s&&t<=w.e);
+  }
+}
+function pips(t){
+  const n=lines[curIdx+1], box=$("pips");
+  if(!n){ box.innerHTML=""; return; }
+  const gap=n.s-t;
+  if(gap>0&&gap<2.2){ const k=Math.ceil(gap/0.55);
+    box.innerHTML=[0,1,2,3].map(j=>`<span class="pip ${j<k?"on":""}"></span>`).join(""); }
+  else box.innerHTML="";
+}
+function rain(){
+  if(audio.paused||!rainWords.length) return;
+  const w=rainWords[Math.floor(Math.random()*rainWords.length)];
+  const e=document.createElement("div"); e.className="rw"; e.textContent=w;
+  e.style.left=(Math.random()*88)+"%"; e.style.top=(60+Math.random()*38)+"%";
+  e.style.fontSize=(.9+Math.random()*2)+"rem";
+  e.style.color=Math.random()<.5?"#7dffb0":"#63e0ff";
+  e.style.animationDuration=(2.6+Math.random()*2)+"s";
+  $("rain").appendChild(e); setTimeout(()=>e.remove(),5000);
+}
+setInterval(rain,240);
+function tick(){
+  const t=audio.currentTime;
+  let i=-1; for(let k=0;k<lines.length;k++){ if(t>=lines[k].s-0.45) i=k; else break; }
+  if(i!==curIdx&&i>=0) showLine(i);
+  if(i>=0) paint(t);
+  pips(t);
+  $("barFill").style.width=(t/(audio.duration||1)*100)+"%";
+  requestAnimationFrame(tick);
+}
+function load(k){
+  key=k; const song=DATA[k];
+  lines=parse(song.w); curIdx=-1;
+  rainWords=[...new Set(lines.flatMap(l=>l.words).map(w=>clean(w.t)).filter(w=>G[w]))];
+  audio.src="https://cdn1.suno.ai/"+song.id+".mp3"; audio.load();
+  audio.playbackRate=parseFloat($("rate").value); audio.loop=looping;
+  $("cur").innerHTML=""; $("nxt").textContent=""; $("sect").textContent="";
+  localStorage.setItem("kara_last",k);
+}
+function jump(d){
+  const ks=Object.keys(DATA).sort(); let i=ks.indexOf(key)+d;
+  if(i<0)i=ks.length-1; if(i>=ks.length)i=0;
+  $("sel").value=ks[i]; audio.pause(); $("play").textContent="▶ 再生"; load(ks[i]);
+}
+(async function(){
+  try{
+    DATA=await fetch(ALIGN_URL+"?c="+Date.now(),{cache:"no-store"}).then(r=>r.json());
+    const ks=Object.keys(DATA).sort();
+    $("sel").innerHTML=ks.map(k=>`<option value="${k}">${DATA[k].title}</option>`).join("");
+    const last=localStorage.getItem("kara_last");
+    const start=(last&&DATA[last])?last:ks[0];
+    $("sel").value=start; load(start);
+    $("load").style.display="none"; tick();
+  }catch(e){ $("load").textContent="⚠️ 読み込み失敗。通信を確認してね"; }
+})();
+$("sel").onchange=e=>{ audio.pause(); $("play").textContent="▶ 再生"; load(e.target.value); };
+$("play").onclick=()=>{ if(audio.paused){audio.play();$("play").textContent="⏸ 停止";} else {audio.pause();$("play").textContent="▶ 再生";} };
+$("rate").onchange=e=>audio.playbackRate=parseFloat(e.target.value);
+$("loop").onclick=()=>{ looping=!looping; audio.loop=looping; $("loop").classList.toggle("on",looping); };
+$("glossBtn").onclick=()=>{ showGloss=!showGloss; $("glossBtn").classList.toggle("on",showGloss);
+  $("glossBtn").textContent=showGloss?"🇯🇵 意味 ON":"🇯🇵 意味 OFF"; if(curIdx>=0) showLine(curIdx); };
+$("prev").onclick=()=>jump(-1); $("next").onclick=()=>jump(1);
+$("bar").onclick=e=>{ const r=$("bar").getBoundingClientRect(); audio.currentTime=((e.clientX-r.left)/r.width)*(audio.duration||1); curIdx=-1; };
+$("stage").onclick=()=>$("play").click();
+addEventListener("keydown",e=>{ if(e.code==="Space"){e.preventDefault();$("play").click();}
+  if(e.code==="ArrowRight")jump(1); if(e.code==="ArrowLeft")jump(-1); });
+audio.onended=()=>{ if(!looping){$("play").textContent="▶ 再生";curIdx=-1;} };
+</script>
+</body>
+</html>
