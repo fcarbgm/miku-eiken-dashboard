@@ -119,6 +119,15 @@
   .pe-videos a{color:var(--sakura); font-weight:600; text-decoration:none; font-size:.82rem; margin-right:12px;}
   .pe-videos a:hover{text-decoration:underline;}
   .pe-avg{color:var(--indigo); font-weight:700;}
+  .papa-grid3{display:grid; grid-template-columns:140px 1fr 160px; gap:8px; margin-bottom:8px;}
+  .papa-grid2{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;}
+  @media(max-width:700px){ .papa-grid3,.papa-grid2{grid-template-columns:1fr;} }
+  .papa-scores{display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:6px; margin-bottom:8px;}
+  .papa-scores label{font-size:.7rem; color:var(--sub); display:flex; flex-direction:column; gap:2px;}
+  .papa-scores input{width:100%; text-align:center;}
+  .papa-ta{width:100%; min-height:110px; border:1px solid var(--line); border-radius:8px; padding:8px; font-size:.8rem; font-family:inherit;}
+  .pe-del{display:none;}
+  body.papa-mode .pe-del{display:block;}
 </style>
 </head>
 <body>
@@ -245,7 +254,41 @@
   <div id="sessionList"></div>
 
   <!-- PRESENTATION EVALUATIONS -->
-  <h3 class="section-title">🎬 Presentation evaluations <span class="muted">(one card per speech · scored on the rubric below · Papa drafts → Claude polishes → published here)</span></h3>
+  <h3 class="section-title" style="display:flex;align-items:center;gap:10px;">🎬 Presentation evaluations <span class="muted">(one card per speech · scored on the rubric below)</span><span class="spacer"></span><button class="btn-ghost btn-sm" onclick="papaToggle()">🔒 For Papa only</button></h3>
+  <div class="card" id="papaPanel" style="display:none; margin-bottom:12px; border-color:var(--sakura);">
+    <h2>🔒 Papa's desk — draft, polish, publish</h2>
+    <div class="papa-grid3">
+      <input type="number" id="pe_no" min="1" placeholder="Presentation #" style="width:100%;text-align:left;">
+      <input type="text" id="pe_topic" placeholder="Topic">
+      <input type="date" id="pe_date">
+    </div>
+    <div class="papa-grid2">
+      <input type="url" id="pe_vb" placeholder="BEFORE video URL (YouTube)">
+      <input type="url" id="pe_va" placeholder="AFTER video URL (YouTube)">
+    </div>
+    <div class="papa-scores">
+      <label>Pronunciation <input type="number" id="pe_pron" min="1" max="5"></label>
+      <label>Fluency <input type="number" id="pe_flu" min="1" max="5"></label>
+      <label>Grammar <input type="number" id="pe_gram" min="1" max="5"></label>
+      <label>Vocabulary <input type="number" id="pe_voc" min="1" max="5"></label>
+      <label>Content <input type="number" id="pe_cont" min="1" max="5"></label>
+      <label>Camera <input type="number" id="pe_cam" min="1" max="5"></label>
+      <label>Structure <input type="number" id="pe_str" min="1" max="5"></label>
+      <label>Memorization <input type="number" id="pe_mem" min="1" max="5"></label>
+      <label>Pacing <input type="number" id="pe_pace" min="1" max="5"></label>
+    </div>
+    <textarea class="papa-ta" id="papaDraft" placeholder="Your draft notes — raw and unpolished is fine. What she did well, what to fix, what to practice…"></textarea>
+    <div class="flex" style="margin:8px 0;">
+      <button class="btn-primary btn-sm" onclick="polishDraft()">✨ Polish draft</button>
+      <span class="muted" id="papaStatus"></span>
+    </div>
+    <textarea class="papa-ta" id="papaPolished" placeholder="The polished evaluation appears here (HTML) — edit it freely before publishing."></textarea>
+    <div class="flex" style="margin-top:8px;">
+      <span class="hint">Publishing adds the card below and syncs live to Miku. Leave any rubric score blank to omit it.</span>
+      <span class="spacer"></span>
+      <button class="btn-primary" onclick="publishEval()">Publish →</button>
+    </div>
+  </div>
   <div id="speechEvalList"></div>
   <details class="sess">
     <summary>📐 The rubric — how every speech is scored (1–5)</summary>
@@ -673,9 +716,10 @@ function render(){
         ${bars?`<div class="pe-scores">${bars}</div>`:""}
         ${vids?`<div class="pe-videos">${vids}</div>`:""}
         ${e.html||""}
+        <div class="pe-del" style="text-align:right;margin-top:8px;"><button class="btn-ghost btn-sm" onclick="delSpeechEval(${D.speechEvals.indexOf(e)})">✕ remove</button></div>
       </div>
     </details>`;
-  }).join("") || `<div class="card muted">No presentation evaluations published yet. The flow: Papa writes his draft notes → Claude polishes them and scores the rubric → the evaluation is published here with your before/after videos. Presentation 1 is up first. 🎬</div>`;
+  }).join("") || `<div class="card muted">No presentation evaluations published yet — Presentation 1 is up first. Each one will appear here with rubric scores and your before/after videos. 🎬</div>`;
 
   // vocabulary list
   const vb = document.getElementById("vocabBody");
@@ -766,6 +810,75 @@ function addVocab(){
   commit();
 }
 function delVocab(i){ if(confirm("Remove this word?")){ D.vocabList.splice(i,1); commit(); } }
+
+/* ---------- Papa's desk: draft → polish → publish ---------- */
+let puterReady = null;
+function papaToggle(){
+  const p = document.getElementById("papaPanel");
+  const show = p.style.display === "none" || !p.style.display;
+  p.style.display = show ? "block" : "none";
+  document.body.classList.toggle("papa-mode", show);
+  if(show){
+    if(!document.getElementById("pe_date").value) document.getElementById("pe_date").value = today0().toISOString().slice(0,10);
+    if(!window.puter && !puterReady){
+      puterReady = new Promise((res,rej)=>{
+        const s = document.createElement("script");
+        s.src = "https://js.puter.com/v2/"; s.onload = res; s.onerror = rej;
+        document.head.appendChild(s);
+      });
+    }
+  }
+}
+const PE_MODELS = ["claude-sonnet-4", "gpt-4o", "gpt-4.1", "gpt-4o-mini"];
+function peExtract(resp){
+  let c = resp?.message?.content ?? resp?.text ?? resp;
+  if(Array.isArray(c)) c = c.map(p=>p.text||"").join("");
+  return (typeof c === "string" ? c : String(c||"")).trim();
+}
+async function peChat(msgs){
+  for(const m of PE_MODELS){
+    try{ const r = await puter.ai.chat(msgs, {model:m}); const t = peExtract(r); if(t) return t; }catch(e){}
+  }
+  return peExtract(await puter.ai.chat(msgs));
+}
+function papaMeta(){
+  const g = id => document.getElementById(id).value.trim();
+  const scores = {};
+  [["pron","pe_pron"],["flu","pe_flu"],["gram","pe_gram"],["voc","pe_voc"],["cont","pe_cont"],["cam","pe_cam"],["str","pe_str"],["mem","pe_mem"],["pace","pe_pace"]]
+    .forEach(([k,id])=>{ const v=g(id); if(v!=="") scores[k]=Math.max(1,Math.min(5,+v)); });
+  return {presNo:g("pe_no"), topic:g("pe_topic"), date:g("pe_date")||today0().toISOString().slice(0,10), videoBefore:g("pe_vb"), videoAfter:g("pe_va"), scores};
+}
+async function polishDraft(){
+  const st = document.getElementById("papaStatus");
+  const draft = document.getElementById("papaDraft").value.trim();
+  if(!draft){ st.textContent = "Write your draft notes first."; return; }
+  st.textContent = "Polishing… ✨";
+  try{
+    if(puterReady) await puterReady;
+    const m = papaMeta();
+    const days = Math.max(0, Math.round((TEST_DATE - new Date())/86400000));
+    const scoresTxt = Object.entries(m.scores).map(([k,v])=>k+": "+v+"/5").join(", ") || "not entered";
+    const sys = `You polish evaluations of Miku's EIKEN 準1級 speech presentations. Miku is 16, in Japan; the writer is her father and coach, "Papa". Rewrite his raw draft notes into a warm, specific, encouraging evaluation in his established style: open with genuine, evidence-based praise; then the concrete fixes (pronunciation and language points, each with a practical drill); then a short game plan for the week; and close with a <div class="goal"> containing motivation and "${days} days to October 4". Use ONLY facts from the draft — invent nothing. English at 準1級 level; short Japanese glosses welcome. Format: HTML only — <h4> section headings, <b>, <i>, and the final goal div. No <html> wrapper, no markdown, no preamble, no mention of polishing or AI.`;
+    const usr = `Presentation ${m.presNo||"?"} — "${m.topic||"(topic not set)"}" (${m.date}). Rubric scores: ${scoresTxt}.\n\nPAPA'S DRAFT NOTES:\n${draft}`;
+    const out = await peChat([{role:"system",content:sys},{role:"user",content:usr}]);
+    document.getElementById("papaPolished").value = out.replace(/^```html\s*/i,"").replace(/```\s*$/,"").trim();
+    st.textContent = "Polished ✔ — review and edit below, then publish.";
+  }catch(e){ st.textContent = "Polish failed — check Puter sign-in and try again."; }
+}
+function publishEval(){
+  const st = document.getElementById("papaStatus");
+  const m = papaMeta();
+  const html = document.getElementById("papaPolished").value.trim();
+  if(!m.topic){ st.textContent = "Topic is required."; return; }
+  if(!html){ st.textContent = "Nothing to publish — polish or write the final text first."; return; }
+  D.speechEvals = D.speechEvals || [];
+  D.speechEvals.push({date:m.date, topic:m.topic, presNo:m.presNo?+m.presNo:null, scores:m.scores, videoBefore:m.videoBefore, videoAfter:m.videoAfter, html});
+  commit();
+  document.getElementById("papaDraft").value = "";
+  document.getElementById("papaPolished").value = "";
+  st.textContent = "Published ✔ — live for Miku.";
+}
+function delSpeechEval(i){ if(confirm("Remove this published evaluation?")){ D.speechEvals.splice(i,1); commit(); } }
 
 function exportData(){ document.getElementById("backupBox").value = JSON.stringify(D); }
 function importData(){
