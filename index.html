@@ -77,6 +77,48 @@
   details.sess .sess-body h4:first-child{margin-top:0;}
   details.sess .sess-body b{color:var(--indigo-d);}
   details.sess .sess-body .goal{background:linear-gradient(120deg,#eef0fb,#fdeef4); border-radius:10px; padding:12px 14px; margin-top:14px; font-weight:600; color:var(--indigo-d);}
+  /* ---- study calendar ---- */
+  .cal-tabs{display:flex; gap:6px; flex-wrap:wrap;}
+  .cal-tabs button.on{background:var(--indigo); color:#fff;}
+  .cal-nav{display:flex; gap:6px; align-items:center;}
+  .cal-title{font-weight:700; color:var(--indigo-d); font-size:.92rem; margin-top:10px;}
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:3px; margin-top:8px;}
+  .cal-grid .dow{text-align:center; font-size:.65rem; color:var(--sub); padding:2px 0; font-weight:600;}
+  .cal-cell{min-height:56px; border:1px solid var(--line); border-radius:6px; padding:2px 3px; font-size:.65rem; background:#fff; cursor:pointer; overflow:hidden;}
+  .cal-cell.out{background:transparent; border-color:transparent; cursor:default;}
+  .cal-cell.today{outline:2px solid var(--sakura); outline-offset:-2px;}
+  .cal-cell.past{opacity:.55;}
+  .cal-cell .dnum{font-weight:700; color:var(--indigo-d);}
+  .cal-ev{display:block; border-radius:4px; padding:0 3px; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; background:#eef0fb; color:var(--indigo);}
+  .cal-ev.mock{background:#fdf1dc; color:#a97817;}
+  .cal-ev.test{background:#fdeef4; color:var(--sakura); font-weight:700;}
+  .cal-ev.sess{background:#e2f4ea; color:var(--green);}
+  .bp-months{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin-top:10px;}
+  .bp-month h4{font-size:.8rem; color:var(--indigo-d); text-align:center; margin-bottom:4px;}
+  .bp-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:2px;}
+  .bp-grid .dow{font-size:.55rem; text-align:center; color:var(--sub);}
+  .bp-cell{position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:.62rem; border-radius:5px; cursor:pointer;}
+  .bp-cell.off{visibility:hidden;}
+  .bp-cell.dim{opacity:.25; cursor:default;}
+  .bp-cell.p0{background:#e6f0ea;} .bp-cell.p1{background:#eef0fb;} .bp-cell.p2{background:#fdf1dc;} .bp-cell.p3{background:#fdeef4;}
+  .bp-cell.past{opacity:.4;}
+  .bp-cell.today{outline:2px solid var(--sakura); outline-offset:-1px; font-weight:700;}
+  .bp-cell .dots{position:absolute; bottom:1px; left:0; right:0; display:flex; justify-content:center; gap:1px;}
+  .dot{display:inline-block; width:5px; height:5px; border-radius:50%;}
+  .dot.mock{background:var(--gold);} .dot.test{background:var(--sakura);} .dot.sess{background:var(--green);} .dot.ev{background:var(--indigo);}
+  .cal-legend{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; font-size:.7rem; color:var(--sub); align-items:center;}
+  .cal-legend .dot{margin-right:3px;}
+  .day-list{margin-top:8px; font-size:.85rem;}
+  .day-list li{list-style:none; padding:6px 8px; border-bottom:1px solid var(--line); display:flex; gap:8px; align-items:center;}
+  .day-list li:last-child{border-bottom:none;}
+  /* ---- presentation evaluations ---- */
+  .pe-scores{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin:6px 0 12px;}
+  .pe-score .lbl2{font-size:.7rem; color:var(--sub); display:flex; justify-content:space-between; gap:4px;}
+  .pe-score .bar{height:8px; margin:3px 0 0;}
+  .pe-videos{margin-bottom:10px;}
+  .pe-videos a{color:var(--sakura); font-weight:600; text-decoration:none; font-size:.82rem; margin-right:12px;}
+  .pe-videos a:hover{text-decoration:underline;}
+  .pe-avg{color:var(--indigo); font-weight:700;}
 </style>
 </head>
 <body>
@@ -89,6 +131,29 @@
 </header>
 
 <div class="wrap">
+
+  <!-- CALENDAR -->
+  <div class="card" style="margin-bottom:16px;">
+    <h2>📅 Study calendar <span class="muted" style="font-weight:400;">— the road to Oct 4 · click any day to zoom in</span></h2>
+    <div class="flex">
+      <div class="cal-tabs">
+        <button class="btn-ghost btn-sm" data-view="big" onclick="calView('big')">🗾 Big picture</button>
+        <button class="btn-ghost btn-sm" data-view="month" onclick="calView('month')">Month</button>
+        <button class="btn-ghost btn-sm" data-view="week" onclick="calView('week')">Week</button>
+        <button class="btn-ghost btn-sm" data-view="day" onclick="calView('day')">Day</button>
+      </div>
+      <span class="spacer"></span>
+      <div class="cal-nav">
+        <button class="btn-ghost btn-sm" onclick="calNav(-1)">←</button>
+        <button class="btn-ghost btn-sm" onclick="calToday()">today</button>
+        <button class="btn-ghost btn-sm" onclick="calNav(1)">→</button>
+        <button class="btn-ghost btn-sm" onclick="addEvent()">+ add</button>
+      </div>
+    </div>
+    <div class="cal-title" id="calTitle"></div>
+    <div id="calBody"></div>
+    <div class="cal-legend" id="calLegend"></div>
+  </div>
 
   <!-- TOP ROW -->
   <div class="grid cols3">
@@ -179,10 +244,25 @@
   <h3 class="section-title">🌟 Session evaluations <span class="muted">(read this after every lesson, Miku!)</span></h3>
   <div id="sessionList"></div>
 
+  <!-- PRESENTATION EVALUATIONS -->
+  <h3 class="section-title">🎬 Presentation evaluations <span class="muted">(one card per speech · scored on the rubric below · Papa drafts → Claude polishes → published here)</span></h3>
+  <div id="speechEvalList"></div>
+  <details class="sess">
+    <summary>📐 The rubric — how every speech is scored (1–5)</summary>
+    <div class="sess-body">
+      <h4>Speech &amp; interview criteria (準1級 面接)</h4>
+      <b>Pronunciation 発音</b> — 1: errors often block understanding · 3: noticeable slips but always clear · 5: natural stress, linking and rhythm.<br>
+      <b>Fluency 流暢さ</b> — 1: frequent long pauses · 3: some hesitation, recovers without freezing · 5: smooth, natural pace start to finish.<br>
+      <b>Grammar 文法</b> — 1: basic errors obscure meaning · 3: solid base, slips only in complex forms · 5: accurate, varied 準1級-level structures.<br>
+      <b>Vocabulary 語彙</b> — 1: simple words only · 3: some 準1級 items used correctly · 5: rich, precise, natural word choice.<br>
+      <b>Content &amp; interaction 内容</b> — 1: ideas thin or off-topic · 3: clear opinion with support · 5: organized, persuasive, answers questions directly (concession + reason).
+      <h4>Video delivery criteria</h4>
+      <b>Camera presence</b> — eyes up, talking <i>to</i> someone · <b>Structure</b> — signposts guide the listener · <b>Memorization ownership</b> — the speech sounds like her own words, not recitation · <b>Pacing</b> — 3–5 minutes, no racing.
+    </div>
+  </details>
+
   <!-- VOCABULARY LIST -->
-  <h3 class="section-title" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">🗣 Vocabulary list <span class="muted">(from sessions · click any cell to edit · saves automatically · hardest words float to the top)</span>
-    <a href="vocab-trainer.html" style="margin-left:auto; text-decoration:none;"><button class="btn-primary btn-sm">🎮 単語トレーニング →</button></a>
-  </h3>
+  <h3 class="section-title">🗣 Vocabulary list <span class="muted">(from sessions · click any cell to edit · saves automatically)</span></h3>
   <div class="card" style="overflow-x:auto;">
     <table id="vocabTable">
       <thead><tr>
@@ -241,10 +321,24 @@ const SECTIONS = [
   {id:"list",  name:"リスニング Listening", max:29},
 ];
 
+const DAILIES = [
+  "🎯 10-min mouth work (current drill targets)",
+  "📱 Vocab trainer — 1–2 sessions",
+  "📝 Add 15–25 new words to the list",
+  "🧹 Talk with キキ先生",
+  "🎵 Songs — current pair",
+  "🎤 Speech practice — current topic",
+];
+
 const DEFAULTS = {
   updatedAt:0,
   mockDates:["2026-07-25","2026-08-15","2026-09-05","2026-09-26"],
   scores:{},
+  calendar:[
+    {date:"2026-07-29", label:"⭐ Placement test (ASAP!)"},
+    {date:"2026-08-01", label:"🎬 Record Presentation 1 'BEFORE' video → send Papa"},
+  ],
+  speechEvals:[],
   vocabNow:0, vocabMax:1500, gramNow:0, gramMax:60, idiomNow:0, idiomMax:200,
   streak:0, lastStudy:null, totalStudyDays:0,
   speechTopic:"", speechChecks:{}, speechCount:0,
@@ -286,8 +380,6 @@ Miku, let's start with the truth: Papa teaches many students, and he said it out
 Every one of these fixes shows up on test day. Clear /bl/ gives you "problem," "public," "establish" — words in almost every 準1級 reading. Clear -ed endings and first syllables are exactly what the speaking examiner grades. And reading the <i>title</i> first to predict the meaning — like Papa showed you — is the secret weapon for the summary question.
 <div class="goal">74 days, Miku. Nobody in the family has passed 準1級 at 16 — you are on schedule to be the first. Your ear is already excellent; now we train the mouth to catch up. Next mission: your speech — "Should AI be used in education?" Make the "before" video on day one. Future Miku wants to see how far you came. 🌸</div>`},
   ],
-  leitner:{},
-  trainerStats:{xp:0, totalCorrect:0, totalWrong:0, bestStreak:0, sessionsCompleted:0},
 };
 
 let D = loadLocal();
@@ -366,6 +458,137 @@ function buildMockTable(){
 
 function pctClass(p){ return p>=70?"pct-good":(p>=55?"pct-mid":"pct-low"); }
 
+/* ---------- study calendar ---------- */
+let calV = "big";
+let calCursor = today0();
+const DOW_MIN = ["S","M","T","W","T","F","S"];
+const DOW_FULL = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+function pad2(n){ return String(n).padStart(2,"0"); }
+function isoD(d){ return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()); }
+
+function calEvents(){
+  const ev = {};
+  const push=(ds,label,cls)=>{ if(!ds) return; (ev[ds]=ev[ds]||[]).push({label,cls}); };
+  (D.mockDates||[]).forEach((ds,i)=> push(ds,"⭐ Mock "+(i+1),"mock"));
+  (D.sessions||[]).forEach(s=> push(s.date,"🌟 "+String(s.title).split("—")[0].trim(),"sess"));
+  push(isoD(TEST_DATE),"🎌 TEST DAY — 準1級!","test");
+  (D.calendar||[]).forEach(e=> push(e.date,e.label,"ev"));
+  return ev;
+}
+function phaseIdx(d){
+  const ends=["2026-08-15","2026-09-05","2026-09-26","2026-10-04"];
+  const ds=isoD(d);
+  for(let i=0;i<4;i++) if(ds<=ends[i]) return i;
+  return 3;
+}
+function calView(v){ calV=v; renderCalendar(); }
+function calToday(){ calCursor=today0(); renderCalendar(); }
+function calNav(dir){
+  if(calV==="day") calCursor=new Date(calCursor.getFullYear(),calCursor.getMonth(),calCursor.getDate()+dir);
+  else if(calV==="week") calCursor=new Date(calCursor.getFullYear(),calCursor.getMonth(),calCursor.getDate()+dir*7);
+  else if(calV==="month") calCursor=new Date(calCursor.getFullYear(),calCursor.getMonth()+dir,1);
+  renderCalendar();
+}
+function calGoto(ds){ calCursor=new Date(ds+"T00:00:00"); calV="day"; renderCalendar(); }
+function addEvent(){
+  const date=prompt("Date (YYYY-MM-DD):", isoD(calCursor)); if(!date) return;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){ alert("Please use YYYY-MM-DD format."); return; }
+  const label=prompt("Assignment / event (e.g. 🎬 Record speech video):"); if(!label) return;
+  D.calendar=D.calendar||[]; D.calendar.push({date,label}); commit();
+}
+function delEvent(i){ if(confirm("Remove this assignment?")){ D.calendar.splice(i,1); commit(); } }
+
+function renderCalendar(){
+  const elBody=document.getElementById("calBody");
+  if(!elBody) return;
+  document.querySelectorAll(".cal-tabs button").forEach(b=> b.classList.toggle("on", b.dataset.view===calV));
+  const ev=calEvents(), t0=today0(), tIso=isoD(t0);
+  const title=document.getElementById("calTitle");
+  document.getElementById("calLegend").innerHTML =
+    `<span><span class="dot test"></span>test day</span>
+     <span><span class="dot mock"></span>mock test</span>
+     <span><span class="dot ev"></span>assignment</span>
+     <span><span class="dot sess"></span>session eval</span>
+     <span>· background = phase: <i>Foundation / Build / Intensive / Polish</i></span>`;
+
+  if(calV==="big"){
+    title.textContent = `The whole road: Jul 22 → Oct 4 (${Math.max(daysBetween(t0,TEST_DATE),0)} days left)`;
+    let html=`<div class="bp-months">`;
+    [[2026,6],[2026,7],[2026,8],[2026,9]].forEach(([y,m])=>{
+      const first=new Date(y,m,1), dim=new Date(y,m+1,0).getDate();
+      html+=`<div class="bp-month"><h4>${first.toLocaleString("en",{month:"long"})}</h4><div class="bp-grid">`;
+      DOW_MIN.forEach(d=> html+=`<div class="dow">${d}</div>`);
+      for(let i=0;i<first.getDay();i++) html+=`<div class="bp-cell off"></div>`;
+      for(let d=1;d<=dim;d++){
+        const dt=new Date(y,m,d), ds=isoD(dt);
+        if(dt<START_DATE||dt>TEST_DATE){ html+=`<div class="bp-cell dim">${d}</div>`; continue; }
+        const cls=["bp-cell","p"+phaseIdx(dt)];
+        if(dt<t0) cls.push("past");
+        if(ds===tIso) cls.push("today");
+        const dots=(ev[ds]||[]).map(e=>`<span class="dot ${e.cls}"></span>`).join("");
+        html+=`<div class="${cls.join(" ")}" onclick="calGoto('${ds}')">${d}<div class="dots">${dots}</div></div>`;
+      }
+      html+=`</div></div>`;
+    });
+    html+=`</div>`;
+    const up=Object.keys(ev).filter(ds=>ds>=tIso).sort().slice(0,5)
+      .map(ds=> ev[ds].map(e=>`<li>📌 <b>${+ds.slice(5,7)}/${+ds.slice(8,10)}</b> ${e.label}</li>`).join("")).join("");
+    html+=`<ul class="day-list"><li style="font-weight:700;color:var(--indigo-d);border-bottom:2px solid var(--line);">Coming up</li>${up||`<li class="muted">nothing scheduled yet</li>`}</ul>`;
+    elBody.innerHTML=html;
+  }
+  else if(calV==="month"){
+    const y=calCursor.getFullYear(), m=calCursor.getMonth();
+    title.textContent = calCursor.toLocaleString("en",{month:"long",year:"numeric"});
+    const first=new Date(y,m,1), dim=new Date(y,m+1,0).getDate();
+    let html=`<div class="cal-grid">`;
+    DOW_FULL.forEach(d=> html+=`<div class="dow">${d}</div>`);
+    for(let i=0;i<first.getDay();i++) html+=`<div class="cal-cell out"></div>`;
+    for(let d=1;d<=dim;d++){
+      const dt=new Date(y,m,d), ds=isoD(dt);
+      const cls=["cal-cell"]; if(ds===tIso) cls.push("today"); if(dt<t0) cls.push("past");
+      const evs=(ev[ds]||[]).map(e=>`<span class="cal-ev ${e.cls}">${e.label}</span>`).join("");
+      html+=`<div class="${cls.join(" ")}" onclick="calGoto('${ds}')"><span class="dnum">${d}</span>${evs}</div>`;
+    }
+    html+=`</div>`;
+    elBody.innerHTML=html;
+  }
+  else if(calV==="week"){
+    const start=new Date(calCursor.getFullYear(),calCursor.getMonth(),calCursor.getDate()-calCursor.getDay());
+    const end=new Date(start.getFullYear(),start.getMonth(),start.getDate()+6);
+    title.textContent = `${start.toLocaleDateString("en",{month:"short",day:"numeric"})} – ${end.toLocaleDateString("en",{month:"short",day:"numeric"})}`;
+    let html=`<div class="cal-grid">`;
+    for(let i=0;i<7;i++){
+      const dt=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
+      html+=`<div class="dow">${DOW_FULL[dt.getDay()]} ${dt.getMonth()+1}/${dt.getDate()}</div>`;
+    }
+    for(let i=0;i<7;i++){
+      const dt=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i), ds=isoD(dt);
+      const cls=["cal-cell"]; if(ds===tIso) cls.push("today"); if(dt<t0) cls.push("past");
+      const evs=(ev[ds]||[]).map(e=>`<span class="cal-ev ${e.cls}">${e.label}</span>`).join("");
+      html+=`<div class="${cls.join(" ")}" style="min-height:96px;" onclick="calGoto('${ds}')"><span class="dnum">${dt.getDate()}</span>${evs}</div>`;
+    }
+    html+=`</div><div class="hint">Every day（毎日）: ${DAILIES.join(" · ")}</div>`;
+    elBody.innerHTML=html;
+  }
+  else{ // day
+    const ds=isoD(calCursor);
+    title.textContent = calCursor.toLocaleDateString("en",{weekday:"long",month:"long",day:"numeric"}) + (ds===tIso?" — today":"");
+    const custom=D.calendar||[];
+    let html=`<ul class="day-list">`;
+    (ev[ds]||[]).forEach(e=>{
+      const ci=(e.cls==="ev") ? custom.findIndex(c=>c.date===ds && c.label===e.label) : -1;
+      html+=`<li>📌 <b>${e.label}</b>${ci>=0?`<span class="spacer"></span><button class="btn-ghost btn-sm" onclick="delEvent(${ci})">✕</button>`:""}</li>`;
+    });
+    if(calCursor>=START_DATE && calCursor<=TEST_DATE && ds!==isoD(TEST_DATE)){
+      html+=`<li style="font-weight:700;color:var(--indigo-d);">Daily missions（毎日のミッション）:</li>`;
+      DAILIES.forEach(d=> html+=`<li>${d}</li>`);
+    }
+    html+=`</ul>`;
+    elBody.innerHTML=html;
+  }
+}
+
 function render(){
   tick();
 
@@ -432,6 +655,28 @@ function render(){
     <div class="sess-body">${s.html}</div>
   </details>`).join("") || `<div class="card muted">Evaluations will appear here after each session.</div>`;
 
+  // presentation evaluations (newest first; latest open)
+  const RUBRIC = [["pron","Pronunciation"],["flu","Fluency"],["gram","Grammar"],["voc","Vocabulary"],["cont","Content & interaction"],["cam","Camera presence"],["str","Structure"],["mem","Memorization"],["pace","Pacing"]];
+  const pe = document.getElementById("speechEvalList");
+  const pevs = [...(D.speechEvals||[])].sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")));
+  pe.innerHTML = pevs.map((e,i)=>{
+    const scored = RUBRIC.filter(([k])=> e.scores && e.scores[k]!=null && e.scores[k]!=="");
+    const avg = scored.length ? scored.reduce((s,[k])=> s + +e.scores[k],0)/scored.length : null;
+    const bars = scored.map(([k,name])=>{
+      const v=+e.scores[k], col = v>=4?"var(--green)":(v>=3?"var(--gold)":"var(--red)");
+      return `<div class="pe-score"><div class="lbl2"><span>${name}</span><b>${v}/5</b></div><div class="bar"><span style="width:${v/5*100}%;background:${col};"></span></div></div>`;
+    }).join("");
+    const vids=[e.videoBefore?`<a href="${e.videoBefore}" target="_blank" rel="noopener">▶ BEFORE video</a>`:"", e.videoAfter?`<a href="${e.videoAfter}" target="_blank" rel="noopener">▶ AFTER video</a>`:""].filter(Boolean).join("");
+    return `<details class="sess"${i===0?" open":""}>
+      <summary>🎬 ${e.presNo!=null?`Presentation ${e.presNo} — `:""}${e.topic||"(untitled)"} <span class="muted">· ${String(e.date||"").replaceAll("-","/")}</span>${avg!=null?` · <span class="pe-avg">${avg.toFixed(1)}</span><span class="muted">/5</span>`:""}</summary>
+      <div class="sess-body">
+        ${bars?`<div class="pe-scores">${bars}</div>`:""}
+        ${vids?`<div class="pe-videos">${vids}</div>`:""}
+        ${e.html||""}
+      </div>
+    </details>`;
+  }).join("") || `<div class="card muted">No presentation evaluations published yet. The flow: Papa writes his draft notes → Claude polishes them and scores the rubric → the evaluation is published here with your before/after videos. Presentation 1 is up first. 🎬</div>`;
+
   // vocabulary list
   const vb = document.getElementById("vocabBody");
   const esc = s => String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;");
@@ -462,6 +707,8 @@ function render(){
     "Every idiom you own is a point nobody can take from you.",
   ];
   document.getElementById("quote").textContent = "“" + quotes[today0().getDate() % quotes.length] + "”";
+
+  renderCalendar();
 }
 
 function save(){
