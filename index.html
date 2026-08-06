@@ -276,6 +276,7 @@
       <tbody id="mockBody"></tbody>
     </table>
     <div class="hint">Sections: 語彙 Vocabulary /18 · 長文 Reading /13 · 要約 Summary /16 · 英作文 Essay /16 · リスニング Listening /29. Leave blank until taken.</div>
+    <div id="mockAnalysis"></div>
   </div>
   </details>
 
@@ -532,6 +533,41 @@ function buildMockTable(){
   tb.innerHTML = html;
 }
 
+/* ---------- mock test score breakdown + study guides ---------- */
+function renderMockAnalysis(){
+  var el = document.getElementById("mockAnalysis");
+  if(!el) return;
+  var A = [].concat(D.mockAnalysis||[]).sort(function(a,b){ return (b.mock||0)-(a.mock||0); });
+  if(!A.length){ el.innerHTML = ""; return; }
+  var cards = A.map(function(a,i){
+    var rows = (a.sections||[]).map(function(s){
+      var pct = s.max ? Math.round(s.score/s.max*100) : 0;
+      var col = pct>=70?"var(--green)":(pct>=55?"var(--gold)":"var(--red)");
+      return '<div class="pe-score"><div class="lbl2"><span>'+s.name+'</span><b>'+s.score+'/'+s.max+'</b></div>'
+        + '<div class="bar"><span style="width:'+pct+'%;background:'+col+';"></span></div>'
+        + (s.note?'<div class="muted" style="font-size:.7rem;margin-top:3px;">'+s.note+'</div>':'')
+        + '</div>';
+    }).join("");
+    var list = function(arr,t,ic){
+      if(!arr || !arr.length) return '';
+      return '<h4>'+ic+' '+t+'</h4><ul style="margin:4px 0 10px;padding-left:20px;">'
+        + arr.map(function(x){ return '<li>'+x+'</li>'; }).join("") + '</ul>';
+    };
+    var guide = a.guideUrl ? '<div class="pe-videos"><a href="'+a.guideUrl+'" target="_blank" rel="noopener">📄 Mock '+a.mock+' study guide (PDF) →</a></div>' : '';
+    return '<details class="sess"'+(i===0?' open':'')+'>'
+      + '<summary>📊 Mock '+a.mock+' breakdown <span class="muted">· '+String(a.date||"").split("-").join("/")+'</span>'
+      + (a.headline?' · <span class="pe-avg">'+a.headline+'</span>':'') + '</summary>'
+      + '<div class="sess-body">'
+      + (rows?'<div class="pe-scores">'+rows+'</div>':'')
+      + guide
+      + list(a.strengths,"What is already working","✨")
+      + list(a.patterns,"Patterns to fix","🎯")
+      + (a.html||"")
+      + '</div></details>';
+  }).join("");
+  el.innerHTML = '<h4 style="margin:14px 0 6px;">📊 Score breakdown &amp; study guides</h4>' + cards;
+}
+
 function pctClass(p){ return p>=70?"pct-good":(p>=55?"pct-mid":"pct-low"); }
 
 /* ---------- study calendar ---------- */
@@ -722,6 +758,8 @@ function render(){
     } else pill = `<span class="pill todo">–</span>`;
     statusCells[m].innerHTML = pill;
   }
+
+  renderMockAnalysis();
 
   // session evaluations (newest first; latest open)
   const sl = document.getElementById("sessionList");
