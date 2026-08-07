@@ -1,0 +1,416 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>読解 精読編 | Miku EIKEN</title><style>
+:root{--nv:#0b3d64;}
+*{box-sizing:border-box}
+body{font-family:"Hiragino Sans","Noto Sans CJK JP","Yu Gothic",sans-serif;font-size:15px;line-height:1.65;color:#1a1a1a;max-width:940px;margin:0 auto;padding:18px;background:#fff}
+a.back{display:inline-block;margin-bottom:12px;color:var(--nv);text-decoration:none;font-weight:bold;font-size:14px}
+h1{font-size:26px;color:var(--nv);border-bottom:3px solid var(--nv);padding-bottom:6px;margin:0 0 6px}
+h2{font-size:18px;color:#fff;background:var(--nv);padding:8px 12px;margin:26px 0 12px;border-radius:4px}
+h3{font-size:16px;color:var(--nv);margin:20px 0 8px;border-left:5px solid #d98324;padding-left:10px}
+h4{font-size:15px;color:#333;margin:16px 0 6px}
+.sub{color:#666;font-size:14px;margin:0 0 14px}
+table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:13.5px}
+th{background:#e8eef3;color:var(--nv);padding:7px 8px;border:1px solid #b9c9d6;text-align:left}
+td{padding:6px 8px;border:1px solid #d5dee5;vertical-align:top}
+.big{background:var(--nv);color:#fff;padding:14px 16px;border-radius:5px;margin:14px 0;font-size:15px}
+.big b{color:#ffd27f}
+.warn{background:#fdecea;border:1px solid #f0a9a0;padding:11px 14px;border-radius:4px;margin:12px 0}
+.map{background:#eef4f9;border:1px solid #bcd2e3;border-radius:5px;padding:12px 15px;margin:12px 0;font-size:14.5px}
+.map b{color:var(--nv)}
+.sent{border:1px solid #dbe3ea;border-left:4px solid #4a7fae;border-radius:4px;padding:10px 13px;margin:12px 0;background:#fbfcfd}
+.sent.hard{border-left-color:#c0392b;background:#fdf6f5}
+.sent .n{display:inline-block;background:#4a7fae;color:#fff;font-size:12px;padding:2px 9px;border-radius:10px;margin-right:7px}
+.sent.hard .n{background:#c0392b}
+.eng{font-size:16px;line-height:1.85;color:#123;margin:7px 0}
+.eng u{text-decoration:none;border-bottom:2px solid #f0b429}
+.eng b{color:var(--nv)}
+.row{margin:6px 0;font-size:14px}
+.row .lbl{display:inline-block;min-width:4.5em;font-weight:bold;color:#1d4a75}
+.lit{color:#2c4a63}
+.pt{background:#fff8e6;border:1px solid #f0d089;border-radius:4px;padding:8px 11px;margin:8px 0 0;font-size:14px}
+.pt b{color:#a56a00}
+.gap{background:#f1ecfa;border:1px solid #c3b3e8;border-left:4px solid #6b4fbb;border-radius:4px;padding:8px 11px;margin:8px 0 0;font-size:14px}
+.gap b{color:#5335a5}
+.maker{background:#eef7ef;border:1px solid #a9d4b0;border-left:4px solid #1a7f37;border-radius:4px;padding:10px 13px;margin:12px 0;font-size:14.5px}
+.maker b{color:#146c2e}
+code{background:#eef2f5;padding:1px 5px;border-radius:3px;font-size:14px}
+ul.plain{padding-left:18px;margin:6px 0}
+@media print{body{padding:0;max-width:none} a.back{display:none} .sent{page-break-inside:avoid} h2{page-break-after:avoid}}
+@media (max-width:600px){body{font-size:14px;padding:12px}.eng{font-size:15px}table{font-size:12px}}
+</style></head><body>
+<a class="back" href="index.html">&larr; ダッシュボードに戻る</a>
+<h1>模擬試験1 ― 読解 精読編</h1>
+<p class="sub">5つの英文すべてを、1文ずつ分解します。構造 → 直訳（前から）→ つまずきポイント → 出題者の意図。<br><b>この5本を完全に読めるようになれば、Pre-1 の読解は8割取れます。</b></p>
+<h2>第15章　総論 ― Pre-1 の英文が読めない、たった3つの理由</h2>
+<p>単語を知らないから読めない、のではありません。<b>原因はほぼこの3つに絞れます。</b></p>
+<table><tr><th style="width:5%"></th><th style="width:30%">原因</th><th>具体例（この5本から）</th></tr>
+<tr><td><b>①</b></td><td><b>主語と動詞が離れている</b><br>主語に飾りがつきすぎて、本当の動詞を見失う</td><td><code>The idea <u>that the order in which children are born can have … personalities</u> <b>was developed</b> by …</code><br>主語だけで<b>25語</b>。動詞は26語目。</td></tr>
+<tr><td><b>②</b></td><td><b>名詞の後ろから説明が来る</b><br>日本語は前から飾るので、順番が逆</td><td><code>fish with larger brains <u>that were bred together</u></code><br><code>structures <u>called ziggurats</u> <u>that were topped with temples</u></code></td></tr>
+<tr><td><b>③</b></td><td><b>文全体を受ける which / 分詞構文</b><br>言い切ったあとに、解釈や結果を足す</td><td><code>…, <b>which</b> helped facilitate the governance …</code><br><code>…, <b>indicating that</b> the gene had enhanced their memory</code></td></tr></table>
+
+<div class="big"><b>精読の手順 ― 毎回この順番でやってください。</b><br>
+<b>STEP 1</b>　文を見たら、まず <b>主語（S）</b> を丸で囲む。<br>
+<b>STEP 2</b>　そこから右へ進み、<b>本当の動詞（V）</b> を見つけて下線。<b>関係詞の中の動詞を主節の動詞と間違えないこと。</b><br>
+<b>STEP 3</b>　S と V の間にあるものは、<b>全部おまけ</b>。カッコに入れて一旦無視する。<br>
+<b>STEP 4</b>　骨組み（S＋V）だけで意味を取る。<br>
+<b>STEP 5</b>　カッコの中身を、<b>前から</b> 足していく。</div>
+
+<h4>Pre-1 に必ず出る 12 の構文 ― この5本に全部入っています</h4>
+<table><tr><th style="width:4%">#</th><th style="width:24%">構文</th><th style="width:34%">実例</th><th>意味・注意</th></tr>
+<tr><td>1</td><td><b>同格の that</b><br>名詞 ＋ that ＋ 完全文</td><td>the idea <b>that</b> the order … can have an effect<br>the fact <b>that</b> larger brains require energy</td><td>「〜という考え／事実」。<b>関係代名詞と違い、that の後ろが完全な文。</b></td></tr>
+<tr><td>2</td><td><b>前置詞 ＋ 関係代名詞</b></td><td>the order <b>in which</b> children are born</td><td>「子どもが生まれる<u>順番</u>」。in which ＝ 元は in the order。</td></tr>
+<tr><td>3</td><td><b>, which（前の節全体を指す）</b></td><td>…, <b>which</b> did not fit the stereotype</td><td>「そしてそのことは〜」。<b>直前の名詞ではなく文全体</b>を指すことがある。</td></tr>
+<tr><td>4</td><td><b>数量詞 ＋ of which</b></td><td>many <b>of which</b> survive／all <b>of which</b> point to …</td><td>「そのうちの多くは／そのすべては」</td></tr>
+<tr><td>5</td><td><b>分詞構文（結果・付帯）</b></td><td>…, <b>leaving</b> them all vulnerable／<b>indicating</b> that …／<b>resulting in</b> …</td><td><b>コンマ ＋ ~ing は「そして〜」と前から流す。</b></td></tr>
+<tr><td>6</td><td><b>過去分詞の後置修飾</b></td><td>sea levels <b>caused</b> by climate change／a gene <b>called</b> FOXP2／the resources <b>required</b> for the project</td><td>名詞の直後の過去分詞は「〜された名詞」。<b>動詞と間違えやすい。</b></td></tr>
+<tr><td>7</td><td><b>倒置（場所の副詞句が文頭）</b></td><td><b>Behind this remarkable growth were</b> several factors</td><td>were の後ろが主語。<b>Pre-1 で必ず1回は出る。</b></td></tr>
+<tr><td>8</td><td><b>to such an extent that / so ~ that</b></td><td>developed <b>to such an extent that</b> historians consider it …</td><td>「とても〜なので…」。that の後ろが結果。</td></tr>
+<tr><td>9</td><td><b>形式主語 it / 動名詞主語</b></td><td><b>it</b> would be impossible <b>for</b> the creature <b>to give</b> consent<br><b>withholding</b> animal uplift <b>is</b> unethical</td><td>長い主語は it に逃がす。<b>~ing で始まる文は主語。</b></td></tr>
+<tr><td>10</td><td><b>間接疑問</b></td><td>awareness of <b>how brief</b> its lifespan <b>is</b></td><td>疑問詞の後ろは <b>ふつうの語順（S＋V）</b>。</td></tr>
+<tr><td>11</td><td><b>完了不定詞 seem to have p.p.</b></td><td>this <b>seems to have led</b> them to produce fewer offspring</td><td>「〜したようだ」。<b>過去のこと。</b></td></tr>
+<tr><td>12</td><td><b>関係詞の省略</b></td><td>the sophisticated city <b>[that]</b> it became</td><td><b>名詞のすぐ後ろに S＋V が来たら、関係詞が省略されている。</b></td></tr></table>
+
+<div class="warn"><b>Miku へ ―― この章がいちばん大事です。</b><br>
+語彙は増やせば増えます。でも <b>構文が読めないと、単語を全部知っていても意味が取れません。</b><br>
+逆に構文が読めれば、<b>知らない単語が2〜3個あっても正解できます。</b>今回の(26)(29)(30)はまさにそれでした。<br>
+これから先の精読で、上の12番号が何度も出てきます。<b>出てくるたびに番号を確認してください。</b></div>
+
+<h2>第16章　精読①　Birth Order（大問2-A）</h2>
+<div class="map"><b>■ 文章の設計図</b><br>
+<b>第1段落＝古い説</b>　アドラーの理論（長子は責任感／中間子は外交的／末っ子は反抗的）。今も育児書に載っている。<br>
+<b>第2段落＝研究結果</b>　大規模研究をしたら、差は<b>ごくわずか</b>で、しかも<b>予想と矛盾</b>した。→ 関連はほぼ無意味。<br>
+<b>第3段落＝本当の理由</b>　親が見ている差は生まれ順ではなく <b>一時的な発達段階</b>。性格を決めるのは遺伝と環境。<br><br>
+<b>→ 型：「よく信じられている説 → 研究で否定 → 本当の説明」。</b>Pre-1 の大問2で最も多い型。<b>この型だと分かった時点で、空所の答えは「否定的な内容」だと予測できます。</b></div>
+
+<h3>第1段落</h3>
+<div class="sent hard"><span class="n">①</span><b>最難関の一文。</b>
+<div class="eng">The idea <u>that the order <u>in which children are born</u> can have a lasting and dramatic effect on their personalities</u> <b>was developed</b> by the Austrian psychologist Alfred Adler more than a century ago.</div>
+<div class="row"><span class="lbl">構造</span> <b>S</b> = The idea ＋［同格の that 節：構文①］／ <b>V</b> = was developed（受動態）</div>
+<div class="row"><span class="lbl">入れ子</span> that 節の中：<b>S</b> = the order［in which children are born：構文②］／ <b>V</b> = can have ／ <b>O</b> = an effect</div>
+<div class="row lit"><span class="lbl">直訳</span> その考え ／ ―子どもが生まれる順番が ／ 持ちうるという ／ 永続的で劇的な影響を ／ 彼らの性格に― ／ は ／ 発展させられた ／ オーストリアの心理学者アドラーによって ／ 一世紀以上前に</div>
+<div class="pt"><b>★ポイント1：</b> 主語 The idea から動詞 was developed まで <b>25語</b>。<b>The idea が出た瞬間に「動詞はどこだ」と探しに行く</b>のが精読の第一歩です。<br>
+<b>★ポイント2：</b> <code>the order <b>in which</b> children are born</code> ＝ 元は <code>children are born <b>in the order</b></code>。in が前に出ています。<br>
+<b>★ポイント3：</b> 同格の that と関係代名詞の that の区別 ―― <b>that の後ろが完全な文なら同格（〜という）。</b></div>
+<div class="gap"><b>つまずきやすい点：</b> <code>lasting</code> を動名詞に取ると崩れます。ここは <b>形容詞「永続的な」</b>。<code>a <b>lasting</b> and <b>dramatic</b> effect</code> と形容詞が2つ並んでいると気づけば解決。</div></div>
+
+<div class="sent"><span class="n">②</span>
+<div class="eng">(19 <b>Specifically</b>), Adler believed <b>that</b> firstborns tended to be responsible yet anxious, <b>that</b> middle children were more diplomatic, and <b>that</b> youngest siblings were more rebellious.</div>
+<div class="row"><span class="lbl">構造</span> believed ＋ <b>that節 × 3 の並列</b></div>
+<div class="row lit"><span class="lbl">直訳</span> 具体的には ／ アドラーは信じた ／ 長子は ／ 責任感が強い傾向にあると ／ しかし不安が強いと ／ 中間子は ／ より外交的だと ／ そして末っ子は ／ より反抗的だと</div>
+<div class="pt"><b>★</b> <b>that が3回＝並列の合図。</b>2つ目の that が出た瞬間に「リストだな」と分かると一気に読めます。<code>responsible <b>yet</b> anxious</code> の <b>yet ＝ but</b>。<b>Pre-1 頻出。</b></div>
+<div class="gap"><b>(19)：</b> ①で<b>一般論</b>、②で<b>3つの具体例</b>。<b>一般 → 具体</b>なので <b>Specifically</b>。<br>1 Consequently は<b>因果</b>、3 Nonetheless は<b>逆接</b>、4 Otherwise は<b>条件</b>。論理関係が合いません。</div></div>
+
+<div class="sent"><span class="n">④⑤</span>
+<div class="eng">Extensive research has been conducted on birth order. One notable study examined thousands of teenagers and found that it <b>did</b> lead to some measurable differences.</div>
+<div class="row lit"><span class="lbl">直訳</span> 広範な研究が ／ 行われてきた ／ 生まれ順について。／ ある注目すべき研究が ／ 調査した ／ 数千人の十代を ／ そして見つけた ／ それが ／ <b>確かに</b>もたらすと ／ いくらかの測定可能な差を</div>
+<div class="pt"><b>★</b> <code>it <b>did</b> lead to</code> の <b>did は強調の do</b>（「確かに〜した」）。過去形ではありません。<br><b>これは重要な合図です。</b>「確かに差はあった<b>ものの</b>…」という<b>譲歩</b>で、<b>この後に必ず However が来ます。</b></div></div>
+
+<div class="sent hard"><span class="n">⑦</span><b>(20) の根拠。</b>
+<div class="eng">However, <b>while</b> firstborns were, <u>as expected</u>, found to be more responsible, they tended to be <b>less anxious</b>, <b>which</b> did not fit the stereotype.</div>
+<div class="row lit"><span class="lbl">直訳</span> しかし ／ 〜だが ／ 長子は ／ ―予想どおり― ／ 見出された ／ より責任感が強いと ／ 彼らは ／ 〜する傾向にあった ／ より不安が<b>少ない</b> ／ <b>そしてそのことは</b> ／ 合致しなかった ／ その固定観念に</div>
+<div class="pt"><b>★1：</b> <code>, as expected,</code> は<b>挿入</b>。コンマで挟まれた部分を飛ばすと骨が見えます。<br>
+<b>★2：</b> <b>文頭の While はほぼ「〜だが（譲歩）」。</b>Pre-1 では圧倒的多数。<br>
+<b>★3：</b> 最後の <code>which</code> は<b>「不安が少なかった」という内容全体</b>を指します（構文③）。</div>
+<div class="gap"><b>理解の山場：</b> アドラー説は「長子＝責任感が強い<b>かつ</b>不安が強い」。研究では責任感は<b>合い</b>、不安は<b>逆</b>だった。<b>半分当たって半分外れた。</b>これが次文の <b>such contradictions</b> の中身です。</div></div>
+
+<div class="sent"><span class="n">⑧⑨</span>
+<div class="eng"><b>In addition to</b> such contradictions, the differences for every birth position were <b>extremely slight</b>. According to the researchers, associations between birth order and a person's character (20 <b>are mostly meaningless</b>).</div>
+<div class="row lit"><span class="lbl">直訳</span> そうした矛盾に加えて ／ その差は ／ すべての出生順位について ／ 極めてわずかだった。／ 研究者たちによれば ／ 関連は ／ 生まれ順と人の性格との間の ／ <b>ほとんど無意味である</b></div>
+<div class="gap"><b>(20)：</b> 直前に<b>2つの否定材料</b>（矛盾／差が極めてわずか）。結論は当然<b>否定</b>。<br>1 特定の順位の話は出ていない。2 真逆。4 研究結果と真逆。<b>空所の直前2文を読むだけで解けます。</b></div></div>
+
+<h3>第3段落</h3>
+<div class="sent"><span class="n">⑩⑪⑫</span>
+<div class="eng">As children grow, there are obvious differences in everything from maturity to rebelliousness. Parents often observe that younger children have less self-control and disobey them more than older children. However, it is also true that this (21 <b>tends to fade with time</b>).</div>
+<div class="row lit"><span class="lbl">直訳</span> 子どもが育つにつれ ／ 存在する ／ 明らかな差が ／ 成熟度から反抗性まであらゆることに。／ 親はしばしば観察する ／ 年下の子どもは ／ 自制心がより少なく ／ 逆らうと ／ 彼らに ／ より多く ／ 年上の子どもより。／ しかし ／ 〜もまた本当である ／ このことが ／ <b>時とともに薄れる傾向にある</b> ということ</div>
+<div class="gap"><b>(21) ―― Miku が落とした問題。</b><br>
+<b>手順1：</b> <code>However</code> がある → <b>直前の文の反対</b>を探す。直前は「小さい子は自制心がなく親に逆らう」。反対は「<b>でもそれは続かない</b>」。<br>
+<b>手順2：</b> <b>直後の文で確認</b> → <code>really just the <u>temporary</u> stages of development</code>。<b>temporary ＝ 一時的 ＝ fade with time。</b><br>
+<b>選んだ3「大人になってからの成功に影響する」がダメな理由：</b>「一時的」と正反対。しかも本文に「大人の成功」の話は一度も出ません。<br>
+<b>なぜ3を選んだか：</b> この段落に <code>grow / maturity / younger / older</code> と「成長」の語が多く、<b>「成長 → 大人」と話題で連想した</b>のだと思います。<b>論理ではなく話題でつないでいます。</b></div></div>
+
+<div class="sent hard"><span class="n">⑬</span><b>二番目に難しい文。</b>
+<div class="eng">It therefore seems that <u>what many people <b>take to be</b> birth order affecting personality</u> <b>is</b> really just the temporary stages of development <u>[that] their children are going through</u>.</div>
+<div class="row"><span class="lbl">構造</span> <b>It seems that …</b>［形式主語：構文⑨］／ that 節の <b>S</b> = what 節 ／ <b>V</b> = is ／ <b>C</b> = the temporary stages ＋［関係詞省略：構文⑫］</div>
+<div class="row lit"><span class="lbl">直訳</span> したがって思われる ／ 多くの人が ／ <b>〜だとみなしているもの</b>は ／ 生まれ順が性格に影響していること（だと）／ 実は単に ／ 一時的な発達段階である ／ 彼らの子どもが今通り抜けている（段階）</div>
+<div class="pt"><b>★1：</b> <code><b>take A to be B</b></code> ＝ AをBだとみなす。<br>
+<b>★2：</b> <code>birth order <b>affecting</b> personality</code> ＝ 動名詞句で、<b>birth order がその意味上の主語</b>。<br>
+<b>★3：</b> <code>the stages of development <b>their children are going through</b></code> ―― <b>名詞のすぐ後ろに S＋V</b> → <b>関係代名詞の省略</b>（構文⑫）。</div>
+<div class="gap"><b>この文の言いたいこと（ここだけ覚えれば十分）：</b><br><b>「みんなが〈生まれ順の影響〉だと思っているものは、実はただの〈発達段階〉だ。」</b><br>これが (21) の根拠であり、文章全体の結論でもあります。</div></div>
+
+<div class="maker"><b>■ 出題者の意図 ―― この文章から3問をどう作ったか</b><br>
+<b>(19)</b> 「一般論 → 具体例」という<b>論理関係</b>だけを問う。語彙は不要。<b>接続副詞は、意味ではなく〈方向〉と〈種類〉で解く。</b><br>
+<b>(20)</b> 空所の<b>直前2文</b>が根拠。<b>「研究結果 → 結論」の型を読めるか。</b><br>
+<b>(21)</b> 空所の<b>直後の文</b>（temporary）が根拠。<b>言い換え（temporary ⇄ fade with time）に気づけるか。</b><br><br>
+<b>3問とも、空所の「すぐ隣」に答えがあります。</b>段落全体の雰囲気で選ぶと必ず外します。</div>
+<div class="warn"><b>この文章で覚える語</b>　lasting 永続的な ／ diplomatic 外交的な ／ rebellious 反抗的な ／ extensive 広範な ／ measurable 測定可能な ／ contradiction 矛盾 ／ slight わずかな ／ association 関連</div>
+<h2>第17章　精読②　Digital Nations（大問2-B）</h2>
+<div class="map"><b>■ 文章の設計図</b><br>
+<b>第1段落＝問題</b>　ツバルは海面上昇で消滅の危機。移住しかない。→ <b>実はもう準備が始まっている</b>（豪州との協定）。<br>
+<b>第2段落＝対策</b>　防波堤・土地のかさ上げ → <b>でも長期的には無駄かも</b> → <b>だから技術へ</b>（国のデジタル再現）。<br>
+<b>第3段落＝反論と再反論</b>　批判「その金を気候対策に使え」→ 政府「<b>ツバルだけの利益ではない</b>」。国際法の「領土」「定住人口」を仮想で満たす新しい国家の形を目指す。<br><br>
+<b>→ 型：「問題 → 対策 → 限界 → 新発想 → 批判 → 反論」。</b><b>「批判 → 反論」で終わったら、最後の主張が筆者の立場です。</b></div>
+
+<div class="sent"><span class="n">①②</span>
+<div class="eng">The small Polynesian island nation of Tuvalu <b>is in danger of</b> disappearing forever. Scientists have predicted that, <u>decades from now</u>, <b>living in Tuvalu</b> will become impossible <b>due to</b> rising sea levels <b>caused by</b> climate change.</div>
+<div class="row"><span class="lbl">構造</span> that 節の <b>S</b> = living in Tuvalu［動名詞主語：構文⑨］／ <b>V</b> = will become ／ caused by ＝ 過去分詞の後置修飾［構文⑥］</div>
+<div class="row lit"><span class="lbl">直訳</span> その小さなポリネシアの島国ツバルは ／ 危機にある ／ 永遠に消えることの。／ 科学者たちは予測してきた ／ ―数十年後には― ／ ツバルに住むことが ／ 不可能になると ／ 〜のせいで ／ 上昇する海面 ／ 気候変動によって引き起こされた</div>
+<div class="pt"><b>★1：</b> <code>be in danger of ~ing</code>。<b>前置詞 of の後ろは必ず ~ing。</b><br>
+<b>★2：</b> <b>~ing で文が始まったら、それは主語です</b>（構文⑨）。<br>
+<b>★3：</b> <code>sea levels <b>caused by</b> climate change</code> ―― caused は<b>動詞ではなく飾り</b>。<b>ここを動詞に取ると文が崩れます。</b></div></div>
+
+<div class="sent"><span class="n">③④</span>
+<div class="eng">When that happens, the only option for Tuvaluans will be <b>to move</b> elsewhere. (22 <b>In fact</b>), the preparations for doing this are already <b>in place</b>.</div>
+<div class="row lit"><span class="lbl">直訳</span> それが起きたとき ／ 唯一の選択肢は ／ ツバル人にとっての ／ 〜だろう ／ よそへ移ること。／ <b>実際</b> ／ その準備は ／ すでに ／ 整っている</div>
+<div class="pt"><b>★</b> <code><b>in place</b></code> ＝ （制度・準備が）<b>整っている</b>。<b>Pre-1 頻出。</b></div>
+<div class="gap"><b>(22) ―― Miku が落とした問題。</b><br>
+③「移住するしかない」→ ④「その準備はもう整っている」。<b>同じ話題を一歩進めて強調</b> → <b>In fact</b>。<br>
+<b>選んだ3 Similarly がダメな理由 ―― 機械的に判定できます。</b><br>
+<b>Similarly は「A について述べたあと、〈別の〉B について同じことを言う」ときだけ</b>使えます。<b>主語が変わる必要があるのです。</b><br>
+ここは前も後ろも主語は<b>ツバル</b>。主語が変わっていないので Similarly は不可。<br>
+<b>覚える：同じ方向のつなぎ語 3種</b> ―― 具体例 → <b>Specifically</b>／強めて一歩進める → <b>In fact</b>／<u>別の対象</u>で同じこと → <b>Similarly</b></div></div>
+
+<div class="sent hard"><span class="n">⑤</span>
+<div class="eng">Tuvalu has negotiated <b>an agreement</b> with Australia <b>that allows</b> a certain number of its people <b>to emigrate</b> there every year.</div>
+<div class="row"><span class="lbl">構造</span> that の先行詞は <b>an agreement</b>（× Australia）／ allow ＋ O ＋ to V</div>
+<div class="row lit"><span class="lbl">直訳</span> ツバルは交渉してまとめた ／ ある協定を ／ オーストラリアと ／ <b>その協定は</b>認める ／ 一定数の自国民が ／ そこへ移住することを ／ 毎年</div>
+<div class="pt"><b>★</b> 関係代名詞 that の先行詞が <b>直前の Australia ではなく an agreement</b>。<br><b>見分け方は意味です。</b><code>emigrate <u>there</u></code> の there ＝ Australia。オーストラリアが先行詞なら there が矛盾します。<br><b>関係詞の先行詞は「直前の名詞」とは限りません。意味で決める。</b></div></div>
+
+<div class="sent"><span class="n">⑥〜⑨</span>
+<div class="eng">Tuvalu's government is doing <b>what it can</b> to save its nation. Sea barriers have been built, and <b>work is underway</b> to create an area of raised land <b>that will provide</b> a habitable area for residents. <b>However</b>, the government knows these measures <b>may be useless in the long term</b>. <b>So,</b> it (23 <b>is turning to technology instead</b>).</div>
+<div class="row lit"><span class="lbl">直訳</span> ツバル政府は ／ している ／ <b>できることを</b> ／ 国を救うために。／ 防波堤が ／ 建設された ／ そして作業が ／ 進行中である ／ かさ上げされた土地を作り出すための ／ <b>それは</b>提供するだろう ／ 居住可能な区域を。／ しかし ／ 政府は知っている ／ これらの対策が ／ 役に立たないかもしれないと ／ 長期的には。／ だから ／ それは ／ <b>代わりに技術に頼ろうとしている</b></div>
+<div class="pt"><b>★</b> <code>what it can (do)</code> ＝ できること（do の省略）。<code><b>work is underway to V</b></code> ＝ 〜するための作業が進行中。<b>ニュース英語の定番。</b></div>
+<div class="gap"><b>(23)：</b> <code>However（物理的対策はだめかも）→ <b>So</b> → 空所</code>。直後に <b>virtual reconstruction</b>。<br>「物理 → だめかも → <b>代わりに</b>技術」。<b>instead が効いています。</b><br>2 直前で「無駄かも」と言ったばかりで矛盾。3 新しく始めている。4 豪州の話は前段落で、So の後の内容ではない。</div></div>
+
+<div class="sent"><span class="n">⑬</span>
+<div class="eng">Some critics claim the resources <b>required</b> for the project <b>could be better used</b> to tackle climate change.</div>
+<div class="row"><span class="lbl">構造</span> claim ＋［that 省略］／ that 節の <b>S</b> = the resources［required for the project：構文⑥］／ <b>V</b> = could be used</div>
+<div class="row lit"><span class="lbl">直訳</span> 一部の批判者は主張する ／ その資源は ／ そのプロジェクトに必要とされる ／ もっとうまく使えるだろうと ／ 気候変動に取り組むために</div>
+<div class="pt"><b>★</b> <b>required を動詞だと思うと読めなくなります。</b>これは<b>過去分詞の後置修飾</b>。本当の動詞は <b>could be used</b>。<br><b>見分け方：</b> required の後ろに目的語がなく、前置詞 for が来ている → 飾り。</div></div>
+
+<div class="sent"><span class="n">⑮⑯⑰</span>
+<div class="eng">The current international treaty states that <b>sovereign</b> nations must have a "defined territory" and a "permanent population." Tuvalu's government hopes <b>to pioneer</b> a new form of statehood <b>that allows it to continue to exist by meeting these criteria in a virtual form</b>. This could <b>also</b> help to ensure the survival of <b>other island nations</b> facing similar threats from the sea.</div>
+<div class="row lit"><span class="lbl">直訳</span> 現行の国際条約は ／ 定めている ／ 主権国家は ／ 持たねばならないと ／「明確な領土」と「恒久的な人口」を。／ ツバル政府は ／ 望んでいる ／ 先駆けとなることを ／ 新しい国家の形の ／ <b>それは</b>可能にする ／ 自国が ／ 存在し続けることを ／ 満たすことによって ／ これらの基準を ／ 仮想の形で。／ これは<b>また</b>役立ちうる ／ 確実にすることに ／ <b>他の島国の</b>存続を ／ 海からの同様の脅威に直面している</div>
+<div class="gap"><b>(24)：</b> 空所は「政府の反論」。根拠は<b>最終文</b> ―― <code>This could <b>also</b> help … <u>other island nations</u></code>。<br>＝ 選択肢3「ツバルだけの利益ではない」。<b>also と other が答えの合図です。</b></div></div>
+
+<div class="maker"><b>■ 出題者の意図</b><br>
+<b>(22)</b> <b>Similarly の「主語が変わる」という条件</b>を知っているかを試している。感覚で選ぶと落ちる。<br>
+<b>(23)</b> <code>However … So, it ( )</code> という<b>論理の枠</b>を作り、答えを<b>直後の内容</b>に置いた。<br>
+<b>(24)</b> 反論の根拠を<b>最終文の also / other</b> に置いた。<b>「批判 → 反論」の型では、反論の根拠は必ずそのあとに書かれます。</b></div>
+<div class="warn"><b>この文章で覚える語</b>　emigrate（国外へ）移住する ／ in place 整っている ／ underway 進行中で ／ habitable 居住可能な ／ in the long term 長期的には ／ tackle 取り組む ／ sovereign 主権を持つ ／ territory 領土 ／ pioneer 先駆けとなる ／ criteria 基準（単数 criterion）</div>
+<h2>第18章　精読③　Uruk（大問3-A）</h2>
+<div class="map"><b>■ 文章の設計図</b><br>
+<b>第1段落＝成長</b>　村から始まった → 4千年紀末には「世界最初の都市」→ <b>背後にあった要因＝技術（灌漑）</b> → 人口を支え、<b>余剰</b>を生み、交易できた。<br>
+<b>第2段落＝文字</b>　楔形文字：初期は<u>商品の絵</u> → 次第に高度化し<u>会計・行政</u>へ → <b>複雑化する都市の統治を助けた</b> → やがて経済・政治・<u>宗教</u>にも。<br>
+<b>第3段落＝衰退</b>　何百年も近隣と競争 → <b>その結果</b>外部勢力に弱くなった → アッカド人が征服 → <b>しかし宗教区画は尊重・保護された</b> → 文化の復興 → 最盛期には戻らなかったが重要都市であり続けた。<br><br>
+<b>→ 型：「興隆 → 制度・技術 → 衰退」の歴史文。</b><b>時間の流れの語（early / gradually / over time / later）に必ず印をつけること。</b></div>
+
+<div class="sent"><span class="n">①〜③</span>
+<div class="eng">The ancient settlement of Uruk was located in a fertile delta … <b>in what is now southern Iraq</b>. Uruk began life as a village. However, toward the end of the fourth millennium BC, it had developed <b>to such an extent that</b> some historians consider it the world's first city.</div>
+<div class="row lit"><span class="lbl">直訳</span> 古代の集落ウルクは ／ 位置していた ／ 肥沃な三角州に ／ <b>今でいう</b>イラク南部に。／ ウルクは ／ 生涯を始めた ／ 一つの村として。／ しかし ／ 紀元前4千年紀の終わりごろまでに ／ それは発展していた ／ <b>とても大きな程度まで</b> ／ <b>その結果</b> ／ 一部の歴史家は ／ みなす ／ それを ／ 世界最初の都市だと</div>
+<div class="pt"><b>★1：</b> <code><b>what is now ~</b></code> ＝ 「今でいう〜」。<b>歴史の文章で必ず出ます。</b><br>
+<b>★2：</b> <code><b>to such an extent that …</b></code> ＝ so … that（構文⑧）。<b>that の後ろが結果。</b><br>
+<b>★3：</b> <code>consider <b>O C</b></code> ＝ O を C だとみなす。<b>間に as は入りません。</b></div></div>
+
+<div class="sent hard"><span class="n">④</span><b>倒置の文。ここで多くの人が崩れます。</b>
+<div class="eng"><b>Behind this remarkable growth were</b> <u>several factors</u>, including technological advancements <b>that increased</b> agricultural efficiency, <b>such as</b> the construction of irrigation canals <b>to funnel</b> water to fields and orchards.</div>
+<div class="row"><span class="lbl">構造</span> <b>倒置</b>［構文⑦］：本来 = <u>Several factors</u> <b>were</b> behind this remarkable growth.</div>
+<div class="row lit"><span class="lbl">直訳</span> この目覚ましい成長の背後に ／ あった ／ いくつかの要因が ／ 含めて ／ 技術的進歩を ／ 農業の効率を高めた（進歩） ／ たとえば ／ 灌漑用水路の建設のような ／ 水を導くための ／ 畑や果樹園へ</div>
+<div class="pt"><b>★</b> <b>場所を表す副詞句が文頭に出ると、主語と動詞がひっくり返ります。</b>were の<b>後ろ</b>が主語。<br>
+<b>見分け方：文頭が前置詞句で、その直後にいきなり動詞（were / stood / lay / came）が来たら倒置。</b><br>同じ形：<code>In the box <b>was</b> a letter.</code> <b>Pre-1 で年に1回は出ます。</b></div></div>
+
+<div class="sent hard"><span class="n">⑤</span><b>(25) の根拠。</b>
+<div class="eng">These advances <b>not only</b> allowed Uruk <b>to support</b> a growing population <b>but also to create a surplus</b>, <b>which</b> could then be traded.</div>
+<div class="row lit"><span class="lbl">直訳</span> これらの進歩は ／ 〜だけでなく ／ ウルクが ／ 支えることを可能にした ／ 増え続ける人口を ／ <b>〜もまた</b> ／ 余剰を生み出すことを ／ <b>そしてそれは</b> ／ その後 ／ 交易されえた</div>
+<div class="pt"><b>★</b> <code>not only A but also B</code> ―― <b>A も B も to 不定詞。形をそろえるのがルール。</b><br><code><b>surplus</b></code> ＝ 余剰。⇔ shortage。<b>経済の文章で頻出。</b></div>
+<div class="gap"><b>(25)：</b> 正解2「<b>必要以上に食料を作る能力</b>が、より速い変化を可能にした」＝ <code>create a <b>surplus</b>, which could then be <b>traded</b></code> の言い換え。<br>
+1「技術がなくても成長できた」＝ ④が「技術こそ背後の要因」（真逆）。3「運河が人口増に追いつかなかった」＝ 真逆。4「自国用に取っておきすぎた」＝ 真逆。<br><b>3つとも「真逆」。④⑤の2文だけで全部解けます。</b></div></div>
+
+<div class="sent"><span class="n">⑧⑨</span>
+<div class="eng">Various other developments <b>helped Uruk evolve</b> into the sophisticated city <u>[that] it became</u> … The script was mainly written on clay tablets, <b>many of which</b> survive to this day.</div>
+<div class="row lit"><span class="lbl">直訳</span> 他のさまざまな発展が ／ 助けた ／ ウルクが ／ 進化するのを ／ 洗練された都市へと ／ <b>それがなった（都市へと）</b>。／ その文字は ／ 主に書かれた ／ 粘土板に ／ <b>そしてそのうちの多くは</b> ／ 生き残っている ／ 今日まで</div>
+<div class="pt"><b>★1：</b> <code>the sophisticated city <b>it became</b></code> ―― 名詞の直後に <b>S＋V</b> → <b>関係代名詞 that の省略</b>（構文⑫）。<br>
+<b>★2：</b> <code><b>many of which</b> survive</code>（構文④）＝ 「そしてそのうちの多くは生き残っている」。<b>前から「そのうちの〜は」と流す。</b></div></div>
+
+<div class="sent hard"><span class="n">⑩⑪⑫</span><b>(26) が作られた3文。時系列に注目。</b>
+<div class="eng"><b>In its early form</b>, it was relatively simple, <b>with pictures representing goods</b>, but it allowed for rudimentary recordkeeping.<br>The writing system <b>gradually</b> became more sophisticated and <b>was used for accounting and general administrative matters</b>, <b>which helped facilitate the governance of the increasingly complex city</b>.<br><b>Over time</b>, the script was used … to keep records in fields such as economics, politics, and <b>religion</b>.</div>
+<div class="row lit"><span class="lbl">直訳</span> <b>その初期の形では</b> ／ それは比較的単純だった ／ 絵が商品を表す形で ／ しかしそれは可能にした ／ 初歩的な記録づけを。<br>その書記体系は ／ <b>次第に</b> ／ より洗練されていった ／ そして使われた ／ 会計と一般的な行政の事柄に ／ <b>そしてそのことが</b> ／ 助けた ／ 容易にすることを ／ 統治を ／ ますます複雑になる都市の。<br><b>時とともに</b> ／ その文字は使われた ／ 記録を保つために ／ 経済・政治・<b>宗教</b>といった分野で</div>
+<div class="pt"><b>★1：</b> <code>with pictures <b>representing</b> goods</code> ＝ <b>with ＋ O ＋ ~ing（付帯状況）</b>。<br>
+<b>★2：</b> <code>, <b>which</b> helped facilitate …</code> の which は<b>「会計と行政に使われた」という内容全体</b>を指します（構文③）。<br>
+<b>★3：</b> <code><b>facilitate</b></code> 容易にする／<code><b>governance</b></code> 統治・行政。<b>どちらも必須語。</b></div>
+<div class="gap"><b>(26) ―― Miku が落とした問題。</b><br>
+<b>正解4</b>「ますます複雑化する社会の行政を管理する<b>手段を与えた</b>」＝ <code>helped facilitate the <b>governance</b> of the <b>increasingly complex</b> city</code> のほぼ直訳。<br><br>
+<b>選んだ3「宗教目的で最初に開発され、後に商業と行政に使われた」がダメな理由 ―― 順序が完全に逆です。</b><br>
+この3文に<b>時間の語が3つ</b>：<code><b>In its early form</b>（初期）→ <b>gradually</b>（次第に）→ <b>Over time</b>（時とともに）</code><br>
+その順に：<b>①商品の絵 → ②会計・行政 → ③経済・政治・宗教</b>。<b>宗教は最後です。</b><br><br>
+<b>なぜ3を選んだか（2つ重なった）：</b><br>
+<b>①</b> 段落の最後に <b>religion</b> が実際に出てくる → <b>本文で見た語が選択肢にある</b>ので正しく感じた。<br>
+<b>②</b> 「古代文明の文字は宗教から始まった」という<b>世界史の常識</b>。<b>知識があるがゆえの間違い</b>です。<br><br>
+<b>対策：選択肢に「A → 後に B」という順序があったら、本文の時間の語に線を引いて確認する。</b></div></div>
+
+<div class="sent"><span class="n">⑭⑯</span>
+<div class="eng">Uruk had competed with neighboring Sumerian cities for hundreds of years, <b>leaving them all vulnerable to</b> forces from other regions. … <b>Despite this conquest</b>, Uruk's religious districts <b>were respected and protected</b>, and after Akkadian rule came to an end, a renaissance of Sumerian culture occurred.</div>
+<div class="row lit"><span class="lbl">直訳</span> ウルクは ／ 競争してきていた ／ 近隣の都市と ／ 何百年も ／ <b>そしてその結果</b> ／ それらすべてを ／ 弱い状態にした ／ 他地域からの勢力に対して。／ この征服にもかかわらず ／ ウルクの宗教区画は ／ 尊重され ／ 保護された ／ そして ／ アッカドの支配が終わったあと ／ 文化の復興が ／ 起こった</div>
+<div class="pt"><b>★</b> <code>, <b>leaving</b> them all vulnerable</code> は<b>結果を表す分詞構文</b>（構文⑤）。<b>「そしてその結果〜」と前から流す。</b><br><code>leave ＋ O ＋ 形容詞</code>／<code>vulnerable to ~</code> 〜に弱い。</div>
+<div class="gap"><b>(27)：</b> 正解1「シュメール地方は攻撃され敗れたが、<b>ウルクの宗教的遺産は破壊されなかった</b>」＝ ⑯の直訳。<br>
+2 本文にない。3「破壊しなければならなかった」＝ <b>真逆</b>。4「近隣都市がアッカドと<b>同盟</b>」＝ ⑭は「<b>競争</b>した結果みんな弱くなった」。<b>競争 ≠ 同盟。</b></div></div>
+
+<div class="sent"><span class="n">⑱</span>
+<div class="eng">Archaeological excavations have revealed an immense city wall, sculptures, artworks, large stone buildings <b>decorated with</b> mosaics, and numerous pyramid-like structures <b>called ziggurats</b> <b>that were topped with</b> temples — <b>all of which</b> point to the historical significance of Uruk.</div>
+<div class="pt"><b>★</b> 名詞の後ろに飾りが<b>3種類</b> ―― <code>decorated with</code>／<code>called ziggurats</code>／<code>that were topped with</code>。<br>
+<b>これが「読めない長文」の正体です。</b>骨は <code>excavations have revealed A, B, C, D, and E</code> だけ。<b>飾りを全部カッコに入れれば、驚くほど簡単な文です。</b></div></div>
+
+<div class="maker"><b>■ 出題者の意図</b><br>
+<b>(25)</b> <b>surplus</b> という1語を理解し、「交易できた」につながることを読めるか。<b>誤答3つを全部「真逆」で作っている。</b><br>
+<b>(26)</b> <b>時系列のすり替え。</b>本文の最後に religion を置いておき、選択肢で「religion が最初」と入れ替える。<b>受験者の世界史の常識を利用した引っかけ。</b><br>
+<b>(27)</b> <b>Despite / Although / Even though の後ろは、必ず設問になります。</b></div>
+<div class="warn"><b>この文章で覚える語</b>　settlement 集落 ／ fertile 肥沃な ／ millennium 千年紀 ／ irrigation 灌漑 ／ <b>surplus 余剰</b> ／ thrive 栄える ／ rudimentary 初歩的な ／ <b>facilitate 容易にする</b> ／ <b>governance 統治</b> ／ conquest 征服 ／ vulnerable to ~ に弱い ／ immense 巨大な ／ excavation 発掘</div>
+<h2>第19章　精読④　Animal Uplift（大問3-B）</h2>
+<div class="map"><b>■ 設計図 ―― 賛否両論型。段落ごとに立場が変わります。</b><br>
+<b>第1段落＝可能性</b>　FOXP2 をマウスに入れたら迷路学習が速くなった＝記憶が向上。<b>ただし初期研究で、知能は多数の遺伝子に依存。技術的・倫理的な壁がある。</b>［→28］<br>
+<b>第2段落＝反対①（予期せぬ結果）</b>　脳の大きい魚を交配 → 子はさらに脳が大きく成績も良かった。<b>しかし消化器が小さくなり、子の数が減った。</b>＝<b>他の身体的特徴が乱れる</b>。［→29］<br>
+<b>第3段落＝反対②（倫理）</b>　健康な動物への外科手術。心理的影響。<b>動物は事前に同意（consent）できない</b>。しかも不可逆。［→30］<br>
+<b>第4段落＝賛成（反論）</b>　Dvorsky：<b>与えないことこそ非倫理的</b>。動物はずっと人間の医療のために犠牲になってきた。［→31］<br><br>
+<b>→ 設問は段落と1対1です。28＝1段落／29＝2段落／30＝3段落／31＝4段落。</b><br><b>これが分かっていれば、(30) で第2段落の内容を選ぶことは絶対にありません。</b></div>
+
+<div class="sent hard"><span class="n">④</span><b>長いが、構造は単純。</b>
+<div class="eng">When mice <b>were genetically altered</b> to produce it, they were able to learn a route through a maze <b>much more rapidly than</b> their unmodified <b>counterparts</b>, <b>indicating that</b> the gene <b>had significantly enhanced</b> their memory, <b>which is</b> an essential component of intelligence.</div>
+<div class="row"><span class="lbl">構造</span> When 節 ＋ 主節 ＋ <b>, indicating that …</b>［分詞構文：構文⑤］ ＋ <b>, which is …</b>［構文③］</div>
+<div class="row lit"><span class="lbl">直訳</span> マウスが ／ 遺伝子的に改変されたとき ／ それを作るように ／ 彼らは ／ 学ぶことができた ／ 迷路を通る経路を ／ <b>はるかに速く</b> ／ 改変されていない同類より ／ <b>そしてそのことが示すのは</b> ／ その遺伝子が ／ <b>大幅に高めた</b>ということ ／ 彼らの記憶を ／ <b>そしてそれは</b> ／ 知能の不可欠な要素である</div>
+<div class="pt"><b>★1：</b> <code><b>much</b> more rapidly</code> ―― <b>much は比較級の強調</b>「はるかに」。far / even / a lot も同じ。<br>
+<b>★2：</b> <code><b>counterparts</b></code> ＝ 対応するもの・同等のもの。<b>比較の相手を指す便利な語。Pre-1 頻出。</b><br>
+<b>★3：</b> <code>, indicating that …</code> ＝「そしてそれは〜を示している」。<b>分詞構文は前から流す。</b></div>
+<div class="gap"><b>(28) の選択肢1を潰す根拠：</b> 本文は <code><b>significantly</b> enhanced</code>（<b>大幅に</b>）。選択肢1「記憶への<b>わずかな</b>効果しかない」＝ 矛盾。<b>副詞1語で正誤が決まります。</b></div></div>
+
+<div class="sent"><span class="n">⑤</span>
+<div class="eng">This research is <b>preliminary</b>, however, and intelligence depends on <b>a multitude of</b> genes, so significant technical and ethical <b>hurdles must be overcome</b> before such advancements can be responsibly applied.</div>
+<div class="row lit"><span class="lbl">直訳</span> この研究は ／ 初期段階のものである ／ しかし ／ そして知能は ／ 依存する ／ <b>多数の</b>遺伝子に ／ だから ／ 重大な技術的・倫理的な障壁が ／ 乗り越えられねばならない ／ そうした進歩が ／ 責任をもって応用されうる前に</div>
+<div class="gap"><b>(28)：</b> 正解2「知能の<b>一要素</b>には影響したが、<b>複雑な過程の初期段階</b>にすぎない」＝ 前半が④、後半が⑤。<b>2文をまたいで作られた選択肢。</b><br>
+3「マウスの<b>意思疎通</b>が高度」＝ 実験は迷路と記憶。4「未知の知能の形」＝ 本文にない。<br><b>★ preliminary を知らないと、選択肢2の early step につながりません。必須語。</b></div></div>
+
+<div class="sent hard"><span class="n">⑥⑦</span><b>主語と動詞が離れる典型例。</b>
+<div class="eng">An aspect of animal uplift <u>that needs to be considered</u> <b>is</b> the possibility of unintended outcomes.<br>One experiment <b>compared</b> fish with larger brains that were bred together <b>to</b> fish with smaller brains that were bred together.</div>
+<div class="row"><span class="lbl">構造</span> 上：<b>S</b> = An aspect［that needs to be considered］／ <b>V</b> = is<br>下：<b>compare A to B</b> ―― A が9語もあるので to が遠い！</div>
+<div class="pt"><b>★</b> <b>compare が出たら、「to / with はどこだ」と探しに行く。</b>そこで A と B の切れ目が決まります。</div></div>
+
+<div class="sent hard"><span class="n">⑧⑨⑪</span><b>(29) の根拠。</b>
+<div class="eng">The young of the larger-brained fish tended to have even bigger brains, and the babies' performance on cognitive tests was <b>superior to that of</b> fish with smaller brains.<br><b>However</b>, the researchers also observed that these fish produced young <b>that had smaller digestive systems</b>, and this <b>in turn seems to have led</b> them to produce <b>fewer offspring</b>.<br>As this experiment indicates, trying to boost intelligence <b>may disrupt other physical attributes</b>, <b>leading to</b> consequences <b>that extend beyond</b> the individual animals <b>to</b> entire populations.</div>
+<div class="row lit"><span class="lbl">直訳</span> 大きな脳の魚の<b>子</b>は ／ 持つ傾向にあった ／ さらに大きな脳を ／ そして成績は ／ <b>より優れていた</b> ／ 小さな脳の魚の<b>それ</b>より。／ しかし ／ 研究者たちは観察もした ／ これらの魚が ／ 子を産んだと ／ より小さな消化器を持つ（子を） ／ そしてこのことが ／ <b>今度は</b> ／ 導いたようだ ／ より少ない子孫を産むことへ。／ この実験が示すように ／ 知能を高めようとすることは ／ <b>他の身体的特徴を乱すかもしれない</b></div>
+<div class="pt"><b>★1：</b> <code><b>the young</b></code> ＝ 「子・幼獣」（名詞）。「若い」ではありません。<br>
+<b>★2：</b> <code>superior <b>to</b></code> ―― <b>than ではなく to。</b>仲間：inferior to / senior to / prior to。<br>
+<b>★3：</b> <code><b>that of</b> fish …</code> の <b>that ＝ the performance</b>。<b>繰り返しを避ける that。</b><br>
+<b>★4：</b> <code><b>seems to have led</b></code> ＝ <b>完了不定詞</b>（構文⑪）「<u>導いた</u>ようだ」。<b>過去の話。</b><code><b>in turn</b></code> ＝ 今度は・その結果。</div>
+<div class="gap"><b>(29) ―― Miku が落とした問題。</b><br>
+<b>正解3</b>「動物の生物学的な<b>他の重要な側面に干渉</b>しうる」＝ <code>may <b>disrupt other physical attributes</b></code> のほぼ直訳。<br><br>
+<b>選んだ2「意図と逆の効果になる」がダメな理由：</b><br>
+実験の<b>目的は知能を上げること</b>。上がりましたか？ → <code>performance on cognitive tests was <b>superior</b></code> ＝ <b>上がりました。</b><br>
+<b>目的は達成されています。だから「逆効果」ではありません。</b>起きたのは<b>別の場所での副作用</b>（消化器・子の数）。<br><br>
+<b>なぜ2を選んだか：</b> ⑨が <code>However … smaller … fewer</code> と<b>マイナスの言葉だらけ</b>なので「失敗だった」と読み、いちばん強くマイナスな選択肢を選んだのだと思います。<b>段落の雰囲気の把握は正しかったのです。</b><br><br>
+<b>覚える区別：</b> <b>逆効果</b>＝ねらいが失敗　／　<b>副作用</b>＝ねらいは成功、でも別のところに害。<b>Pre-1 はこの区別を毎回聞いてきます。</b></div></div>
+
+<div class="sent hard"><span class="n">⑭</span><b>whose の挿入で主語と動詞が分断される文。</b>
+<div class="eng">A mouse, <u>whose life would normally be a simple matter of survival</u>, <b>could</b> instead <b>be thrust into</b> a confusing, possibly terrifying awareness of <b>how brief its lifespan is</b> and <b>how little control it has</b> over its environment.</div>
+<div class="row"><span class="lbl">構造</span> <b>S</b> = A mouse ／［whose 節が挿入］／ <b>V</b> = could be thrust ／ awareness of ＋ <b>間接疑問 × 2</b>［構文⑩］</div>
+<div class="pt"><b>★1：</b> コンマで挟まれた whose 節を<b>飛ばす</b>と骨が見えます → <code>A mouse could be thrust into an awareness of …</code><br>
+<b>★2：</b> <b>疑問詞の後ろは S＋V の普通の語順</b>（× how brief is its lifespan）。<br>
+<b>★3：</b> <code>how <b>little</b> control</code> ＝「いかに<b>わずかしか</b>〜ないか」。<b>little は否定の意味。</b>a little（少しある）との違いに注意。</div></div>
+
+<div class="sent hard"><span class="n">⑮</span><b>(30) の正解の根拠。</b>
+<div class="eng">There is also the issue of <b>whether making such radical alterations to an animal's biology could ever be considered ethical</b>, <b>since it would be impossible for the creature to give consent beforehand</b>, especially since the procedures would probably not be <b>reversible</b>.</div>
+<div class="row"><span class="lbl">構造</span> whether 節の <b>S</b> = making such radical alterations［動名詞主語］／ <b>V</b> = could be considered<br>後半：<b>since</b>［理由］＋ <b>it … for A to V</b>［形式主語：構文⑨］</div>
+<div class="row lit"><span class="lbl">直訳</span> 存在する ／ 〜という問題も ／ そのような根本的な改変を加えることが ／ 動物の生物学的性質に ／ そもそも倫理的とみなされうるか ／ <b>なぜなら</b> ／ <b>不可能だろうから</b> ／ <b>その生き物が</b> ／ <b>事前に同意を与えることは</b></div>
+<div class="pt"><b>★</b> <code><b>consent</b></code> ＝ 同意。<code>give consent / without consent / informed consent</code>。<b>医療・倫理の最重要語。</b></div>
+<div class="gap"><b>(30) ―― Miku が落とした問題。</b><br>
+<b>正解1</b>「動物は自分に何が起こるか<b>同意できない</b>ので、行うべきでない」＝ <code>impossible … to give <b>consent</b></code> そのもの。<br><br>
+<b>なぜ選択肢3を選んだのか ―― 原因ははっきりしています。</b><br>
+<b>①</b> <b>consent を知らなかった。</b>知らないと、選択肢1の「agree to what is going to happen to them」が本文のどこにも対応して見えません。<b>選択肢1は、あなたの目には最初から存在していなかった。</b><br>
+<b>②</b> 一方、本文には <code><b>surgical procedures</b> on healthy animals</code>、選択肢3には <code>performing <b>operations</b></code>。<b>本文と一致する唯一の選択肢</b>でした。<b>この状況なら3を選ぶのが当然です。</b><br><br>
+<b>ただし選択肢3の後半</b>「due to our <b>lack of knowledge</b> about how they function」は<b>本文に一切ありません。</b><br>
+<b>対策：選択肢を〈前半〉と〈後半〉に切り、両方に根拠があるか確かめる。片方でも×なら、その選択肢は×。</b></div></div>
+
+<div class="sent hard"><span class="n">⑱</span><b>この文章で最も長い文。骨だけ取れば簡単です。</b>
+<div class="eng">According to Dvorsky, <u>in light of increased awareness of animal rights</u> and <u>given the tremendous role that animals have played in improving human existence</u>, <b>withholding advances that could improve their intelligence</b> <b>would be</b> <b>just as unethical as</b> withholding them from a group of humans who lack sufficient wealth to afford them.</div>
+<div class="row"><span class="lbl">構造</span> ［副詞句2つ］＋ <b>S</b> = withholding advances［that could improve …］／ <b>V</b> = would be ／ <b>just as A as B</b></div>
+<div class="pt"><b>★1：</b> <code><b>in light of ~</b></code> 〜を考慮すると／<code><b>given ~</b></code> 〜を考えれば。<b>どちらも「前置き」。読み飛ばして骨を探してよい。</b><br>
+<b>★2：</b> <b>主語は withholding（動名詞）。</b><code>withhold</code> ＝ 与えずに差し控える。<br>
+<b>★3：</b> <code>just as unethical as ~</code> ＝ 〜と<b>まったく同じくらい</b>非倫理的。</div>
+<div class="gap"><b>(31)：</b> 正解4「人間が自分の知能を高める過程で動物を使うなら、動物を uplift する<b>義務はより大きくなる</b>」<br>
+＝ <code>if humans artificially increase our own intelligence, <b>animals will likely be sacrificed for that as well</b></code> ＋ ⑱。<br>
+1 本文にない。2「uplift の医療進歩が動物を長生きさせる」＝ 本文は「動物が犠牲になって<b>人間の</b>寿命が延びた」。<b>主語が逆。</b>3「倫理を考える前に技術開発を」＝ 真逆。</div></div>
+
+<div class="maker"><b>■ 出題者の意図</b><br>
+<b>(28)</b> <b>preliminary</b> を軸に、「効果はあった / でも初期段階」という<b>2文にまたがる要約</b>を作らせる。<br>
+<b>(29)</b> <b>「副作用」と「逆効果」の区別。</b>段落がマイナス一色なので、感覚で選ぶと必ず「逆効果」を取る。<b>意図的な罠です。</b><br>
+<b>(30)</b> <b>consent という1語を知っているかどうかだけ</b>で決まる。<b>語彙が読解を殺す典型例。</b><br>
+<b>(31)</b> 最長の文から作る。<b>「一番長い文には、必ず設問がある」</b>と思ってください。<br><br>
+<b>そして最重要：設問と段落は1対1です。</b>(30) は「第3段落」と明記。<b>指定された段落の外から選んだ時点で、必ず不正解です。</b></div>
+<div class="warn"><b>この文章で覚える語</b>　alter 改変する ／ counterpart 対応するもの ／ <b>preliminary 初期の</b> ／ a multitude of 多数の ／ hurdle 障壁 ／ breed / bred 交配する ／ cognitive 認知の ／ <b>offspring 子・子孫</b> ／ disrupt 乱す ／ attribute 特性 ／ <b>consent 同意</b> ／ reversible 元に戻せる ／ <b>withhold 与えないでおく</b> ／ in light of ~ を考慮して ／ given ~ を考えれば</div>
+<h2>第20章　精読⑤　Fluoride（大問4・要約課題文）</h2>
+<div class="map"><b>■ 要約課題文は「型」が完全に固定されています。</b><br>
+<b>第1段落＝背景・導入</b>（何が、いつ、なぜ始まったか）<br>
+<b>第2段落＝賛成側／利点</b>（Supporters believe …）<br>
+<b>第3段落＝反対側／懸念</b>（However, critics express concerns …）<br><br>
+<b>3段落 → 3文。</b>これが要約の設計図です。<b>本番でも、まずこの3つの箱を探してください。</b></div>
+
+<div class="sent"><span class="n">第1段落</span>
+<div class="eng">Fluoride is a naturally occurring mineral <b>found</b> in water and soil. … <b>Based on these findings</b>, governments in several countries <b>introduced water fluoridation as a public health policy</b>, and it is now practiced in many urban areas.</div>
+<div class="row lit"><span class="lbl">直訳</span> フッ素は ／ 自然に生じる鉱物である ／ 水と土壌に見出される。／ これらの発見に基づいて ／ いくつかの国の政府が ／ 導入した ／ 水道水フッ素添加を ／ 公衆衛生政策として ／ そしてそれは今 ／ 実施されている ／ 多くの都市部で</div>
+<div class="pt"><b>★</b> <code>a mineral <b>found</b> in water</code>／<code>water <b>containing</b> fluoride</code> ―― <b>どちらも名詞の後ろからの飾り</b>。短い文章でも後置修飾は容赦なく出ます。</div>
+<div class="gap"><b>要約に入れる骨：</b>「フッ素は<b>歯の健康のための公衆衛生政策</b>として、長く水道水に加えられてきた」<br>
+<b>捨てるもの：</b>「自然に生じる鉱物」「20世紀初頭」「都市部で」―― <b>具体的すぎる情報は捨てる。</b>60〜70語しかありません。</div></div>
+
+<div class="sent"><span class="n">第2段落</span>
+<div class="eng">Supporters believe that adding fluoride to water improves dental health in practical ways. In communities <b>where</b> dental clinics are limited, residents may only visit a dentist once every few years <b>due to</b> cost or travel distance. By including fluoride in tap water, protection is provided daily <b>without requiring</b> clinic visits. In addition, fluoride reaches children at school, office workers, and elderly people at home equally, <b>regardless of</b> income or personal routines.</div>
+<div class="gap"><b>要約に入れる骨：</b>「<b>歯科医療を受けにくい人々</b>に、<b>本人の努力なしに</b>届く」<br>
+<b>言い換えの技（ここが語彙点）：</b><br>
+「歯科医院が限られた地域の人／費用や距離で数年に一度しか通えない人」→ <b>people with limited access to dental care</b>（<u>具体例をまとめて抽象語に</u>）<br>
+「通院を必要とせず日々提供される」→ <b>without requiring individual effort</b></div></div>
+
+<div class="sent"><span class="n">第3段落</span>
+<div class="eng"><b>However</b>, critics express concerns about possible negative effects. One issue is that individuals consume different amounts of water depending on factors such as age, physical activity, or climate. … <b>This makes it difficult to control individual intake.</b> Another concern is that some people may <b>rely too much on</b> fluoride and reduce personal dental care, <b>which can result in undetected problems</b>.</div>
+<div class="pt"><b>★</b> <code>This makes <b>it</b> difficult <b>to control</b> …</code> ―― <b>形式目的語の it</b>。本当の目的語は to control。<code>make it 形容詞 to V</code> は<b>ライティングでも使える型</b>です。</div>
+<div class="gap"><b>要約に入れる骨：</b>「①摂取量の管理が難しい ②頼りすぎて個人のケアが減る」<br>
+<b>言い換え：</b>「年齢・運動量・気候で異なる量を消費」→ <b>water consumption varies among individuals</b>（<u>動詞→名詞に品詞を変える</u>）</div></div>
+
+<h4>■ 模範解答の分解（68語）― この3文構造をそのまま真似する</h4>
+<table><tr><th style="width:14%">役割</th><th>英文</th><th style="width:14%">語数</th></tr>
+<tr><td><b>背景</b></td><td>Fluoride has long been added to public water supplies as a health policy to improve dental health.</td><td>17語</td></tr>
+<tr><td><b>利点</b></td><td>It benefits people with limited access to dental care by reaching them through the water supply without requiring individual effort.</td><td>20語</td></tr>
+<tr><td><b>懸念</b></td><td><b>However,</b> safe intake levels are difficult to control because water consumption varies among individuals, and relying too much on fluoridated water may reduce personal dental care and lead to oral problems.</td><td>31語</td></tr></table>
+
+<div class="big"><b>要約 5つの鉄則</b><br>
+<b>①</b> <b>3段落 → 3文。</b>1段落につき1文。増やさない。<br>
+<b>②</b> <b>意見を書かない。</b>I think / In my opinion は<b>内容0点</b>になりえます。<br>
+<b>③</b> <b>具体例は捨てて抽象語にまとめる。</b>「屋外労働者」「学校の子ども」などの例は入れない。<br>
+<b>④</b> <b>丸写ししない。</b>品詞を変える（consume → consumption）、まとめる（歯科医院が少ない → limited access to dental care）。<br>
+<b>⑤</b> <b>However を必ず1回使う。</b>賛成 → 反対の切り替えが構成点になります。</div>
+
+<h2>第21章　出題者の頭の中 ― Pre-1 読解はこう作られている</h2>
+<p>5本を分析して見えた、<b>誤答選択肢の作り方は5種類だけ</b>です。これを知っていれば、消去が一気に速くなります。</p>
+<table><tr><th style="width:6%">型</th><th style="width:22%">誤答の作り方</th><th style="width:34%">今回の実例</th><th>見破り方</th></tr>
+<tr><td><b>A</b></td><td><b>真逆にする</b></td><td>(25)-1「技術がなくても成長できた」／(26)-2「複雑な業務に不向き」／(27)-3「破壊しなければならなかった」</td><td><b>いちばん多い型。</b>本文の該当箇所を見れば一発。</td></tr>
+<tr><td><b>B</b></td><td><b>順序・主語をすり替える</b></td><td>(26)-3「宗教が先、商業が後」／(31)-2「動物が長生きした」（実際は人間）</td><td><b>時間の語と主語に線を引く。</b></td></tr>
+<tr><td><b>C</b></td><td><b>本文の語を使って、無い内容を足す</b></td><td>(30)-3 前半「動物の脳の手術」＝本文にある／後半「知識不足のせい」＝<b>無い</b></td><td><b>選択肢を前半・後半に切って、両方確認。</b></td></tr>
+<tr><td><b>D</b></td><td><b>もっともらしいが本文にない</b></td><td>(29)-1「知能には限界がある」／(31)-1「傷つけない手術法を開発すべき」</td><td>「言われてみればそうだね」と思ったら<b>危険信号</b>。本文の行を指させるか？</td></tr>
+<tr><td><b>E</b></td><td><b>似た概念にすり替える</b></td><td>(29)-2「逆効果」（正しくは<b>副作用</b>）／(21)-4「育て方」（正しくは<b>発達段階</b>）</td><td><b>いちばん難しい型。</b>概念の違いを言葉にできるか。</td></tr></table>
+
+<div class="warn"><b>正解の選択肢には、逆に共通点があります。</b>
+<ul class="plain">
+<li><b>必ず言い換えられている。</b>本文 governance → 選択肢 manage the administration／本文 surplus → 選択肢 produce more food than it needed／本文 affluent → 選択肢 wealthy</li>
+<li><b>本文の1〜2文に、そのまま対応する行がある。</b>指で押さえられる。</li>
+<li><b>控えめな言い方が多い。</b>（may / could / tend to / one important characteristic）<b>言い切りすぎる選択肢は疑う。</b></li>
+</ul></div>
+
+<h3>本番での読み方 ― 大問3を25分で解く手順</h3>
+<table><tr><th style="width:8%">手順</th><th style="width:12%">時間</th><th>やること</th></tr>
+<tr><td><b>1</b></td><td>30秒</td><td><b>設問だけ先に読む。</b>本文はまだ読まない。「第3段落の反対論」「FOXP2の研究」など、<b>どこを探すかだけ</b>頭に入れる。</td></tr>
+<tr><td><b>2</b></td><td>1分</td><td><b>各段落の最初の1文だけ</b>を読んで、設計図を作る。（興隆／文字／衰退、のように）</td></tr>
+<tr><td><b>3</b></td><td>—</td><td><b>1段落読む → 対応する設問を1問解く。</b>全部読んでから解かない。<b>忘れます。</b></td></tr>
+<tr><td><b>4</b></td><td>—</td><td>選択肢は<b>4つ全部読む。</b>そして<b>切る理由を1語でメモ</b>する（真逆／無い／段落違い）。</td></tr>
+<tr><td><b>5</b></td><td>—</td><td>正解を選んだら、<b>本文の根拠に下線</b>。下線が引けなければ、それは正解ではありません。</td></tr></table>
+
+<div class="big"><b>この精読編を終えたあなたへ</b><br>
+今回の読解の失点 <b>12問中、語彙が原因だったのは3問だけ</b>（consent / surplus / preliminary）。<br>
+残りの <b>9問は「構造」と「選び方」</b>でした。<b>つまり、単語を増やさなくても取れた問題です。</b><br><br>
+この5本を、<b>直訳を見ずに前から読めるようになるまで</b>音読してください。3日で3周。<br>
+<b>読めるようになった英文の数だけ、本番で読める英文が増えます。</b></div>
+<p style="text-align:center;font-size:17px;color:#0b3d64;font-weight:bold;margin-top:24px">構造が読めれば、知らない単語があっても正解できる。</p>
+</body></html>
