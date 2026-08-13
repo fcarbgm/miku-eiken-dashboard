@@ -470,10 +470,28 @@ Miku, let's start with the truth: Papa teaches many students, and he said it out
 <h4>🚀 Why this matters</h4>
 Every one of these fixes shows up on test day. Clear /bl/ gives you "problem," "public," "establish" — words in almost every 準1級 reading. Clear -ed endings and first syllables are exactly what the speaking examiner grades. And reading the <i>title</i> first to predict the meaning — like Papa showed you — is the secret weapon for the summary question.
 <div class="goal">74 days, Miku. Nobody in the family has passed 準1級 at 16 — you are on schedule to be the first. Your ear is already excellent; now we train the mouth to catch up. Next mission: your speech — "Should AI be used in education?" Make the "before" video on day one. Future Miku wants to see how far you came. 🌸</div>`},
+    {date:"2026-08-13", title:"Session 4 — Speech 2 & 3 cleared · pivot to the paper test", html:`
+<h4>🏆 Speech 2 (AFTER) — perfect</h4>
+Miku, Papa watched it and the word he used was <b>perfect</b>. Your delivery, your pacing, your expression — this is <b>speech-competition level</b>. Not "good for a student." Competition level. There are a few small pronunciation points left, and we will polish those when we start <b>interview training</b> — not now, because they are too small to matter yet. Compare this to July 22nd and the improvement is honestly remarkable. <span style="color:var(--muted)">スピーチ2（AFTER）は完璧。表現力はスピーチコンテストレベルです。細かい発音は面接対策の時に直します。</span>
+<h4>🎙 Speech 3 — your method is correct</h4>
+The <b>input → input → output</b> "announcer" method is exactly right, and Speech 3 shows it: much better, and precisely the quality 準1級 expects. Keep this engine. It is what we will run on for the interview. <span style="color:var(--muted)">インプット→インプット→アウトプット（アナウンサー方式）は正解。面接対策でそのまま使います。</span>
+<h4>⏸ Now the hard turn: speeches are paused</h4>
+The speeches have done their job — <b>your speaking is ahead of schedule.</b> That part is won. With <b>53 days</b> left, every hour now goes to <b>vocabulary, grammar exposure, writing, and Listening Part 2</b> — Part 2 is your weakest section, and it is the one that decides this test. Mock Test 1 was not passed, and the writing section of the study guide is still unstudied. The gap is not ability. It is <b>consistency</b>: about 50 hours logged where 100+ should already be done. 1–2 hours a day, every day. <span style="color:var(--muted)">スピーチ動画は試験後に再開。今は語彙・文法・ライティング・リスニング第2部に集中。</span>
+<h4>✅ Your four jobs before August 20</h4>
+<b>1. Study the Mock Test 1 study guide + the Listening Section 2 guide</b> — including the writing part at the end. Upload the guide and the listening script to ChatGPT or Gemini and ask for clear explanations of <b>passages 13–24</b>. <b>2. Retake Mock Test 1 — the whole thing, with timed writing</b>, and put your answers in the online answer sheet again. Three reasons: to check that your studying is actually working, to build confidence (if you studied, your score should be near 100), and to practice timing. <b>3. Vocabulary and the songs — every single day.</b> Short and daily beats long and occasional. <b>4. Take Mock Test 2 — after jobs 1–3 are finished</b>, and before the August 20 meeting. The guide is what makes the test worth taking, so do not run ahead of it. <i>(Papa's job: send you the study guide and the listening script.)</i>
+<div class="goal">53 days — and only <b>three more lessons</b> before the test. Miku, your voice is already there — the examiner will hear a strong speaker the moment you open your mouth. Now bring that same discipline to the paper, and 準1級 is yours on the first try. No excuses, no next year. 一発合格しよう。🌸</div>`},
   ],
 };
 
 let D = loadLocal();
+// Session evaluations are owned by the code, not the cloud store: union by date so a new
+// evaluation shipped in index.html always shows up, even if the store still holds an old list.
+function mergeDefaultSessions(){
+  const byDate = new Map((D.sessions||[]).map(s=>[s.date,s]));
+  (DEFAULTS.sessions||[]).forEach(s=> byDate.set(s.date, s));
+  D.sessions = [...byDate.values()].sort((a,b)=> a.date.localeCompare(b.date));
+}
+mergeDefaultSessions();
 let saveTimer = null, dirty = false;
 
 function loadLocal(){
@@ -502,6 +520,7 @@ async function cloudPull(){
     const remote = JSON.parse(txt);
     if((remote.updatedAt||0) > (D.updatedAt||0)){
       D = Object.assign(structuredClone(DEFAULTS), remote);
+      mergeDefaultSessions();
       persistLocal(); render();
     }
     setStatus("🟢","live · synced "+new Date().toLocaleTimeString());
