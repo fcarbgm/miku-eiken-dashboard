@@ -141,6 +141,10 @@
   .papa-scores label{font-size:.7rem; color:var(--sub); display:flex; flex-direction:column; gap:2px;}
   .papa-scores input{width:100%; text-align:center;}
   .papa-ta{width:100%; min-height:110px; border:1px solid var(--line); border-radius:8px; padding:8px; font-size:.8rem; font-family:inherit;}
+  .drill-block{border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:14px;}
+  .drill-head{font-size:.9rem; font-weight:700; color:var(--indigo-d); display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;}
+  .drill-tag{color:#fff; border-radius:99px; width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; font-size:.72rem;}
+  .drill-delta{color:var(--red); font-size:.75rem; font-weight:700; background:#fdecea; padding:2px 8px; border-radius:99px;}
   .pe-del{display:none;}
   body.papa-mode .pe-del{display:block;}
 </style>
@@ -272,6 +276,81 @@
     <ul style="margin:.2rem 0 .9rem;padding-left:1.15rem;line-height:1.75"><li>英語は全部<b>自然な使い方</b>。そのまま暗記して、そのまま使えます</li><li>各話に<b>直訳（英語の語順のまま）</b>と「英語の頭の使い方」つき</li><li>BONUS：まぎらわしいペア早口ドリル／前から訳す1分ドリル／30秒スピードラウンド</li><li>パパ用スコアカードつき（Day 1〜3）</li></ul>
     <a href="warmup-stories.html" style="display:inline-block;background:#7a2e83;color:#fff;text-decoration:none;font-weight:700;padding:.7rem 1.15rem;border-radius:8px;font-size:1rem">ストーリーをひらく &rarr;</a>
   </div>
+  <div class="card" style="border-color:#0b6b6b;">
+    <h2>🔑 句動詞・コロケーション 100 <span class="muted" style="font-weight:400;">― 語彙 Q11〜18 専用</span></h2>
+    <p class="muted" style="margin:.2rem 0 .9rem">Mock 1→2 で語彙後半が 5/8 → <b>2/8</b> に低下。Q13・Q17 は2回とも不正解。歌の単語帳には句動詞が入っていないのが原因です。</p>
+    <ul style="margin:.2rem 0 .9rem;padding-left:1.15rem;line-height:1.75"><li>9グループ × 例文つき ― 全部そのまま英作文にも使えます</li><li>「日本語をかくす」ボタンで<b>そのまま試験形式のテスト</b>に</li><li>まぎらわしいペア（take on / over / off / after など）を別立てで整理</li><li>1日20個 × 5日 → あとは毎朝10分で1周</li></ul>
+    <a href="phrasal-verbs.html" style="display:inline-block;background:#0b6b6b;color:#fff;text-decoration:none;font-weight:700;padding:.7rem 1.15rem;border-radius:8px;font-size:1rem">句動詞100をひらく &rarr;</a>
+  </div>
+
+  <div class="card" style="border-color:#b4571a;">
+    <h2>🔗 つなぎ語 30 <span class="muted" style="font-weight:400;">― 空所補充 Q19〜24 専用</span></h2>
+    <p class="muted" style="margin:.2rem 0 .9rem">Mock 1→2 で 67% → <b>33%</b>。ただし出題語は約30語の閉じたリスト。試験全体で<b>一番速く上がる6問</b>です。</p>
+    <ul style="margin:.2rem 0 .9rem;padding-left:1.15rem;line-height:1.75"><li>意味ではなく<b>「向き」</b>で分類 ― ①逆向き ②結果 ③追加 ④言い換え</li><li>In contrast と On the contrary の決定的な違い（＝Q22 の正体）</li><li>向きだけで解くミニ演習6問つき</li><li>同じ30語が要約・英作文の構成点にもそのまま効きます</li></ul>
+    <a href="connectors.html" style="display:inline-block;background:#b4571a;color:#fff;text-decoration:none;font-weight:700;padding:.7rem 1.15rem;border-radius:8px;font-size:1rem">つなぎ語30をひらく &rarr;</a>
+  </div>
+
+  <!-- DRILL CHECKLISTS -->
+  <h3 class="section-title">🎯 Mock 1 → Mock 2 分析ドリル <span class="muted">(chase the points that are actually missing)</span></h3>
+  <div class="card" id="drillCard">
+    <p class="muted" style="margin:0 0 12px">2回のモック全問を1問ずつ照合した結果、失点は5か所に集中しています。ここだけを潰します。チェックは自動保存され、パパの画面にも同期します。</p>
+
+    <div class="drill-block">
+      <div class="drill-head"><span class="drill-tag" style="background:#0b6b6b">1</span> 句動詞 ― 語彙後半 <b class="drill-delta">5/8 → 2/8</b></div>
+      <div class="checks">
+        <label><input type="checkbox" class="drill-check" data-k="pv1" onchange="save()"> グループ1〜2（20個）</label>
+        <label><input type="checkbox" class="drill-check" data-k="pv2" onchange="save()"> グループ3〜4（20個）</label>
+        <label><input type="checkbox" class="drill-check" data-k="pv3" onchange="save()"> グループ5〜6（20個）</label>
+        <label><input type="checkbox" class="drill-check" data-k="pv4" onchange="save()"> グループ7〜8（20個）</label>
+        <label><input type="checkbox" class="drill-check" data-k="pv5" onchange="save()"> グループ9 コロケーション（20個）</label>
+        <label><input type="checkbox" class="drill-check" data-k="pv6" onchange="save()"> まぎらわしいペアを音読</label>
+        <label><input type="checkbox" class="drill-check" data-k="pv7" onchange="save()"> 日本語→英語で100個言えた</label>
+      </div>
+    </div>
+
+    <div class="drill-block">
+      <div class="drill-head"><span class="drill-tag" style="background:#b4571a">2</span> つなぎ語 ― 空所補充 <b class="drill-delta">67% → 33%</b></div>
+      <div class="checks">
+        <label><input type="checkbox" class="drill-check" data-k="cn1" onchange="save()"> ①逆向き 9語</label>
+        <label><input type="checkbox" class="drill-check" data-k="cn2" onchange="save()"> ②結果 6語 ＋ ③追加 6語</label>
+        <label><input type="checkbox" class="drill-check" data-k="cn3" onchange="save()"> ④言い換え ＋ ⑤譲歩 ＋ まとめ</label>
+        <label><input type="checkbox" class="drill-check" data-k="cn4" onchange="save()"> ミニ演習6問</label>
+        <label><input type="checkbox" class="drill-check" data-k="cn5" onchange="save()"> Mock 1・2 の Q19〜24 に①②③④を書き込んだ</label>
+      </div>
+    </div>
+
+    <div class="drill-block">
+      <div class="drill-head"><span class="drill-tag" style="background:#4a7c59">3</span> リスニング Part 2 ― 段落まるごと落ちる <b class="drill-delta">3/12 → 6/12</b></div>
+      <p class="muted" style="margin:0 0 8px">12段落中<b>9段落が「2問とも正解」か「2問とも不正解」</b>。細部ではなく話の流れごと落としています。狙うのは単語ではなく<b>段落の骨格</b>。</p>
+      <div class="checks">
+        <label><input type="checkbox" class="drill-check" data-k="l1" onchange="save()"> 月 ― 1段落 ×3周（50% → 75% → 100%、原稿なし）</label>
+        <label><input type="checkbox" class="drill-check" data-k="l2" onchange="save()"> 火 ― 1段落 ×3周</label>
+        <label><input type="checkbox" class="drill-check" data-k="l3" onchange="save()"> 水 ― 1段落 ×3周</label>
+        <label><input type="checkbox" class="drill-check" data-k="l4" onchange="save()"> 木 ― 1段落 ×3周</label>
+        <label><input type="checkbox" class="drill-check" data-k="l5" onchange="save()"> 金 ― 1段落 ×3周</label>
+        <label><input type="checkbox" class="drill-check" data-k="l6" onchange="save()"> 土 ― 聞き終わって<b>1文で要約</b>を言う練習</label>
+      </div>
+    </div>
+
+    <div class="drill-block">
+      <div class="drill-head"><span class="drill-tag" style="background:#c98f2d">4</span> 「3」で迷って埋める癖 <b class="drill-delta">Mock 2 で60問中24問が「3」</b></div>
+      <p class="muted" style="margin:0 0 8px">うち13問が不正解。<b>1回のテストで5〜8点</b>を当てずっぽうで失っています。正解の分布はほぼ均等です。</p>
+      <div class="checks">
+        <label><input type="checkbox" class="drill-check" data-k="g1" onchange="save()"> 選ぶ前に<b>2つを線で消す</b>ルールを決めた</label>
+        <label><input type="checkbox" class="drill-check" data-k="g2" onchange="save()"> Mock 3 で全問このルールを守った</label>
+      </div>
+    </div>
+
+    <div class="drill-block" style="border-bottom:none;margin-bottom:0;padding-bottom:0;">
+      <div class="drill-head"><span class="drill-tag" style="background:#d9536f">5</span> 本番前ウォームアップ <b class="drill-delta">Mock 2 は最初の2段落が 0/4</b></div>
+      <p class="muted" style="margin:0 0 8px">エンジンがかかる前に4問失っています。試験開始前に必ず耳を温めること。</p>
+      <div class="checks">
+        <label><input type="checkbox" class="drill-check" data-k="w1" onchange="save()"> モック開始前に必ず1段落シャドーイング</label>
+        <label><input type="checkbox" class="drill-check" data-k="w2" onchange="save()"> 10/4 本番の朝のウォームアップ音源を決めた</label>
+      </div>
+    </div>
+  </div>
+
   <!-- MOCK TESTS -->
   <details class="fold">
     <summary>📝 Mock tests <span class="muted">— Papa enters the scores</span></summary>
@@ -433,12 +512,15 @@ const DEFAULTS = {
   vocabNow:0, vocabMax:1500, gramNow:0, gramMax:60, idiomNow:0, idiomMax:200,
   streak:0, lastStudy:null, totalStudyDays:0,
   speechTopic:"", speechChecks:{}, speechCount:0,
+  drillChecks:{},
   links:[
     {name:"📹 Papa's meeting room (Zoom)", url:""},
     {name:"📄 Speech & Q&A transcripts", url:""},
     {name:"🏛 EIKEN official — 準1級", url:"https://www.eiken.or.jp/eiken/exam/grade_p1/"},
     {name:"🗂 Past papers (過去問)", url:"https://www.eiken.or.jp/eiken/exam/"},
     {name:"📱 Vocab Trainer", url:"vocab-trainer.html"},
+    {name:"🔑 句動詞100 (Q11–18)", url:"phrasal-verbs.html"},
+    {name:"🔗 つなぎ語30 (Q19–24)", url:"connectors.html"},
     {name:"🎧 Listening practice", url:""},
   ],
   vocabList:[
@@ -460,6 +542,20 @@ const DEFAULTS = {
     {w:"eldest", ja:"最年長の", ex:"Eldest siblings differed from others in terms of responsibility.", st:"EL-dest", no:"7/22: good after 3×"},
   ],
   sessions:[
+    {date:"2026-08-19", title:"Session 5 — Mock 1 vs Mock 2: where the points actually went", html:`
+<h4>📈 The number that matters most</h4>
+Miku, before anything else: <b>Mock 1 was 58%. The post-test retake was 93%.</b> Reading went 61 → 94. Listening went 55 → 93. You had already seen the answers, yes — but you also <i>studied the guide</i>, and the result was a pass-level score with room to spare. <b>Your ceiling is not the problem.</b> Coverage and consistency are. Everything below is just about pointing your hours at the right five things. <span style="color:var(--sub)">実力の天井は問題ではありません。あとは「どこに時間を使うか」だけです。</span>
+<h4>🔄 The headline: it is reading now, not listening</h4>
+On Tuesday we said listening was the challenge. The full question-by-question comparison says otherwise. <b>Listening improved 55% → 65.5%. Reading fell 61% → 44%.</b> Listening Part 1 (75%) and Part 3 (80%) were <b>identical in both tests</b> and are already at pass level — we stop spending time there. From today the weight shifts to reading. <span style="color:var(--sub)">リスニングは上がっています。落ちたのは読解です。</span>
+<h4>🎯 The five leaks</h4>
+<b>1. Phrasal verbs.</b> Q1–10 (single words) held steady at 6/10 both times. Q11–18 collapsed: 5/8 → 2/8. <b>Q13 and Q17 were wrong in both tests.</b> Your Quizlet deck is built from song lyrics, and songs contain almost no phrasal verbs. That is the whole story. New deck: 句動詞100.<br>
+<b>2. The cloze section.</b> 67% → 33%. <b>Q22 wrong both times.</b> But there are only six questions and only about thirty possible words. This is the cheapest section on the entire test. New deck: つなぎ語30.<br>
+<b>3. Listening Part 2 fails by whole paragraph.</b> Of twelve passages across both tests, <b>nine were all-right or all-wrong</b>. You are not missing details — you are losing the thread and then answering two questions blind. Shadowing is the exact cure, and it is already working (3/12 → 6/12).<br>
+<b>4. You guess "3."</b> In Mock 2 you chose 3 on <b>24 of 60 questions</b>, and 13 of those were wrong. The real answer key is close to even. That habit costs 5–8 points per test. New rule: <b>physically cross out two options before you choose.</b><br>
+<b>5. Cold start.</b> In Mock 2, listening passages A and B were <b>0/4</b> — then you recovered to 6/8. Four points lost before your ears woke up. Shadow one passage before every test, including October 4th.
+<h4>✍️ Writing</h4>
+Essay 27/32 (84%) — well above the line, and your ideas and structure are genuinely good. Summary 21/32 (66%) — just under. Same three habits as before: copying source wording instead of changing word class, missing articles and plurals (<i>"ride taxi and bus"</i>), and nouns where verbs are needed (<i>"can lead to drop out of many drivers"</i>). Mechanical, not conceptual. The guide fixes all three.
+<div class="goal">46 days. Two new decks are on the dashboard and the checklists track them. Do these five things and nothing else, Miku — this is not more work, it is <b>less</b> work aimed better. あと46日。やることは5つだけです。🌸</div>`},
     {date:"2026-07-22", title:"Session 1 — Kickoff & the Birth Order cold reading", html:`
 <h4>✨ What you did brilliantly</h4>
 Miku, let's start with the truth: Papa teaches many students, and he said it out loud tonight — <b>your pronunciation is the best of all of them</b>. That was not a compliment to be nice. It was an observation, and here is the evidence. You corrected <b>"eldest"</b> and <b>"obvious"</b> yourself, before anyone helped you — that is called self-monitoring, and it is the #1 skill of successful language learners. You built an entire original sentence out loud: <i>"We watch the weather forecast to guess what the future weather will be."</i> Nobody gave you that sentence. You made it. And when you had a question, you asked it <b>in English</b> — "Should I... don't read the script?" That is courage. On your very first try, you also read a real 準1級 passage from start to finish in <b>4 minutes 17 seconds</b>. Most students freeze on page one. You finished.
@@ -771,6 +867,8 @@ function render(){
 
   document.getElementById("speechTopic").value = D.speechTopic;
   document.querySelectorAll("#speechChecks input").forEach(cb=> cb.checked = !!D.speechChecks[cb.dataset.k]);
+  if(!D.drillChecks) D.drillChecks={};
+  document.querySelectorAll(".drill-check").forEach(cb=> cb.checked = !!D.drillChecks[cb.dataset.k]);
   document.getElementById("speechCount").textContent = D.speechCount;
 
   document.querySelectorAll(".mockDate").forEach(inp=> inp.value = D.mockDates[+inp.dataset.mock] || "");
@@ -863,6 +961,8 @@ function save(){
   ["vocabNow","vocabMax","gramNow","gramMax","idiomNow","idiomMax"].forEach(k=> D[k] = +document.getElementById(k).value || 0);
   D.speechTopic = document.getElementById("speechTopic").value;
   document.querySelectorAll("#speechChecks input").forEach(cb=> D.speechChecks[cb.dataset.k]=cb.checked);
+  if(!D.drillChecks) D.drillChecks={};
+  document.querySelectorAll(".drill-check").forEach(cb=> D.drillChecks[cb.dataset.k]=cb.checked);
   document.querySelectorAll(".mockDate").forEach(inp=> D.mockDates[+inp.dataset.mock]=inp.value);
   document.querySelectorAll("[data-score]").forEach(inp=> D.scores[inp.dataset.score]=inp.value);
   commit();
