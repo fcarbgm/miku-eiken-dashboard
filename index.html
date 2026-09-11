@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miku — EIKEN 準1級 Dashboard</title>
@@ -147,6 +147,19 @@
   .drill-delta{color:var(--red); font-size:.75rem; font-weight:700; background:#fdecea; padding:2px 8px; border-radius:99px;}
   .pe-del{display:none;}
   body.papa-mode .pe-del{display:block;}
+#linkList .link-group{
+  list-style:none;
+  margin:16px 0 4px;
+  padding:4px 0 4px 2px;
+  font-weight:700;
+  font-size:.82rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--sakura);
+  border-bottom:1px solid var(--sakura);
+  opacity:.85;
+}
+#linkList .link-group:first-child{ margin-top:0; }
 </style>
 </head>
 <body>
@@ -492,12 +505,12 @@ const SECTIONS = [
 ];
 
 const DAILIES = [
-  "🎯 10-min mouth work (current drill targets)",
-  "📱 Vocab trainer — 1–2 sessions",
-  "📝 Add 15–25 new words to the list",
+  "🎴 Today's Quizlet set — Test mode · 20% of set · type answer · 3× 100%",
+  "📱 Vocab trainer — 1–2 sessions (the words you keep missing)",
+  "✍️ Use each new word in a sentence of your OWN",
   "🧹 Talk with キキ先生",
-  "🎵 Songs — current pair",
-  "🎤 Speech practice — current topic",
+  "🔁 Mock mistakes — 5 questions, say out loud why the right answer is right",
+  "🎯 10-min mouth work — 5 min interview + 5 min listening script",
 ];
 
 const DEFAULTS = {
@@ -937,9 +950,13 @@ function render(){
   document.getElementById("vocabCount").textContent = (D.vocabList||[]).length;
 
   const ul = document.getElementById("linkList");
+  let _lastGroup = null;
   ul.innerHTML = D.links.map((l,i)=>{
     const a = l.url ? `<a href="${l.url}" target="_blank" rel="noopener">${l.name}</a>` : `<span class="muted">${l.name} — <i>no URL yet</i></span>`;
-    return `<li>${a}<span class="spacer"></span>
+    const g = l.group || "📌 Other";
+    let head = "";
+    if (g !== _lastGroup) { _lastGroup = g; head = `<li class="link-group">${g}</li>`; }
+    return head + `<li>${a}<span class="spacer"></span>
       <button class="btn-ghost btn-sm" onclick="editLink(${i})">✎</button>
       <button class="btn-ghost btn-sm" onclick="delLink(${i})">✕</button></li>`;
   }).join("");
@@ -990,15 +1007,29 @@ function completeSpeech(){
   commit();
 }
 
+const LINK_GROUPS = ["📝 Mock tests","✍️ Writing","🎤 Songs & listening","📱 Vocabulary & drills","🎙 Speaking & presentations","🏛 Official 英検","🔧 Admin"];
+function pickGroup(current){
+  const list = LINK_GROUPS.map((g,n)=>`${n+1}. ${g}`).join("\n");
+  const ans = prompt("Section:\n"+list+"\n\nType a number, or a new section name:", current || "");
+  if(ans===null) return null;
+  const n = parseInt(ans,10);
+  return (n>=1 && n<=LINK_GROUPS.length) ? LINK_GROUPS[n-1] : (ans.trim() || current || "📌 Other");
+}
+function sortLinks(){
+  const order = g => { const n = LINK_GROUPS.indexOf(g); return n<0 ? 999 : n; };
+  D.links.sort((a,b)=> order(a.group)-order(b.group));
+}
 function addLink(){
   const name = prompt("Link name:"); if(!name) return;
   const url = prompt("URL (https://...):") || "";
-  D.links.push({name,url}); commit();
+  const group = pickGroup(); if(group===null) return;
+  D.links.push({name,url,group}); sortLinks(); commit();
 }
 function editLink(i){
   const name = prompt("Link name:", D.links[i].name); if(name===null) return;
   const url = prompt("URL:", D.links[i].url); if(url===null) return;
-  D.links[i] = {name,url}; commit();
+  const group = pickGroup(D.links[i].group); if(group===null) return;
+  D.links[i] = {name,url,group}; sortLinks(); commit();
 }
 function delLink(i){ if(confirm("Remove this link?")){ D.links.splice(i,1); commit(); } }
 
