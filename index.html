@@ -504,11 +504,31 @@ const SECTIONS = [
   {id:"list",  name:"リスニング Listening", max:29},
 ];
 
-const DAILIES = [
+const MOCK_PLAN = {
+  "2026-08-05": {label:"Mock Test 1",        guide:"Study Guide 1"},
+  "2026-08-15": {label:"Mock Test 2",        guide:"Study Guide 2"},
+  "2026-09-05": {label:"Mock Test 3",        guide:"Study Guide 3"},
+  "2026-09-16": {label:"Mock Test 2 RETAKE", guide:"Study Guide 2"},
+  "2026-09-21": {label:"Mock Test 3 RETAKE", guide:"Study Guide 3"},
+  "2026-09-26": {label:"Mock Test 4",        guide:"Study Guides 1–3"},
+};
+const DAILY_BASE = [
   "🧘 Meditate — I can see myself taking the 準1級 test on Sunday, October 4th with ease and confidence. I can see myself happy and smiling when I learn that I passed. [Mind-training]",
   "🎧 Shadowing — Mock Test Listening Section",
   "🎴 Today's Quizlet set (listed above) — Test mode, 100% 3 times in a row — or today's mock test",
 ];
+function nextMock(ds){
+  const ks = Object.keys(MOCK_PLAN).sort();
+  for(const k of ks){ if(k >= ds) return MOCK_PLAN[k]; }
+  return null;
+}
+function dailies(ds){
+  const out = DAILY_BASE.slice();
+  const m = nextMock(ds);
+  out.push(m ? ("📖 Review " + m.guide + " to prepare for " + m.label)
+             : "📖 Review your mock test mistakes to prepare for October 4th");
+  return out;
+}
 
 const DEFAULTS = {
   updatedAt:0,
@@ -721,7 +741,7 @@ function isoD(d){ return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.get
 function calEvents(){
   const ev = {};
   const push=(ds,label,cls)=>{ if(!ds) return; (ev[ds]=ev[ds]||[]).push({label,cls}); };
-  (D.mockDates||[]).forEach((ds,i)=> push(ds,"⭐ Mock "+(i+1),"mock"));
+  (D.mockDates||[]).forEach((ds,i)=> push(ds,"⭐ "+((MOCK_PLAN[ds]&&MOCK_PLAN[ds].label)||("Mock Test "+(i+1))),"mock"));
   (D.sessions||[]).forEach(s=> push(s.date,"🌟 "+String(s.title).split("—")[0].trim(),"sess"));
   push(isoD(TEST_DATE),"🎌 TEST DAY — 準1級!","test");
   (D.calendar||[]).forEach(e=> push(e.date,e.label,"ev"));
@@ -819,7 +839,7 @@ function renderCalendar(){
       const evs=(ev[ds]||[]).map(e=>`<span class="cal-ev ${e.cls}">${e.label}</span>`).join("");
       html+=`<div class="${cls.join(" ")}" style="min-height:96px;" onclick="calGoto('${ds}')"><span class="dnum">${dt.getDate()}</span>${evs}</div>`;
     }
-    html+=`</div><div class="hint">Every day（毎日）: ${DAILIES.join(" · ")}</div>`;
+    html+=`</div><div class="hint">Every day（毎日）: ${dailies(isoD(start)).join(" · ")}</div>`;
     elBody.innerHTML=html;
   }
   else{ // day
@@ -833,7 +853,7 @@ function renderCalendar(){
     });
     if(calCursor>=START_DATE && calCursor<=TEST_DATE && ds!==isoD(TEST_DATE)){
       html+=`<li style="font-weight:700;color:var(--indigo-d);">Daily missions（毎日のミッション）:</li>`;
-      DAILIES.forEach(d=> html+=`<li>${d}</li>`);
+      dailies(ds).forEach(d=> html+=`<li>${d}</li>`);
     }
     html+=`</ul>`;
     elBody.innerHTML=html;
