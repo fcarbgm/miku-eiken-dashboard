@@ -1,1 +1,497 @@
-x
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📖 読解ミニ道場 — 英検準1級</title>
+<style>
+:root{--sakura:#e5799b;--sakura-l:#ffeef4;--ink:#1f2430;--muted:#6b7280;
+--good:#2e9e5b;--good-l:#e8f8ef;--bad:#d1495b;--bad-l:#fdeaec;
+--warn:#b98200;--warn-l:#fff7e3;--blue:#2f6fd0;--blue-l:#eef4ff;--line:#e6e8ec;}
+*{box-sizing:border-box;}
+body{font-family:"Hiragino Kaku Gothic ProN",-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+background:linear-gradient(160deg,#fff8fa,#fff);margin:0;padding:0 14px 60px;line-height:1.7;}
+.wrap{max-width:780px;margin:0 auto;}
+header{text-align:center;padding:22px 0 12px;border-bottom:3px solid var(--sakura);margin-bottom:18px;}
+h1{margin:0 0 2px;font-size:1.35rem;}
+.sub{color:var(--muted);font-size:.85rem;}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.btn{display:inline-block;background:var(--sakura);color:#fff;border:none;border-radius:8px;
+padding:10px 18px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:inherit;margin:4px 4px 4px 0;}
+.btn:hover{opacity:.88;}
+.btn.ghost{background:#fff;color:var(--sakura);border:2px solid var(--sakura);}
+.btn.sm{padding:5px 12px;font-size:.82rem;}
+.modes{display:flex;flex-wrap:wrap;gap:10px;}
+.mode{flex:1 1 160px;border:2px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;text-align:center;background:#fff;}
+.mode:hover{border-color:var(--sakura);background:var(--sakura-l);}
+.mode b{display:block;font-size:1rem;margin-bottom:3px;}
+.mode span{font-size:.78rem;color:var(--muted);}
+.bar{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--muted);
+border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:12px;}
+.timer{font-weight:800;font-size:1.05rem;color:var(--ink);font-variant-numeric:tabular-nums;}
+.timer.warn{color:var(--bad);}
+.passage{background:#fcfcfd;border:1px solid var(--line);border-left:4px solid var(--blue);
+border-radius:8px;padding:14px 16px;margin:10px 0 16px;font-size:.93rem;line-height:1.85;}
+.passage p{margin:0 0 10px;}
+.stem{font-weight:700;margin:14px 0 10px;font-size:1rem;}
+.opt{display:flex;align-items:flex-start;gap:10px;border:2px solid var(--line);border-radius:9px;
+padding:10px 12px;margin:7px 0;cursor:pointer;background:#fff;transition:.12s;}
+.opt:hover{border-color:var(--sakura);}
+.opt .n{font-weight:800;color:var(--muted);min-width:18px;}
+.opt .t{flex:1;}
+.opt .x{color:#bbb;font-size:.95rem;padding:0 2px;cursor:pointer;user-select:none;}
+.opt .x:hover{color:var(--bad);}
+.opt.struck{opacity:.4;}
+.opt.struck .t{text-decoration:line-through;}
+.opt.correct{border-color:var(--good);background:var(--good-l);}
+.opt.wrong{border-color:var(--bad);background:var(--bad-l);}
+.opt.locked{cursor:default;}
+.exp{border-radius:9px;padding:13px 15px;margin:12px 0;font-size:.9rem;}
+.exp.ok{background:var(--good-l);border-left:5px solid var(--good);}
+.exp.ng{background:var(--bad-l);border-left:5px solid var(--bad);}
+.trap{background:var(--warn-l);border-left:5px solid var(--warn);border-radius:8px;padding:10px 13px;margin:10px 0;font-size:.86rem;}
+.gloss{background:var(--blue-l);border:1px solid #cfe0ff;border-radius:8px;padding:10px 13px;margin:10px 0;font-size:.86rem;}
+.gloss b{color:var(--blue);}
+table{border-collapse:collapse;width:100%;font-size:.85rem;margin:10px 0;}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;}
+th{background:#fafafa;}
+.big{font-size:2.6rem;font-weight:800;}
+.center{text-align:center;}
+.pill{display:inline-block;background:var(--sakura-l);color:var(--sakura);border-radius:99px;
+padding:2px 11px;font-size:.75rem;font-weight:700;margin-right:6px;}
+.small{font-size:.8rem;color:var(--muted);}
+.hide{display:none;}
+.tip{background:var(--sakura-l);border-radius:9px;padding:11px 14px;font-size:.85rem;margin:12px 0;}
+.prog{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:12px;}
+.prog i{display:block;height:100%;background:var(--sakura);transition:width .3s;}
+a{color:var(--sakura);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>📖 読解ミニ道場</h1>
+  <div class="sub">英検準1級 ／ 時間つき・即採点・解説つき</div>
+</header>
+
+<!-- ========== HOME ========== -->
+<div id="home">
+  <div class="tip">
+    <b>🔑 このアプリの一番大事なルール</b><br>
+    答える前に、必ず<b>選択肢を2つ「✕」で消して</b>ください。準1級の正解は<b>必ず言い換え</b>です。本文と同じ単語が多い選択肢は、たいてい罠です。
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">モードを選ぶ</h3>
+    <div class="modes">
+      <div class="mode" onclick="start('vocab')"><b>§1 語彙</b><span>24問 ／ 1問30秒</span></div>
+      <div class="mode" onclick="start('cloze')"><b>§2 つなぎ語</b><span>8問 ／ 1問40秒</span></div>
+      <div class="mode" onclick="start('reading')"><b>§3 長文</b><span>3本9問 ／ 1本8分</span></div>
+      <div class="mode" onclick="start('exam')"><b>🔥 本番モード</b><span>全41問 ／ 43分</span></div>
+    </div>
+  </div>
+
+  <div class="card" id="histCard">
+    <h3 style="margin-top:0">📈 記録</h3>
+    <div id="hist" class="small">まだ記録がありません。</div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">📚 この道場に出てくる「まだ知らないかもしれない」単語</h3>
+    <p class="small" style="margin-top:0">準1級によく出るのに、歌のセットにまだ入っていない語です。間違えた語は単語トレーナーに入れてください。</p>
+    <div id="wordlist"></div>
+  </div>
+</div>
+
+<!-- ========== QUIZ ========== -->
+<div id="quiz" class="hide">
+  <div class="bar">
+    <div><span class="pill" id="qmode"></span><span id="qcount"></span></div>
+    <div class="timer" id="timer">00:00</div>
+  </div>
+  <div class="prog"><i id="prog" style="width:0%"></i></div>
+  <div id="qbody"></div>
+  <div id="qafter"></div>
+</div>
+
+<!-- ========== RESULT ========== -->
+<div id="result" class="hide"></div>
+
+<script>
+/* ============ QUESTION BANK ============ */
+const VOCAB = [
+ {s:"Despite the company's strong sales, analysts warned that its rising debt could ( ) its long-term stability.",
+  o:["undermine","underline","undertake","undergo"],a:0,
+  w:"undermine",j:"（土台から）徐々に弱らせる、むしばむ",
+  e:"undermine = 下から少しずつ弱らせる。「安定性を〜する」に合うのはこれだけ。",
+  t:"接頭辞 under- が同じ語を4つ並べた罠。<b>接頭辞が同じでも意味は全く別</b>です。"},
+ {s:"The new housing policy is expected to ( ) the shortage of affordable homes in major cities.",
+  o:["aggravate","alleviate","allocate","allege"],a:1,
+  w:"alleviate",j:"（苦痛・問題を）緩和する",
+  e:"政策が不足を「良くする」文脈。alleviate = 和らげる。",
+  t:"1 aggravate は<b>「悪化させる」＝正反対</b>。文脈の向き（プラスかマイナスか）を先に決めてから選ぶこと。"},
+ {s:"Her explanation was so ( ) that no one could tell whether she supported the plan or opposed it.",
+  o:["ambiguous","meticulous","audible","lucrative"],a:0,
+  w:"ambiguous",j:"あいまいな、どちらとも取れる",
+  e:"「賛成か反対か分からない」＝ どちらとも取れる。",t:""},
+ {s:"Researchers found a significant ( ) between the two sets of data, suggesting a measurement error.",
+  o:["coherence","discrepancy","consensus","abundance"],a:1,
+  w:"discrepancy",j:"食い違い、不一致",
+  e:"「測定ミスを示す」＝ 2つのデータが合わない。",t:""},
+ {s:"The old bridge has ( ) several major earthquakes without serious damage.",
+  o:["withstood","withheld","withdrawn","witnessed"],a:0,
+  w:"withstand",j:"（力・圧力に）耐える",
+  e:"withstand - withstood - withstood。「被害なく地震に耐えた」。",
+  t:"with- で始まる語の罠。4 witnessed（目撃した）は意味は通りそうでも <b>without serious damage</b> と噛み合いません。"},
+ {s:"Because the evidence against him was purely ( ), the court declined to convict.",
+  o:["circumstantial","substantial","influential","residential"],a:0,
+  w:"circumstantial evidence",j:"状況証拠",
+  e:"circumstantial evidence は法律の定番コロケーション。",
+  t:"-tial で韻を踏ませた罠。<b>音が似ている＝選ぶ理由にならない。</b>"},
+ {s:"Many rural clinics are ( ) by the government so that they can remain open.",
+  o:["subsidized","substituted","subscribed","subdued"],a:0,
+  w:"subsidize",j:"補助金を出す",
+  e:"「開けておけるように」＝ 政府がお金を出している。",t:""},
+ {s:"Elderly people are particularly ( ) to extreme heat and should stay indoors.",
+  o:["susceptible","suspicious","sustainable","suspended"],a:0,
+  w:"be susceptible to",j:"〜にかかりやすい、影響を受けやすい",
+  e:"be susceptible <b>to</b> 〜 が丸ごとのコロケーション。前置詞 to までセットで覚える。",t:""},
+ {s:"The construction project was ( ) after the main investor suddenly withdrew.",
+  o:["brought about","called off","carried out","looked into"],a:1,
+  w:"call off",j:"中止する",
+  e:"off ＝「切り離す・やめる」。投資家が撤退 → 中止。",
+  t:"3 carried out は<b>「実行する」＝正反対</b>。句動詞は後ろの語（off / out）の意味から考える。"},
+ {s:"The sharp decline in bee populations may ( ) from the widespread use of pesticides.",
+  o:["stem","stray","strip","stall"],a:0,
+  w:"stem from",j:"〜に由来する、〜が原因である",
+  e:"stem from = 〜に起因する。原因を述べる定番表現。",t:""},
+ {s:"The government intends to ( ) coal-fired power stations over the next fifteen years.",
+  o:["phase out","phase in","pass out","put out"],a:0,
+  w:"phase out",j:"段階的に廃止する",
+  e:"out ＝ 取り除く。「15年かけて」＝ 段階的。",
+  t:"2 phase in は<b>「段階的に導入する」＝逆</b>。in と out で意味が反転する句動詞に注意。"},
+ {s:"The report ( ) the environmental costs of the project, mentioning them in only two sentences.",
+  o:["glossed over","pointed out","brought up","dwelled on"],a:0,
+  w:"gloss over",j:"（都合の悪いことを）軽く扱う、ごまかす",
+  e:"「2文しか触れていない」＝ わざと軽く流した。",
+  t:"4 dwelled on は<b>「長々と論じる」＝正反対</b>。"},
+ {s:"Investigators were unable to ( ) the witness's claims, and the case was eventually dropped.",
+  o:["substantiate","subordinate","speculate","stipulate"],a:0,
+  w:"substantiate",j:"（証拠で）立証する、裏づける",
+  e:"「立証できず → 事件は取り下げ」。",t:""},
+ {s:"Critics warn that the new regulations ( ) a serious threat to small businesses.",
+  o:["pose","posture","possess","postpone"],a:0,
+  w:"pose a threat to",j:"〜に脅威をもたらす",
+  e:"pose a threat to 〜 は準1級の頻出コロケーション。英作文でもそのまま使えます。",t:""},
+ {s:"Although the plan looked attractive on paper, it proved not to be ( ) within the budget.",
+  o:["feasible","fashionable","formidable","favourable"],a:0,
+  w:"feasible",j:"実行可能な",
+  e:"「予算内では無理だった」＝ 実行可能ではない。",
+  t:"f- で始まる語を4つ並べた罠。"},
+ {s:"Torrential rain ( ) rescue efforts in the mountainous region for three days.",
+  o:["impeded","impelled","implied","imposed"],a:0,
+  w:"impede",j:"妨げる、遅らせる",
+  e:"大雨が救助activityを「妨げた」。",t:""},
+ {s:"The differences between the two proposals are ( ); either one would serve our purpose.",
+  o:["negligible","negotiable","neglectful","negative"],a:0,
+  w:"negligible",j:"無視できるほど小さい",
+  e:"「どちらでもいい」＝ 違いはごくわずか。",t:""},
+ {s:"False rumours ( ) rapidly on social media before officials could issue a correction.",
+  o:["proliferated","prohibited","prolonged","professed"],a:0,
+  w:"proliferate",j:"急増する、拡散する",
+  e:"「訂正が出る前に」＝ 一気に広がった。",t:""},
+ {s:"The founder refused to ( ) control of the company to her chosen successor.",
+  o:["relinquish","replenish","reinforce","reiterate"],a:0,
+  w:"relinquish",j:"（権利・地位を）手放す",
+  e:"relinquish control = 支配権を手放す。",t:""},
+ {s:"The failure of the merger can largely be ( ) to poor communication between the two boards.",
+  o:["attributed","contributed","distributed","substituted"],a:0,
+  w:"be attributed to",j:"〜に起因するとされる",
+  e:"be attributed <b>to</b> 〜 でひとかたまり。原因を述べる書き言葉の定番。",
+  t:"2 contribute <b>to</b> は「貢献する・一因となる」。形が似ていますが be contributed to とは言いません。"},
+ {s:"The newly discovered documents ( ) doubt on the commission's original conclusion.",
+  o:["cast","threw","put","laid"],a:0,
+  w:"cast doubt on",j:"〜に疑問を投げかける",
+  e:"doubt と結びつく動詞は <b>cast</b> です。throw / put / lay では言いません。",
+  t:"意味ではなく<b>コロケーション（語の相性）</b>だけで決まる問題。こういう問題は覚えるしかありません。"},
+ {s:"Supporters admit the technology is a ( ) sword: it raises efficiency but destroys jobs.",
+  o:["double-edged","sharp-edged","two-faced","double-sided"],a:0,
+  w:"a double-edged sword",j:"諸刃の剣（長所と短所の両方がある）",
+  e:"「効率は上がるが仕事は失われる」＝ まさに諸刃の剣。イディオムは形が固定です。",t:""},
+ {s:"This quarter's sales figures ( ) well short of what the company had forecast.",
+  o:["fell","dropped","came","went"],a:0,
+  w:"fall short of",j:"〜に達しない、及ばない",
+  e:"fall short of 〜 で固定。drop short / go short とは言いません。",t:""},
+ {s:"Rather than ( ) the problem, the new rule simply shifted it to another department.",
+  o:["doing away with","doing up","making up for","getting away with"],a:0,
+  w:"do away with",j:"廃止する、なくす",
+  e:"「別の部署に移しただけ」＝ なくしてはいない。",t:""}
+];
+
+const CLOZE = [
+ {s:"Electric cars produce no exhaust emissions at all. ( ), the electricity that powers them is often generated by burning coal.",
+  o:["Consequently","However","Similarly","Therefore"],a:1,
+  w:"However",j:"しかし（逆接）",
+  e:"前：排気ガスゼロ（良い）／後：石炭で発電（良くない）→ <b>逆接</b>。",
+  t:"1 と 4 はどちらも「だから」＝ 因果。前後が逆向きなので使えません。"},
+ {s:"The medication reduced symptoms in the great majority of patients. ( ), it caused severe side effects in a small minority.",
+  o:["Nevertheless","Moreover","For instance","In short"],a:0,
+  w:"Nevertheless",j:"それにもかかわらず（逆接）",
+  e:"良い結果 → 悪い結果。逆接。",t:""},
+ {s:"Remote work cuts commuting time and reduces office costs. ( ), it can lower a company's carbon footprint.",
+  o:["In contrast","Furthermore","Otherwise","Instead"],a:1,
+  w:"Furthermore",j:"さらに（追加）",
+  e:"良い点 → さらに良い点。<b>追加</b>。",t:""},
+ {s:"The city invested heavily in protected cycling lanes. ( ), bicycle use rose by forty percent within two years.",
+  o:["Nonetheless","Conversely","As a result","In other words"],a:2,
+  w:"As a result",j:"その結果（因果）",
+  e:"投資 → 利用増。原因と結果。",t:""},
+ {s:"A few species are adapting rapidly to warming seas — ( ), certain corals have acquired heat-resistant algae.",
+  o:["for instance","on the contrary","in conclusion","by contrast"],a:0,
+  w:"for instance",j:"たとえば（例示）",
+  e:"一般論 → 具体例。ダッシュ（—）の後は例示が来やすい。",t:""},
+ {s:"The device must be recharged every three hours. ( ), it is impractical for long journeys.",
+  o:["In other words","Even so","Meanwhile","Likewise"],a:0,
+  w:"In other words",j:"つまり（言い換え）",
+  e:"事実 → その意味を言い直している。<b>言い換え</b>。",t:""},
+ {s:"All participants must register by Friday evening. ( ), their places will be offered to those on the waiting list.",
+  o:["Otherwise","Accordingly","Namely","Besides"],a:0,
+  w:"Otherwise",j:"さもなければ（条件・代替）",
+  e:"「しなければ〜になる」＝ Otherwise。",t:""},
+ {s:"Critics dismissed the policy as a costly failure. Its defenders, ( ), pointed to a measurable fall in emissions.",
+  o:["therefore","meanwhile","by contrast","in addition"],a:2,
+  w:"by contrast",j:"対照的に",
+  e:"批判する側 ↔ 擁護する側。<b>対比</b>。",t:""}
+];
+
+const READING = [
+{
+ title:"The Cooling of Cities",
+ p:["Anyone who has walked through a city centre on a summer evening knows that urban areas retain heat long after the surrounding countryside has cooled. This phenomenon, known as the urban heat island effect, can raise night-time temperatures in a large city by as much as five degrees Celsius compared with nearby rural land. The causes are well understood. Concrete and asphalt absorb solar radiation during the day and release it slowly after dark, while the scarcity of vegetation deprives cities of the cooling that comes from water evaporating through leaves.",
+ "For decades the standard response was air conditioning, but this solution carries an obvious irony: the machines that cool interiors expel hot air into the streets, intensifying the very problem they address. Recently, attention has turned to interventions at the level of the city itself. Painting rooftops white, for instance, reflects sunlight rather than absorbing it, and studies in several American cities have recorded meaningful reductions in indoor temperatures at negligible cost.",
+ "More ambitious still is the movement to restore greenery. Singapore now requires new developments to replace any greenery lost at ground level with planting on walls and roofs. Yet critics caution that such measures, while visually striking, may amount to a drop in the ocean. The volume of vegetation needed to cool a dense city meaningfully is enormous, and in the most crowded districts the space simply does not exist. What is more, green roofs demand irrigation, and in precisely those cities where heat is most severe, water is often scarcest."],
+ q:[
+  {s:"What is ironic about using air conditioning to combat the urban heat island effect?",
+   o:["It consumes electricity that is generated by burning fossil fuels.",
+      "It moves heat out of buildings and into the streets outside.",
+      "It is too expensive for residents of the hottest districts.",
+      "It operates only at night, when temperatures have already fallen."],a:1,
+   e:"第2段落：<i>the machines that cool interiors expel hot air into the streets, intensifying the very problem they address</i>（室内を冷やす機械が、街に熱風を出して問題を悪化させている）。",
+   t:"1 は<b>現実には正しいけれど、本文に書かれていません</b>。「常識として正しい」選択肢は最も引っかかりやすい罠です。本文に書いてあるかだけで判断すること。"},
+  {s:"What does the passage say about painting rooftops white?",
+   o:["It has been made compulsory in Singapore.",
+      "It is effective but prohibitively expensive.",
+      "It has produced measurable results for very little money.",
+      "It is more effective than restoring vegetation."],a:2,
+   e:"<i>meaningful reductions in indoor temperatures at negligible cost</i> ＝ 意味のある効果を、ごくわずかな費用で。",
+   t:"4 は<b>比較していないことを比較している罠</b>。本文は白い屋根と緑化を比べていません。"},
+  {s:"What concern do critics raise about green roofs?",
+   o:["They are less attractive in reality than in photographs.",
+      "The cities that need them most may lack the water to maintain them.",
+      "They cannot be installed on older buildings.",
+      "Singapore's rules have failed to increase the amount of greenery."],a:1,
+   e:"最終文：<i>green roofs demand irrigation, and in precisely those cities where heat is most severe, water is often scarcest</i>。",
+   t:""}]
+},
+{
+ title:"What We Lose When We Stop Writing by Hand",
+ p:["Handwriting instruction has been quietly disappearing from primary schools across the developed world. The reasoning seems sound: children will spend their working lives typing, and the hours devoted to forming letters neatly could be given to subjects with clearer practical value. Several countries have removed cursive from the curriculum entirely, retaining only enough instruction for pupils to produce legible print.",
+ "Researchers in cognitive psychology, however, have begun to question whether the trade-off is as straightforward as it appears. In a series of studies, students who took lecture notes by hand consistently outperformed those who typed them on later tests of conceptual understanding — though not, notably, on tests of simple factual recall. The explanation proposed is that handwriting is slower. Because students cannot transcribe a lecture word for word, they are forced to summarise, and the act of summarising requires them to process meaning rather than merely record sound.",
+ "This finding has been widely cited, sometimes more enthusiastically than the evidence warrants. The effect sizes reported are modest, and attempts to replicate the results have produced mixed outcomes. What can be said with more confidence is narrower: the advantage appears to stem not from handwriting itself but from the constraint it imposes. Students who were instructed to type selectively, resisting the temptation to transcribe, performed much like those writing by hand. If that interpretation is correct, the skill worth teaching may not be penmanship at all, but the discipline of deciding what not to write down."],
+ q:[
+  {s:"According to the first paragraph, why has handwriting instruction been reduced?",
+   o:["Research demonstrated that it provides no cognitive benefit.",
+      "Pupils were found to produce cursive that could not be read.",
+      "The time can be given to subjects regarded as more useful.",
+      "Teachers no longer receive training in how to teach it."],a:2,
+   e:"<i>the hours devoted to forming letters neatly could be given to subjects with clearer practical value</i>。",
+   t:"1 は第2・3段落の話を第1段落の理由にすり替えた<b>「別の段落」の罠</b>です。"},
+  {s:"On which type of test did handwritten note-takers do better?",
+   o:["Tests of specific factual recall.",
+      "Tests of conceptual understanding.",
+      "Tests taken immediately after the lecture.",
+      "Tests requiring word-for-word reproduction."],a:1,
+   e:"<i>outperformed those who typed them on later tests of conceptual understanding — though not, notably, on tests of simple factual recall</i>。",
+   t:"1 は本文が<b>はっきり否定している</b>内容（though not … factual recall）。ダッシュや though の後ろは必ず読むこと。"},
+  {s:"What does the writer suggest is the true source of the advantage?",
+   o:["The physical act of forming letters by hand.",
+      "The limitation that forces students to select what to record.",
+      "The fact that handwriting is slower to read afterwards.",
+      "The extra effort required to learn cursive writing."],a:1,
+   e:"<i>the advantage appears to stem not from handwriting itself but from the constraint it imposes</i>（手書きそのものではなく、それが課す<b>制約</b>から生まれる）。",
+   t:"<b>not A but B</b> の構文は準1級が大好きです。A（手書きそのもの）を選ばせる罠。"}]
+},
+{
+ title:"Letting the Land Decide",
+ p:["Traditional conservation has generally worked by deciding in advance what a landscape ought to look like and then managing it to that specification: cutting back scrub to preserve meadow, culling one species to protect another. Rewilding begins from the opposite premise. Its advocates propose reintroducing key species — often large grazers or predators — and then withdrawing human management, allowing the ecosystem to arrive at whatever state it will.",
+ "The results have sometimes been spectacular. The return of wolves to Yellowstone National Park is frequently credited with restoring riverbank vegetation, as deer avoided the open valleys where they were most vulnerable. The story has been retold so often that its details have hardened into fact, though ecologists point out that the recovery coincided with several other changes, including a rise in beaver numbers and a run of unusually wet years, and that disentangling the causes remains difficult.",
+ "Rewilding also raises questions that are political rather than ecological. Land left to itself produces neither crops nor timber, and in most of Europe the land in question belongs to somebody. Farmers asked to surrender fields to scrub, or to tolerate predators near their livestock, are being asked to bear a local cost for a benefit that is diffuse and largely urban. Supporters acknowledge this, and increasingly argue that rewilding schemes must pay landowners properly. Whether the public will fund such payments at the scale required is, so far, untested."],
+ q:[
+  {s:"How does rewilding differ from traditional conservation?",
+   o:["It concentrates on plant life rather than animal life.",
+      "It decides on a target state and manages the land towards it.",
+      "It withdraws human management instead of applying it.",
+      "It depends on culling in order to control populations."],a:2,
+   e:"<i>withdrawing human management, allowing the ecosystem to arrive at whatever state it will</i>。",
+   t:"2 と 4 は<b>伝統的な保全のほうの説明</b>。本文の語をそのまま使った<b>単語一致の罠</b>です。"},
+  {s:"What caution do ecologists raise about the Yellowstone wolves?",
+   o:["The reintroduced wolves did not in fact survive.",
+      "Other changes may also explain the recovery of vegetation.",
+      "Deer numbers increased rather than decreased.",
+      "Riverbank vegetation has not actually recovered at all."],a:1,
+   e:"<i>the recovery coincided with several other changes … disentangling the causes remains difficult</i>。",
+   t:"4 は<b>言い過ぎの罠</b>。「原因の特定が難しい」と「回復していない」は全く違います。"},
+  {s:"What political difficulty does the final paragraph identify?",
+   o:["Governments cannot agree on which species should be reintroduced.",
+      "Those who bear the cost are not the people who receive the benefit.",
+      "City residents are opposed to the reintroduction of predators.",
+      "Rewilding schemes have proved more expensive than forecast."],a:1,
+   e:"<i>asked to bear a local cost for a benefit that is diffuse and largely urban</i>（負担は地元の農家、利益は都市の人々）。",
+   t:"3 は本文と<b>逆向き</b>。都市の人は反対ではなく、むしろ利益を受ける側です。"}]
+}];
+
+/* ============ STATE ============ */
+let Q=[], idx=0, answers=[], struck=[], mode='', t0=0, tick=null, limit=0;
+const $=id=>document.getElementById(id);
+const MODES={vocab:'§1 語彙',cloze:'§2 つなぎ語',reading:'§3 長文',exam:'🔥 本番モード'};
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function buildReading(){
+  const out=[];
+  READING.forEach(p=>p.q.forEach((q,i)=>out.push(Object.assign({},q,{passage:p,first:i===0}))));
+  return out;
+}
+
+function start(m){
+  mode=m; idx=0; answers=[]; struck=[];
+  if(m==='vocab'){Q=shuffle(VOCAB); limit=24*30;}
+  else if(m==='cloze'){Q=shuffle(CLOZE); limit=8*40;}
+  else if(m==='reading'){Q=buildReading(); limit=3*8*60;}
+  else {Q=shuffle(VOCAB).concat(shuffle(CLOZE)).concat(buildReading()); limit=43*60;}
+  $('home').classList.add('hide'); $('result').classList.add('hide'); $('quiz').classList.remove('hide');
+  $('qmode').textContent=MODES[m];
+  t0=Date.now();
+  clearInterval(tick);
+  tick=setInterval(()=>{
+    const el=Math.floor((Date.now()-t0)/1000), left=limit-el;
+    const s=Math.abs(left), mm=String(Math.floor(s/60)).padStart(2,'0'), ss=String(s%60).padStart(2,'0');
+    $('timer').textContent=(left<0?'-':'')+mm+':'+ss;
+    $('timer').className='timer'+(left<60?' warn':'');
+  },250);
+  render();
+}
+
+function render(){
+  const q=Q[idx];
+  $('qcount').textContent=` ${idx+1} / ${Q.length}`;
+  $('prog').style.width=((idx)/Q.length*100)+'%';
+  $('qafter').innerHTML='';
+  struck[idx]=struck[idx]||[];
+  let h='';
+  if(q.passage && q.first){
+    h+=`<div class="passage"><b>${q.passage.title}</b>${q.passage.p.map(x=>'<p>'+x+'</p>').join('')}</div>`;
+  } else if(q.passage){
+    h+=`<div class="small" style="margin-bottom:6px">📄 ${q.passage.title}（上の英文のつづき）<button class="btn ghost sm" onclick="showP()">本文をもう一度見る</button></div><div id="pp" class="hide"></div>`;
+  }
+  h+=`<div class="stem">${q.s.replace(/\( \)/,'<b style="color:#e5799b">（　　）</b>')}</div>`;
+  q.o.forEach((o,i)=>{
+    h+=`<div class="opt${struck[idx].includes(i)?' struck':''}" id="o${i}" onclick="pick(${i})">
+      <span class="n">${i+1}</span><span class="t">${o}</span>
+      <span class="x" title="消す" onclick="event.stopPropagation();strike(${i})">✕</span></div>`;
+  });
+  h+=`<div class="small" style="margin-top:8px">💡 答える前に「✕」で<b>2つ消す</b>こと。</div>`;
+  $('qbody').innerHTML=h;
+}
+function showP(){
+  const q=Q[idx], el=$('pp');
+  el.innerHTML=`<div class="passage"><b>${q.passage.title}</b>${q.passage.p.map(x=>'<p>'+x+'</p>').join('')}</div>`;
+  el.classList.toggle('hide');
+}
+function strike(i){
+  const a=struck[idx];
+  const k=a.indexOf(i); if(k>=0)a.splice(k,1); else a.push(i);
+  $('o'+i).classList.toggle('struck');
+}
+function pick(i){
+  if(answers[idx]!==undefined) return;
+  const q=Q[idx]; answers[idx]=i;
+  const ok=i===q.a;
+  q.o.forEach((_,k)=>{
+    const el=$('o'+k); el.classList.add('locked'); el.setAttribute('onclick','');
+    if(k===q.a) el.classList.add('correct');
+    else if(k===i) el.classList.add('wrong');
+  });
+  let h=`<div class="exp ${ok?'ok':'ng'}"><b>${ok?'⭕️ 正解！':'❌ 不正解'}</b> — 正解は <b>${q.a+1}. ${q.o[q.a]}</b><br>${q.e}</div>`;
+  if(q.w) h+=`<div class="gloss"><b>${q.w}</b> ／ ${q.j}</div>`;
+  if(q.t) h+=`<div class="trap"><b>⚠️ 罠の正体</b><br>${q.t}</div>`;
+  if(!struck[idx].length) h+=`<div class="trap">✋ 今回「✕」を使いませんでした。<b>2つ消す習慣</b>が「3を選ぶ癖」を消します。</div>`;
+  h+=`<button class="btn" onclick="next()">${idx+1<Q.length?'次へ →':'結果を見る →'}</button>`;
+  $('qafter').innerHTML=h;
+  $('qafter').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function next(){ if(idx+1<Q.length){idx++;render();} else finish(); }
+
+function finish(){
+  clearInterval(tick);
+  const secs=Math.floor((Date.now()-t0)/1000);
+  let right=0; Q.forEach((q,i)=>{ if(answers[i]===q.a) right++; });
+  const pct=Math.round(right/Q.length*100);
+  const missed=Q.map((q,i)=>({q,i})).filter(x=>answers[x.i]!==x.q.a);
+  const words=missed.filter(x=>x.q.w).map(x=>x.q.w+'（'+x.q.j+'）');
+  const mm=String(Math.floor(secs/60)).padStart(2,'0'), ss=String(secs%60).padStart(2,'0');
+  const col=pct>=80?'var(--good)':pct>=60?'var(--warn)':'var(--bad)';
+  let h=`<div class="card center"><div class="small">${MODES[mode]}</div>
+    <div class="big" style="color:${col}">${pct}%</div>
+    <div>${right} / ${Q.length} 問正解 ・ ${mm}:${ss}</div>
+    <div class="small" style="margin-top:6px">${pct>=80?'🌸 すばらしい！この調子。':pct>=60?'あと少し。間違えた問題の解説を声に出して読んでください。':'大丈夫。間違いは地図です。下の解説を1つずつ。'}</div>
+    <div style="margin-top:12px"><button class="btn" onclick="start('${mode}')">もう一度</button>
+    <button class="btn ghost" onclick="home()">モード選択へ</button></div></div>`;
+  if(words.length){
+    h+=`<div class="card"><h3 style="margin-top:0">📝 単語トレーナーに入れる語</h3>
+      <p class="small" style="margin-top:0">間違えた問題の語です。コピーしてトレーナーに追加してください。</p>
+      <ul>${words.map(w=>'<li>'+w+'</li>').join('')}</ul></div>`;
+  }
+  if(missed.length){
+    h+=`<div class="card"><h3 style="margin-top:0">🔍 間違えた問題の見直し（${missed.length}問）</h3>`;
+    missed.forEach(x=>{
+      const q=x.q, your=answers[x.i];
+      h+=`<div style="border-top:1px solid var(--line);padding-top:10px;margin-top:10px">
+        <div class="stem" style="font-size:.92rem">${q.s.replace(/\( \)/,'（　　）')}</div>
+        <div class="small">あなたの答え： <b style="color:var(--bad)">${your===undefined?'未回答':(your+1)+'. '+q.o[your]}</b>
+        ／ 正解： <b style="color:var(--good)">${q.a+1}. ${q.o[q.a]}</b></div>
+        <div class="exp ok" style="margin-top:6px">${q.e}</div>
+        ${q.t?`<div class="trap">${q.t}</div>`:''}</div>`;
+    });
+    h+=`</div>`;
+  } else {
+    h+=`<div class="card center" style="background:var(--good-l)"><b>全問正解！🌸</b><br><span class="small">パパに見せてください。</span></div>`;
+  }
+  $('quiz').classList.add('hide'); $('result').classList.remove('hide'); $('result').innerHTML=h;
+  window.scrollTo({top:0,behavior:'smooth'});
+  try{
+    const hist=JSON.parse(localStorage.getItem('miku_quiz')||'[]');
+    hist.unshift({m:mode,pct,right,n:Q.length,secs,d:new Date().toISOString().slice(0,10)});
+    localStorage.setItem('miku_quiz',JSON.stringify(hist.slice(0,30)));
+  }catch(e){}
+}
+function home(){ $('result').classList.add('hide'); $('quiz').classList.add('hide'); $('home').classList.remove('hide'); loadHist(); window.scrollTo(0,0); }
+
+function loadHist(){
+  let hist=[]; try{ hist=JSON.parse(localStorage.getItem('miku_quiz')||'[]'); }catch(e){}
+  if(!hist.length){ $('hist').textContent='まだ記録がありません。'; return; }
+  $('hist').innerHTML=`<table><tr><th>日付</th><th>モード</th><th>スコア</th><th>時間</th></tr>`+
+    hist.slice(0,8).map(h=>`<tr><td>${h.d}</td><td>${MODES[h.m]||h.m}</td>
+      <td><b>${h.pct}%</b> (${h.right}/${h.n})</td>
+      <td>${String(Math.floor(h.secs/60)).padStart(2,'0')}:${String(h.secs%60).padStart(2,'0')}</td></tr>`).join('')+`</table>`;
+}
+function loadWords(){
+  const all=VOCAB.filter(v=>v.w).map(v=>`<tr><td><b>${v.w}</b></td><td>${v.j}</td></tr>`).join('');
+  $('wordlist').innerHTML=`<table><tr><th style="width:40%">語</th><th>意味</th></tr>${all}</table>`;
+}
+loadHist(); loadWords();
+</script>
+</div>
+</body>
+</html>
