@@ -85,10 +85,10 @@ a{color:var(--sakura);}
   <div class="card">
     <h3 style="margin-top:0">モードを選ぶ</h3>
     <div class="modes">
-      <div class="mode" onclick="start('vocab')"><b>§1 語彙</b><span>24問 ／ 1問30秒</span></div>
-      <div class="mode" onclick="start('cloze')"><b>§2 つなぎ語</b><span>8問 ／ 1問40秒</span></div>
-      <div class="mode" onclick="start('reading')"><b>§3 長文</b><span>3本9問 ／ 1本8分</span></div>
-      <div class="mode" onclick="start('exam')"><b>🔥 本番モード</b><span>全41問 ／ 43分</span></div>
+      <div class="mode" onclick="start('vocab')"><b>§1 語彙</b><span>24問 ／ 25秒per問・約10分</span></div>
+      <div class="mode" onclick="start('cloze')"><b>§2 つなぎ語</b><span>8問 ／ 50秒per問・約6分半</span></div>
+      <div class="mode" onclick="start('reading')"><b>§3 長文</b><span>長文2本 ／ 110秒per問・約12〜15分</span></div>
+      <div class="mode" onclick="start('exam')"><b>🔥 本番モード</b><span>§1+§2+長文2本・約28〜31分</span></div>
     </div>
   </div>
 
@@ -108,7 +108,7 @@ a{color:var(--sakura);}
 <div id="quiz" class="hide">
   <div class="bar">
     <div><span class="pill" id="qmode"></span><span id="qcount"></span></div>
-    <div class="timer" id="timer">00:00</div>
+    <div><span id="pace" style="color:var(--bad);font-size:.76rem;font-weight:700;margin-right:8px"></span><span class="timer" id="timer">00:00</span></div>
   </div>
   <div class="prog"><i id="prog" style="width:0%"></i></div>
   <div id="qbody"></div>
@@ -349,7 +349,163 @@ const READING = [
       "Rewilding schemes have proved more expensive than forecast."],a:1,
    e:"<i>asked to bear a local cost for a benefit that is diffuse and largely urban</i>（負担は地元の農家、利益は都市の人々）。",
    t:"3 は本文と<b>逆向き</b>。都市の人は反対ではなく、むしろ利益を受ける側です。"}]
-}];
+},
+{
+ title:"Reading the Unreadable",
+ p:["When Mount Vesuvius erupted in AD 79, it buried a private library at Herculaneum under volcanic material. The scrolls it contained were not destroyed but carbonised — turned into fragile cylinders of charcoal that crumble at the lightest touch. For two centuries, attempts to read them followed the same logic: unroll the scroll, then read the text. The results were predictable. Hundreds of scrolls were reduced to fragments in the process, and scholars eventually concluded that the remainder were better left intact than sacrificed to curiosity.",
+ "The breakthrough, when it came, involved abandoning the assumption that a scroll must be opened at all. Researchers used high-resolution X-ray scanning to produce a three-dimensional image of the rolled papyrus, then trained software to identify where the ink lay within it. The difficulty was that the ink was carbon-based, chemically almost identical to the carbonised papyrus beneath it, and therefore nearly invisible to the scanner. What made the technique viable was the discovery that the ink left an almost imperceptible difference in surface texture — a variation far too subtle for the eye, but detectable by a machine trained on thousands of examples.",
+ "Early results have been modest: individual words, then short passages, rather than complete works. Classicists caution against the expectation that the library will yield lost masterpieces. Most of what has been recovered so far is philosophical writing of a fairly ordinary kind, and there is no particular reason to assume the unopened scrolls differ. The significance lies less in what has been read than in the method itself, which may prove applicable to damaged manuscripts far beyond Herculaneum."],
+ q:[
+  {s:"What was the problem with earlier attempts to read the scrolls?",
+   o:["The scrolls had been completely destroyed by the eruption.",
+      "The text on them had faded beyond recognition.",
+      "Scholars could not agree on how the text should be translated.",
+      "The process of unrolling them destroyed a great many."],a:3,
+   e:"第1段落：<i>Hundreds of scrolls were reduced to fragments in the process</i>（開く作業そのもので何百も壊れた）。",
+   t:"1 は<b>言い過ぎの罠</b>。本文は <i>not destroyed but carbonised</i>（破壊されたのではなく炭化した）とはっきり否定しています。"},
+  {s:"Why was the ink difficult for the scanner to detect?",
+   o:["It was chemically very similar to the material beneath it.",
+      "It had been absorbed into the surrounding volcanic material.",
+      "It had been applied too thinly to register on a scan.",
+      "It reacted badly to exposure to X-rays."],a:0,
+   e:"<i>the ink was carbon-based, chemically almost identical to the carbonised papyrus beneath it</i>。",
+   t:""},
+  {s:"What do classicists caution about?",
+   o:["The scanning method may damage the scrolls still further.",
+      "The software frequently misidentifies individual letters.",
+      "The texts recovered may turn out to be unremarkable.",
+      "The library may contain no philosophical writing at all."],a:2,
+   e:"<i>Most of what has been recovered so far is philosophical writing of a fairly ordinary kind</i>。",
+   t:"4 は本文と<b>逆</b>。哲学的な文章が「ない」のではなく、「ありふれたものばかり」と言っています。"},
+  {s:"What does the writer suggest is the most important outcome?",
+   o:["The recovery of masterpieces that had been lost.",
+      "A technique that could be applied to other damaged documents.",
+      "Proof that the eruption preserved rather than destroyed.",
+      "Renewed public interest in classical philosophy."],a:1,
+   e:"最終文：<i>The significance lies less in what has been read than in the method itself</i>（重要なのは読めた内容よりも<b>方法</b>）。",
+   t:"<b>less A than B</b>（AよりむしろB）の構文。A（読めた内容）を選ばせる罠です。"}]
+},
+{
+ title:"The Placebo That Announces Itself",
+ p:["The placebo effect has long been understood as a form of deception. A patient believes they are receiving treatment; the belief itself produces measurable improvement; and the improvement is assumed to disappear once the deception is revealed. On this account the effect is real but ethically awkward, since it appears to depend on misleading the very people it helps.",
+ "A series of trials over the past fifteen years has complicated this picture. Researchers gave patients suffering from chronic back pain, irritable bowel syndrome and migraine a pill they were explicitly told was inert — no active ingredient, no pharmacological action whatever — and asked them to take it anyway. A substantial proportion reported meaningful reductions in their symptoms. The patients knew, and the effect appeared regardless.",
+ "Why this should happen remains contested. One explanation holds that the body responds to the ritual of treatment rather than to any belief about its contents: the appointment, the instruction, the act of swallowing something at a fixed hour each day. Another proposes that expectation operates below the level of conscious judgement, so that being told a pill is inert does not entirely cancel the anticipation of relief.",
+ "Whatever the mechanism, the practical implications are narrower than early coverage tended to suggest. Open-label placebos have shown effects mainly on symptoms that patients report themselves — pain, nausea, fatigue — and not on measures a physician can observe independently, such as tumour size or blood chemistry. The distinction matters. Feeling better is not nothing, but a treatment that changes how an illness feels without changing what it does is a more limited achievement than the headlines implied."],
+ q:[
+  {s:"What was the traditional understanding of the placebo effect?",
+   o:["It worked only on patients who were unusually suggestible.",
+      "It produced no measurable physical change of any kind.",
+      "It was too unreliable to be studied scientifically.",
+      "It depended on the patient being deceived."],a:3,
+   e:"第1段落冒頭：<i>The placebo effect has long been understood as a form of deception.</i>",
+   t:"2 は本文が否定。<i>the belief itself produces <b>measurable</b> improvement</i> と書いてあります。"},
+  {s:"What was unusual about the trials described in the second paragraph?",
+   o:["The patients were given a far higher dose than usual.",
+      "The pills were administered without the patients' knowledge.",
+      "The patients were told the pills contained no active ingredient.",
+      "The trials were carried out on healthy volunteers."],a:2,
+   e:"<i>a pill they were explicitly told was inert</i> ＝ 効き目のない薬だと<b>はっきり伝えられた</b>。",
+   t:"2 は<b>正反対</b>。従来の placebo は「知らせない」ですが、この実験は「知らせた」ことが新しい点です。"},
+  {s:"What limitation does the writer identify?",
+   o:["The effects appear only in symptoms that patients report themselves.",
+      "The effects wear off within a few weeks.",
+      "Only a very small minority of patients respond at all.",
+      "The trials have never been successfully replicated."],a:0,
+   e:"最終段落：<i>effects mainly on symptoms that patients report themselves … and not on measures a physician can observe independently</i>。",
+   t:"3 も本文が否定（<i>A substantial proportion reported meaningful reductions</i>＝かなりの割合が効果を報告）。"}]
+},
+{
+ title:"Four Days",
+ p:["Proposals to shorten the working week are not new, but the form they now take is. Earlier campaigns argued for fewer hours on grounds of welfare: workers were exhausted, and rest was a good in itself. Recent trials have advanced a different and far more contentious claim — that a company can remove a day from the week without losing output, and in some cases while increasing it.",
+ "The largest trials, conducted in Britain, Iceland and Japan, reported encouraging results. Participating firms recorded stable or improved revenue, sharp falls in reported burnout, and reduced staff turnover. Most chose to continue the arrangement once the trial period ended, which advocates regard as the most persuasive evidence available: firms are unlikely to retain a practice that is costing them money.",
+ "Sceptics raise two objections. The first concerns who volunteered. The firms that entered these trials were disproportionately small, white-collar and already sympathetic to the idea; a hospital, a factory or a restaurant cannot simply compress its output into fewer hours, because its output is measured in hours of presence. The second concerns what actually changed. Several participating companies reported that the gains came not from the shorter week itself but from the reforms introduced to make it possible — shorter meetings, fewer interruptions, clearer priorities. If that is so, the four-day week may be less a policy than a pretext: a deadline severe enough to force organisations to do what they could have done at any point."],
+ q:[
+  {s:"How do recent arguments for a shorter week differ from earlier ones?",
+   o:["They concentrate on worker welfare rather than on output.",
+      "They apply only to manufacturing industries.",
+      "They claim that output need not fall when hours are reduced.",
+      "They propose reducing hours without reducing pay."],a:2,
+   e:"<i>a company can remove a day from the week without losing output</i>。",
+   t:"1 は<b>earlier campaigns のほう</b>の説明。段落内の語をそのまま使った<b>単語一致の罠</b>です。"},
+  {s:"Why do advocates find it significant that most firms continued the arrangement?",
+   o:["It shows that employees preferred the new schedule.",
+      "It proves that the trials were properly designed.",
+      "It indicates that customers approved of the change.",
+      "It suggests that the firms were not losing money."],a:3,
+   e:"<i>firms are unlikely to retain a practice that is costing them money</i>。",
+   t:""},
+  {s:"What is the first objection raised by sceptics?",
+   o:["The trials were allowed to run for too short a time.",
+      "The firms taking part were not representative.",
+      "The reported figures were never independently checked.",
+      "Employees simply worked longer on the remaining days."],a:1,
+   e:"<i>disproportionately small, white-collar and already sympathetic to the idea</i>（参加企業が偏っていた）。",
+   t:""},
+  {s:"What does the writer suggest in the final sentence?",
+   o:["The improvements might have been achieved without shortening the week.",
+      "The four-day week will eventually be abandoned everywhere.",
+      "Organisations deliberately exaggerated their own results.",
+      "Shorter meetings are the only reform that genuinely matters."],a:0,
+   e:"<i>a deadline severe enough to force organisations to do what they could have done at any point</i>（いつでもできたことを、やらざるを得なくしただけ）。",
+   t:"4 は<b>言い過ぎの罠</b>。本文は shorter meetings を例の一つとして挙げただけで「唯一」とは言っていません。"}]
+},
+{
+ title:"What the Tulips Did Not Do",
+ p:["Almost every account of financial speculation begins in the same place. In the Dutch Republic of the 1630s, so the story runs, tulip bulbs became objects of frenzied speculation; prices climbed to absurd heights, with a single bulb reportedly exchanging for the price of a house; and when the bubble burst in February 1637, fortunes evaporated overnight and the Dutch economy was left in ruins. The episode is invoked so routinely as a warning that its details are rarely examined.",
+ "Historians who have examined them report a considerably less dramatic picture. The trade was confined to a small circle of merchants and craftsmen, and the general population had no exposure to it whatever. The most extraordinary prices attach to a handful of rare bulbs and appear in sources — pamphlets, satirical songs — composed to moralise rather than to record. Most importantly, the contracts involved were largely futures agreements which, after the crash, were simply not enforced. Buyers who had promised absurd sums were released on payment of a small percentage, and the great transfer of wealth that the story requires appears never to have taken place. No bankruptcies of note followed, and the Dutch economy continued to expand without interruption.",
+ "Why the myth persists is itself instructive. A story in which greed is punished swiftly and visibly is more satisfying, and more useful to whoever is telling it, than one in which a speculative episode passes with limited consequence. Each subsequent financial crisis has found the tulip story ready to hand, and each retelling has reinforced details that the archival record does not support."],
+ q:[
+  {s:"According to the traditional story, what happened in February 1637?",
+   o:["A collapse in prices was said to cause widespread financial ruin.",
+      "The Dutch government prohibited the trade in tulips.",
+      "Tulip bulbs were introduced to the Netherlands for the first time.",
+      "Merchants agreed among themselves to limit speculation."],a:0,
+   e:"<i>when the bubble burst in February 1637, fortunes evaporated overnight</i>。",
+   t:"設問は <b>According to the traditional story</b>（伝説によれば）。第2段落の「本当はそうではなかった」と混同しないこと。<b>どの段落の話か</b>を必ず確認。"},
+  {s:"What do historians say about the most extraordinary prices?",
+   o:["They were recorded only in official government documents.",
+      "They were typical of the trade as a whole.",
+      "They were deliberately falsified by the buyers themselves.",
+      "They come from sources written in order to teach a moral lesson."],a:3,
+   e:"<i>appear in sources — pamphlets, satirical songs — composed to moralise rather than to record</i>。",
+   t:"2 は<b>正反対</b>。<i>a handful of rare bulbs</i>＝ごく一部の珍しい球根だけの話です。"},
+  {s:"Why does the writer describe the persistence of the myth as instructive?",
+   o:["It shows how carefully financial history has been recorded.",
+      "It reveals that a satisfying story can outlast an accurate one.",
+      "It demonstrates that speculation always ends in ruin.",
+      "It proves that the Dutch economy was unusually stable."],a:1,
+   e:"<i>A story in which greed is punished … is more satisfying … than one in which a speculative episode passes with limited consequence</i>。",
+   t:""}]
+},
+{
+ title:"The Last Speakers",
+ p:["Linguists estimate that around half of the world's seven thousand languages will cease to be spoken within the century. The figure is arresting, and the response it usually provokes — that something irreplaceable is being lost — is not wrong. But the framing conceals the mechanism. Languages are rarely eliminated by decree, though that has certainly happened. Far more often they are abandoned, one household at a time, by parents who calculate, correctly, that their children's prospects depend on fluency in a language of wider use.",
+ "This creates a difficulty for revival efforts that is more awkward than it first appears. A language that has been documented is not thereby preserved: recordings, dictionaries and grammars capture a language's structure but not its daily use, and a language without daily use is, in the sense that matters, gone. Successful revivals — Hebrew is the standard example, Welsh and Māori more recent ones — have depended less on scholarship than on creating circumstances in which speaking the language is practically advantageous: schooling, broadcasting, employment.",
+ "There is also the question of who decides. Outsiders who lament the disappearance of a language are not usually the people who must bear the cost of maintaining it, and communities are not always in agreement about whether they wish to. Some regard the language of their grandparents as an inheritance to be defended; others regard it as an obstacle that was, in their own childhoods, used against them. Both positions are held by people with a far stronger claim to judge than the linguists recording them."],
+ q:[
+  {s:"What does the writer say is the most common reason languages disappear?",
+   o:["Governments formally prohibit their use.",
+      "Written records of them are lost or destroyed.",
+      "Families choose a more widely spoken language.",
+      "Linguists fail to document them in time."],a:2,
+   e:"<i>they are abandoned, one household at a time, by parents who calculate … that their children's prospects depend on fluency in a language of wider use</i>。",
+   t:"1 は本文にありますが <b>rarely</b>（まれに）と書かれています。<b>頻度を表す語</b>を読み飛ばすと逆の答えを選びます。"},
+  {s:"Why is documentation on its own insufficient?",
+   o:["Dictionaries and grammars contain too many errors.",
+      "Recordings deteriorate badly over time.",
+      "Very few people can read linguistic notation.",
+      "A language needs daily use in order to survive."],a:3,
+   e:"<i>a language without daily use is, in the sense that matters, gone</i>。",
+   t:""},
+  {s:"What does the writer say about the communities themselves?",
+   o:["They may disagree about whether preservation is desirable.",
+      "They unanimously wish to preserve their own languages.",
+      "They generally defer to the judgement of linguists.",
+      "They rarely understand what is being lost."],a:0,
+   e:"<i>communities are not always in agreement about whether they wish to</i>。Some … / others … と両方の立場が示されています。",
+   t:"3 は本文と<b>逆向き</b>。最終文は <i>a far stronger claim to judge than the linguists</i>（言語学者より判断する資格がある）です。"}]
+}
+];
 
 /* ============ STATE ============ */
 let Q=[], idx=0, answers=[], struck=[], mode='', t0=0, tick=null, limit=0;
@@ -358,18 +514,21 @@ const MODES={vocab:'§1 語彙',cloze:'§2 つなぎ語',reading:'§3 長文',ex
 
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-function buildReading(){
+const PACE={vocab:25, cloze:50, reading:110};
+const tag=(arr,p)=>arr.map(q=>Object.assign({},q,{pace:p}));
+function buildReading(n){
   const out=[];
-  READING.forEach(p=>p.q.forEach((q,i)=>out.push(Object.assign({},q,{passage:p,first:i===0}))));
+  shuffle(READING).slice(0,n).forEach(p=>p.q.forEach((q,i)=>out.push(Object.assign({},q,{passage:p,first:i===0,pace:PACE.reading}))));
   return out;
 }
 
 function start(m){
   mode=m; idx=0; answers=[]; struck=[];
-  if(m==='vocab'){Q=shuffle(VOCAB); limit=24*30;}
-  else if(m==='cloze'){Q=shuffle(CLOZE); limit=8*40;}
-  else if(m==='reading'){Q=buildReading(); limit=3*8*60;}
-  else {Q=shuffle(VOCAB).concat(shuffle(CLOZE)).concat(buildReading()); limit=43*60;}
+  if(m==='vocab'){Q=tag(shuffle(VOCAB),PACE.vocab);}
+  else if(m==='cloze'){Q=tag(shuffle(CLOZE),PACE.cloze);}
+  else if(m==='reading'){Q=buildReading(2);}
+  else {Q=tag(shuffle(VOCAB),PACE.vocab).concat(tag(shuffle(CLOZE),PACE.cloze)).concat(buildReading(2));}
+  limit=Q.reduce((s,q)=>s+q.pace,0);
   $('home').classList.add('hide'); $('result').classList.add('hide'); $('quiz').classList.remove('hide');
   $('qmode').textContent=MODES[m];
   t0=Date.now();
@@ -378,14 +537,16 @@ function start(m){
     const el=Math.floor((Date.now()-t0)/1000), left=limit-el;
     const s=Math.abs(left), mm=String(Math.floor(s/60)).padStart(2,'0'), ss=String(s%60).padStart(2,'0');
     $('timer').textContent=(left<0?'-':'')+mm+':'+ss;
-    $('timer').className='timer'+(left<60?' warn':'');
+    const budget=Q.slice(0,idx+1).reduce((a,q)=>a+q.pace,0); const behind=el>budget;
+    $('timer').className='timer'+((left<60||behind)?' warn':'');
+    const pz=$('pace'); if(pz) pz.textContent = behind ? '⚠️ ペース遅れ' : '';
   },250);
   render();
 }
 
 function render(){
   const q=Q[idx];
-  $('qcount').textContent=` ${idx+1} / ${Q.length}`;
+  $('qcount').textContent=` ${idx+1} / ${Q.length} ・目安 ${q.pace}秒`;
   $('prog').style.width=((idx)/Q.length*100)+'%';
   $('qafter').innerHTML='';
   struck[idx]=struck[idx]||[];
