@@ -514,6 +514,22 @@ const MODES={vocab:'§1 語彙',cloze:'§2 つなぎ語',reading:'§3 長文',ex
 
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
 
+/* ---- 選択肢シャッフル：正解位置を 1〜4 に均等配分（毎回ランダム） ---- */
+function deal(list){
+  // 正解位置のデッキ：各位置がほぼ同数になるよう配ってからシャッフル
+  let deck=[]; while(deck.length<list.length) deck=deck.concat(shuffle([0,1,2,3]));
+  deck=shuffle(deck.slice(0,list.length));
+  return list.map((q,n)=>{
+    const others=shuffle(q.o.map((_,k)=>k).filter(k=>k!==q.a));
+    const perm=others.slice(); perm.splice(deck[n],0,q.a);      // perm[新位置]=元の番号
+    const newNo=k=>perm.indexOf(k)+1;
+    // 解説・罠の冒頭にある「1 と 4 は…」「3 carried out は…」などの番号を新しい番号に付け替え
+    const fix=txt=>!txt?txt:txt.replace(/^([1-4])(\s*と\s*([1-4]))?(?=\s)/,
+      (m,x,y,z)=>{const a=newNo(+x-1),b=z?newNo(+z-1):0; return b?Math.min(a,b)+' と '+Math.max(a,b):String(a);});
+    return Object.assign({},q,{o:perm.map(k=>q.o[k]), a:deck[n], t:fix(q.t), e:q.e});
+  });
+}
+
 const PACE={vocab:25, cloze:50, reading:110};
 const tag=(arr,p)=>arr.map(q=>Object.assign({},q,{pace:p}));
 function buildReading(n){
@@ -528,6 +544,7 @@ function start(m){
   else if(m==='cloze'){Q=tag(shuffle(CLOZE),PACE.cloze);}
   else if(m==='reading'){Q=buildReading(2);}
   else {Q=tag(shuffle(VOCAB),PACE.vocab).concat(tag(shuffle(CLOZE),PACE.cloze)).concat(buildReading(2));}
+  Q=deal(Q);
   limit=Q.reduce((s,q)=>s+q.pace,0);
   $('home').classList.add('hide'); $('result').classList.add('hide'); $('quiz').classList.remove('hide');
   $('qmode').textContent=MODES[m];
