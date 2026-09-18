@@ -72,7 +72,7 @@ a{color:var(--sakura);}
 
 <header>
   <h1>📖 読解ミニ道場</h1>
-  <div class="sub">英検準1級 ／ 時間つき・即採点・解説つき</div>
+  <div class="sub">英検準1級 ／ 時間つき・即採点・解説つき ・ <b>v2 シャッフル版</b></div>
 </header>
 
 <!-- ========== HOME ========== -->
@@ -623,6 +623,7 @@ function finish(){
   let h=`<div class="card center"><div class="small">${MODES[mode]}</div>
     <div class="big" style="color:${col}">${pct}%</div>
     <div>${right} / ${Q.length} 問正解 ・ ${mm}:${ss}</div>
+    <div class="small">正解の位置：${[0,1,2,3].map(k=>(k+1)+'番 '+Q.filter(q=>q.a===k).length+'問').join(' ／ ')}</div>
     <div class="small" style="margin-top:6px">${pct>=80?'🌸 すばらしい！この調子。':pct>=60?'あと少し。間違えた問題の解説を声に出して読んでください。':'大丈夫。間違いは地図です。下の解説を1つずつ。'}</div>
     <div style="margin-top:12px"><button class="btn" onclick="start('${mode}')">もう一度</button>
     <button class="btn ghost" onclick="home()">モード選択へ</button></div></div>`;
