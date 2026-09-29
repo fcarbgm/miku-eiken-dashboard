@@ -177,7 +177,7 @@ function load(k){
   key=k; const song=DATA[k];
   lines=parse(song.w); curIdx=-1;
   rainWords=[...new Set(lines.flatMap(l=>l.words).map(w=>clean(w.t)).filter(w=>G[w]))];
-  audio.src="https://cdn1.suno.ai/"+song.id+".mp3"; audio.load();
+  audio.src="audio/"+k+".mp3"; audio.load();
   audio.playbackRate=parseFloat($("rate").value); audio.loop=looping;
   $("cur").innerHTML=""; $("nxt").textContent=""; $("sect").textContent="";
   localStorage.setItem("kara_last",k);
@@ -199,7 +199,17 @@ function jump(d){
   }catch(e){ $("load").textContent="⚠️ 読み込み失敗。通信を確認してね"; }
 })();
 $("sel").onchange=e=>{ audio.pause(); $("play").textContent="▶ 再生"; load(e.target.value); };
-$("play").onclick=()=>{ if(audio.paused){audio.play();$("play").textContent="⏸ 停止";} else {audio.pause();$("play").textContent="▶ 再生";} };
+$("play").onclick=()=>{
+  if(audio.paused){
+    audio.play().then(()=>{$("play").textContent="⏸ 停止";})
+      .catch(()=>{$("play").textContent="▶ 再生"; toast("⚠️ 再生できませんでした。もう一度タップしてね");});
+  } else {audio.pause();$("play").textContent="▶ 再生";}
+};
+audio.onerror=()=>{
+  if(/\.mp3$/.test(audio.src)){ audio.src="audio/"+key+".m4a"; audio.load(); return; }
+  $("play").textContent="▶ 再生"; toast("⚠️ 音源ファイルが読み込めません（audio/"+key+"）");
+};
+function toast(m){ const n=$("nxt"); n.textContent=m; n.style.color="var(--pink)"; setTimeout(()=>n.style.color="",4000); }
 $("rate").onchange=e=>audio.playbackRate=parseFloat(e.target.value);
 $("loop").onclick=()=>{ looping=!looping; audio.loop=looping; $("loop").classList.toggle("on",looping); };
 $("glossBtn").onclick=()=>{ showGloss=!showGloss; $("glossBtn").classList.toggle("on",showGloss);
